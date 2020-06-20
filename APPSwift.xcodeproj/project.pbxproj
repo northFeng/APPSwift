@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		55A1292883B24A70F282206B /* Pods_APPSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */; };
+		8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8306C558249E120B0060409A /* APPNavigationBarView.swift */; };
 		8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB6C249CAA0C00371C05 /* AppDelegate.swift */; };
 		8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB72249CAA0C00371C05 /* Main.storyboard */; };
 		8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB75249CAA0D00371C05 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		25386012E17DB1DE5368877D /* Pods-APPSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.debug.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		8306C558249E120B0060409A /* APPNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationBarView.swift; sourceTree = "<group>"; };
 		8338EB69249CAA0C00371C05 /* APPSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338EB6C249CAA0C00371C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8338EB73249CAA0C00371C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				8338EB99249CDAD700371C05 /* APPNavigationController.swift */,
+				8306C558249E120B0060409A /* APPNavigationBarView.swift */,
 			);
 			path = CustomNavigationBar;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */,
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
 				8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */,
