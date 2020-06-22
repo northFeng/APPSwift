@@ -246,3 +246,13 @@ func ImageViewLoadImage(imgView:UIImageView, url:String, placeholderImgName:Stri
      })
      */
 }
+
+///常规获取图片 （图片会缓存到 内存中）
+func ImageGet(name:String) -> UIImage {
+    return UIImage(named: name) ?? UIImage()
+}
+
+///通过文件路径加载图片 （不会缓存到内存中）
+func ImageGet(path:String) -> UIImage {
+    return UIImage(contentsOfFile: path) ?? UIImage()
+}

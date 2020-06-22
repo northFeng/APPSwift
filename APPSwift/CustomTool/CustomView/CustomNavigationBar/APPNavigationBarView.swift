@@ -39,10 +39,10 @@ class APPNavigationBarView: UIView {
     let titleLabel:UILabel
     
     ///左边第一个按钮
-    @objc let leftFirstBtn:UIButton
+    let leftFirstBtn:UIButton
     
     ///右边第一个按钮
-    @objc let rightFirstBtn:UIButton
+    let rightFirstBtn:UIButton
     
     ///右边第二个按钮
     let rightSecondBtn:UIButton
