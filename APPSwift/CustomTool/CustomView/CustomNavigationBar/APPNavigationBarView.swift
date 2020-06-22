@@ -73,7 +73,7 @@ class APPNavigationBarView: UIView {
     }
     
     ///布局界面
-    func layoutViews() {
+    private func layoutViews() {
         
         self.backgroundColor = DynamicColor(lightStylecolor: UIColor.white, darkStylecolor: UIColor.black)
 

@@ -12,3 +12,7 @@ let kGlobal_LightOrDarkModelChange = "APPLightOrDarkModelChange"
 ///通知网络变化
 let kGlobal_NetworkingReachabilityChangeNotification = "GFNetworkingReachabilityDidChangeNotification"
 
+///登录变化通知
+let kGlobal_LoginStateChange = "APPLoginStateChangeNotice"
+
+
