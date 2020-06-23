@@ -22,6 +22,9 @@
 		8338EB93249CC22D00371C05 /* APPCustomDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB92249CC22D00371C05 /* APPCustomDefine.swift */; };
 		8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB96249CC48B00371C05 /* APPBaseController.swift */; };
 		8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB99249CDAD700371C05 /* APPNavigationController.swift */; };
+		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
+		83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B524A2048100CC5FC0 /* APPManager.swift */; };
+		83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		8338EB92249CC22D00371C05 /* APPCustomDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPCustomDefine.swift; sourceTree = "<group>"; };
 		8338EB96249CC48B00371C05 /* APPBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPBaseController.swift; sourceTree = "<group>"; };
 		8338EB99249CDAD700371C05 /* APPNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationController.swift; sourceTree = "<group>"; };
+		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
+		83B800B524A2048100CC5FC0 /* APPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPManager.swift; sourceTree = "<group>"; };
+		83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPUserInfoModel.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -136,6 +142,8 @@
 		8338EB80249CBE0A00371C05 /* APPManager */ = {
 			isa = PBXGroup;
 			children = (
+				83B800B524A2048100CC5FC0 /* APPManager.swift */,
+				83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */,
 			);
 			path = APPManager;
 			sourceTree = "<group>";
@@ -236,6 +244,7 @@
 		8338EB8D249CBF8800371C05 /* CustomControls */ = {
 			isa = PBXGroup;
 			children = (
+				83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */,
 				831A4F1524A0B40300646A1C /* MineVC.swift in Sources */,
 				8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */,
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
@@ -373,7 +383,9 @@
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
 				831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */,
 				8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */,
+				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
+				83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */,
 				831A4F0A24A0577B00646A1C /* APPTabBarController.swift in Sources */,
 				8338EB93249CC22D00371C05 /* APPCustomDefine.swift in Sources */,
 				8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */,

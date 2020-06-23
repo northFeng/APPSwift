@@ -28,6 +28,15 @@ typealias APPBackClosure = (Bool, Any)->Void
 ///网络请求回调
 typealias APPNetClosure = (Bool, Any, Int)->Void
 
+///APP内的特征集合模式
+enum APPFaceTraitStyle {
+    ///跟随系统
+    case systemModel
+    ///浅色模式
+    case lightModel
+    ///深色模式
+    case darkModel
+}
 
 ///登录枚举
 enum LoginType:Int {
