@@ -6,7 +6,7 @@
 //  Copyright © 2020 north_feng. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class APPManager {
     
@@ -70,5 +70,44 @@ class APPManager {
 
     }
     
+    ///清楚用户信息
+    func clearUserInfo() {
+        //清除用户信息
+        UserDefaults.standard.removeObject(forKey: Current_Login_User)
+        
+        userInfo = nil
+        isLogined = false
+        isLoginOverdue = false
+    }
+    
+    ///主动退出
+    func forcedExitUserWithShowController(showIndex:Int) {
+        
+         //清楚本地账户数据
+        self.clearUserInfo()
+        
+        let mainWindow:UIWindow? = UIApplication.shared.delegate?.window ?? nil
+        let rootNavi:UINavigationController? = mainWindow?.rootViewController as? UINavigationController ?? nil
+        
+        rootNavi?.popToRootViewController(animated: true)//直接弹到最上层
+        
+        APPTabBarController.tabBarVC.setSelectViewController(index: showIndex)//选中第几个模块
+        
+        //进行发送通知刷新所有的界面（利用通知进行刷新根VC）
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kGlobal_LoginStateChange), object: nil)
+    }
+    
+    
+    ///iPad比例适配
+    static func iPhoneAndIpadTextAdapter() -> Float {
+        var scale:Float = 1.0
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            scale = 1.0
+        }else if UIDevice.current.userInterfaceIdiom == .pad {
+            scale = 1.3
+        }
+        return scale
+    }
     
 }

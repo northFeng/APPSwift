@@ -25,6 +25,9 @@
 		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
 		83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B524A2048100CC5FC0 /* APPManager.swift */; };
 		83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */; };
+		83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */; };
+		83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */; };
+		83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +51,9 @@
 		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
 		83B800B524A2048100CC5FC0 /* APPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPManager.swift; sourceTree = "<group>"; };
 		83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPUserInfoModel.swift; sourceTree = "<group>"; };
+		83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPKeyInfo.swift; sourceTree = "<group>"; };
+		83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoacalInfo.swift; sourceTree = "<group>"; };
+		83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPFileManager.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -144,6 +150,9 @@
 			children = (
 				83B800B524A2048100CC5FC0 /* APPManager.swift */,
 				83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */,
+				83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */,
+				83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */,
+				83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */,
 			);
 			path = APPManager;
 			sourceTree = "<group>";
@@ -382,9 +391,12 @@
 				831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
 				831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */,
+				83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */,
 				8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */,
+				83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */,
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
+				83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */,
 				83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */,
 				831A4F0A24A0577B00646A1C /* APPTabBarController.swift in Sources */,
 				8338EB93249CC22D00371C05 /* APPCustomDefine.swift in Sources */,
@@ -541,6 +553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.northfeng.APPSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

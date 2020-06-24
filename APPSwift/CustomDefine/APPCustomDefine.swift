@@ -95,12 +95,26 @@ let kScaleW = kScreenWidth/375.0
 ///屏幕高度比例
 let kScaleH = kScreenHeight/667.0
 
-///适配iPad比例 ( iPhone 1.  iPad 1.5)
-let kIpadScale = 1.0//APPManager.iPhoneAndIpadTextAdapter()
+///适配iPad比例 ( iPhone 1.  iPad 1.3)
+var kIpadScale:Float {
+    var scale:Float = 1.0
+    
+    if UIDevice.current.userInterfaceIdiom == .phone {
+        scale = 1.0
+    }else if UIDevice.current.userInterfaceIdiom == .pad {
+        scale = 1.3
+    }
+    return scale
+}
 
 ///适配iPad尺寸
-func FitIpad(num:CGFloat) -> Float {
-    return 1.0
+func FitIpad(num:Float) -> Float {
+    
+    if UIDevice.current.userInterfaceIdiom == .phone {
+        return num * 1.0
+    }else{
+        return num * 1.5
+    }
 }
 
 //MARK: ******************************** NaviBar && TabBar 常量宏  ********************************
