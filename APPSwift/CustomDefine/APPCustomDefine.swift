@@ -141,32 +141,7 @@ let kBottomSafeHeight = kStatusBarHeight > 20 ? 34.0 : 0.0
 func COLOR(color:String, alpha:CGFloat = 1.0) -> UIColor {
     // return APPColorFunction.color(withHexString: color, alpha: 1.0)
     
-    // 存储转换后的数值
-    var red: UInt32 = 0, green: UInt32 = 0, blue: UInt32 = 0
-    
-    var hex = color
-    // 如果传入的十六进制颜色有前缀，去掉前缀
-    if hex.hasPrefix("0x") || hex.hasPrefix("0X") {
-        hex = String(hex[hex.index(hex.startIndex, offsetBy: 2)...])
-    } else if hex.hasPrefix("#") {
-        hex = String(hex[hex.index(hex.startIndex, offsetBy: 1)...])
-    }
-    // 如果传入的字符数量不足6位按照后边都为0处理，当然你也可以进行其它操作
-    if hex.count < 6 {
-        for _ in 0..<6-hex.count {
-            hex += "0"
-        }
-    }
-
-    // 分别进行转换
-    // 红
-    Scanner(string: String(hex[..<hex.index(hex.startIndex, offsetBy: 2)])).scanHexInt32(&red)
-    // 绿
-    Scanner(string: String(hex[hex.index(hex.startIndex, offsetBy: 2)..<hex.index(hex.startIndex, offsetBy: 4)])).scanHexInt32(&green)
-    // 蓝
-    Scanner(string: String(hex[hex.index(hex.startIndex, offsetBy: 4)...])).scanHexInt32(&blue)
-
-    return UIColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: alpha)
+    APPColorDefine.colorHexString(color:color, alpha:alpha)
 }
 
 ///红绿蓝 三色 数值 —> UIColor
@@ -178,25 +153,7 @@ func RGB(r:Int, g:Int, b:Int, alpha:CGFloat = 1.0) -> UIColor {
 ///动态颜色
 func DynamicColor(lightStylecolor:UIColor, darkStylecolor:UIColor) -> UIColor {
     
-    var color:UIColor = lightStylecolor
-    
-    if #available(iOS 13.0, *) {
-        color = UIColor { (traitCollection:UITraitCollection) -> UIColor in
-        
-            if traitCollection.userInterfaceStyle == .light {
-                //浅色模式
-                return lightStylecolor
-            } else if traitCollection.userInterfaceStyle == .dark  {
-                //黑暗模式
-                return darkStylecolor
-            } else {
-                //默认浅色模式
-                return lightStylecolor
-            }
-        }
-    }
-    
-    return color
+    APPColorDefine.colorDynamicColor(lightStylecolor:lightStylecolor, darkStylecolor:darkStylecolor)
 }
 
 //MARK: ******************************** 定义字体 *********************************
@@ -225,40 +182,13 @@ func kFontOfCustom(name:String,font:CGFloat) -> UIFont? {
 //MARK: ************************* 图片加载框架 *************************
 ///加载图片
 func ImageViewLoadImage(imgView:UIImageView, url:String) {
-
-    if let urlUrl = URL(string: url) {
-        imgView.kf.setImage(with:urlUrl)
-    }
+    
+    APPImageLoad.ImageViewLoadImage(imgView: imgView, url: url)
 }
 
-///加载图片+占位图
-func ImageViewLoadImage(imgView:UIImageView, url:String, placeholderImgName:String) {
-
-    if let urlUrl = URL(string: url) {
-        imgView.kf.indicatorType = .activity
-        imgView.kf.setImage(
-            with: urlUrl,
-            placeholder: UIImage(named: placeholderImgName),
-            //options参数 是对图片操作的参数选项，里面是个数组，可以设置各种参数放进去！！！
-            options: [.transition(.fade(0.4))]//过渡动画，渐变效果
-            )
-    }
-    
-    /**
-     { (image, error, cacheType, imageUrl) in
-         
-         //image       // 为 nil 时，表示下载失败
-         
-         //error       // 为 nil 时，表示下载成功， 非 nil 时，就是下载失败的错误信息
-         
-         //cacheType   // 缓存类型，是个枚举，分以下三种：
-                     // .none    图片还没缓存（也就是第一次加载图片的时候）
-                     // .memory  从内存中获取到的缓存图片（第二次及以上加载）
-                     // .disk    从磁盘中获取到的缓存图片（第二次及以上加载）
-         
-         //imageUrl    // 所要下载的图片的url
-     })
-     */
+///加载图片 && 占位图
+func ImageViewLoadImage(imgView:UIImageView, url:String, _ placeholderImgName:String) {
+    APPImageLoad.ImageViewLoadImage(imgView: imgView, url: url, placeholderImgName: placeholderImgName)
 }
 
 ///常规获取图片 （图片会缓存到 内存中）
@@ -269,4 +199,21 @@ func ImageGet(name:String) -> UIImage {
 ///通过文件路径加载图片 （不会缓存到内存中）
 func ImageGet(path:String) -> UIImage {
     return UIImage(contentsOfFile: path) ?? UIImage()
+}
+
+//MARK: ************************* JSON 转换 Model *************************
+
+///JSON 转 Model
+func JsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
+    APPNetTool.jsonToModel(json: json, Model: Model)
+}
+
+///Model 转 DicJson
+func modelToJsonObject(model:BaseModel) -> [String : Any] {
+    APPNetTool.modelToJsonObject(model: model)
+}
+
+///Model 转 String
+func modelToJsonString(model:BaseModel) -> String {
+    APPNetTool.modelToJsonString(model: model)
 }

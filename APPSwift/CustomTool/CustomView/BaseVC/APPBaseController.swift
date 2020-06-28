@@ -43,7 +43,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    ///视图加载
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,7 +68,10 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
         
         if self.navigationController?.viewControllers.count ?? 0 > 1 {
             //设置返回按钮
+            naviBar.isHidden = false//显示导航条
             naviBar.setLeftFirstButtonStyle(imgName: "back_s2")
+        }else{
+            naviBar.isHidden = true//隐藏
         }
         
         self.initData()

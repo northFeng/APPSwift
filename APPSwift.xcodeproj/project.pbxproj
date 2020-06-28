@@ -13,6 +13,14 @@
 		831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A4F0E24A0B3E400646A1C /* HomeVC.swift */; };
 		831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A4F1224A0B3F500646A1C /* MiddleVC.swift */; };
 		831A4F1524A0B40300646A1C /* MineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A4F1424A0B40300646A1C /* MineVC.swift */; };
+		8323010924A8531800CF72BB /* APPHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323010724A8531800CF72BB /* APPHttpTool.m */; };
+		8323010C24A8746800CF72BB /* APPHttpCacheTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323010B24A8746800CF72BB /* APPHttpCacheTool.m */; };
+		8323010E24A8782000CF72BB /* APPNetTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323010D24A8782000CF72BB /* APPNetTool.swift */; };
+		8323011024A889A000CF72BB /* APPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323010F24A889A000CF72BB /* APPModel.swift */; };
+		8323011324A88B4000CF72BB /* APPImageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011224A88B4000CF72BB /* APPImageLoad.swift */; };
+		8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011424A89B1C00CF72BB /* APPColorDefine.swift */; };
+		8323011924A89DCF00CF72BB /* APPXYColorApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323011824A89DCF00CF72BB /* APPXYColorApi.m */; };
+		8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */; };
 		8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB6C249CAA0C00371C05 /* AppDelegate.swift */; };
 		8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB72249CAA0C00371C05 /* Main.storyboard */; };
 		8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB75249CAA0D00371C05 /* Assets.xcassets */; };
@@ -22,6 +30,7 @@
 		8338EB93249CC22D00371C05 /* APPCustomDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB92249CC22D00371C05 /* APPCustomDefine.swift */; };
 		8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB96249CC48B00371C05 /* APPBaseController.swift */; };
 		8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB99249CDAD700371C05 /* APPNavigationController.swift */; };
+		83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */; };
 		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
 		83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B524A2048100CC5FC0 /* APPManager.swift */; };
 		83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */; };
@@ -37,6 +46,18 @@
 		831A4F0E24A0B3E400646A1C /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		831A4F1224A0B3F500646A1C /* MiddleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleVC.swift; sourceTree = "<group>"; };
 		831A4F1424A0B40300646A1C /* MineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineVC.swift; sourceTree = "<group>"; };
+		8323010324A851DF00CF72BB /* APPSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "APPSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		8323010724A8531800CF72BB /* APPHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPHttpTool.m; sourceTree = "<group>"; };
+		8323010824A8531800CF72BB /* APPHttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPHttpTool.h; sourceTree = "<group>"; };
+		8323010A24A8746800CF72BB /* APPHttpCacheTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPHttpCacheTool.h; sourceTree = "<group>"; };
+		8323010B24A8746800CF72BB /* APPHttpCacheTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPHttpCacheTool.m; sourceTree = "<group>"; };
+		8323010D24A8782000CF72BB /* APPNetTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNetTool.swift; sourceTree = "<group>"; };
+		8323010F24A889A000CF72BB /* APPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPModel.swift; sourceTree = "<group>"; };
+		8323011224A88B4000CF72BB /* APPImageLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPImageLoad.swift; sourceTree = "<group>"; };
+		8323011424A89B1C00CF72BB /* APPColorDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPColorDefine.swift; sourceTree = "<group>"; };
+		8323011724A89DCF00CF72BB /* APPXYColorApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPXYColorApi.h; sourceTree = "<group>"; };
+		8323011824A89DCF00CF72BB /* APPXYColorApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPXYColorApi.m; sourceTree = "<group>"; };
+		8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPFunctionApi.swift; sourceTree = "<group>"; };
 		8338EB69249CAA0C00371C05 /* APPSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338EB6C249CAA0C00371C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8338EB73249CAA0C00371C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,6 +69,7 @@
 		8338EB92249CC22D00371C05 /* APPCustomDefine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPCustomDefine.swift; sourceTree = "<group>"; };
 		8338EB96249CC48B00371C05 /* APPBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPBaseController.swift; sourceTree = "<group>"; };
 		8338EB99249CDAD700371C05 /* APPNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationController.swift; sourceTree = "<group>"; };
+		83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPOCInterface.swift; sourceTree = "<group>"; };
 		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
 		83B800B524A2048100CC5FC0 /* APPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPManager.swift; sourceTree = "<group>"; };
 		83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPUserInfoModel.swift; sourceTree = "<group>"; };
@@ -111,6 +133,31 @@
 			path = Mine;
 			sourceTree = "<group>";
 		};
+		8323011124A88B1000CF72BB /* KingfisherImage */ = {
+			isa = PBXGroup;
+			children = (
+				8323011224A88B4000CF72BB /* APPImageLoad.swift */,
+			);
+			path = KingfisherImage;
+			sourceTree = "<group>";
+		};
+		8323011624A89D6D00CF72BB /* XYColorOC */ = {
+			isa = PBXGroup;
+			children = (
+				8323011724A89DCF00CF72BB /* APPXYColorApi.h */,
+				8323011824A89DCF00CF72BB /* APPXYColorApi.m */,
+			);
+			path = XYColorOC;
+			sourceTree = "<group>";
+		};
+		8323011A24A8A33600CF72BB /* CustomFunction */ = {
+			isa = PBXGroup;
+			children = (
+				8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */,
+			);
+			path = CustomFunction;
+			sourceTree = "<group>";
+		};
 		8338EB60249CAA0C00371C05 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +200,7 @@
 				83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */,
 				83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */,
 				83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */,
+				83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */,
 			);
 			path = APPManager;
 			sourceTree = "<group>";
@@ -162,6 +210,7 @@
 			children = (
 				8338EB8E249CC14400371C05 /* APPEnum.swift */,
 				8338EB90249CC1D500371C05 /* APPGlobalVariable.swift */,
+				8323011424A89B1C00CF72BB /* APPColorDefine.swift */,
 				8338EB92249CC22D00371C05 /* APPCustomDefine.swift */,
 			);
 			path = CustomDefine;
@@ -170,6 +219,8 @@
 		8338EB82249CBE6A00371C05 /* NetRequest */ = {
 			isa = PBXGroup;
 			children = (
+				8323010D24A8782000CF72BB /* APPNetTool.swift */,
+				8323010F24A889A000CF72BB /* APPModel.swift */,
 			);
 			path = NetRequest;
 			sourceTree = "<group>";
@@ -178,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				8338EB89249CBF3200371C05 /* CustomView */,
+				8323011A24A8A33600CF72BB /* CustomFunction */,
 			);
 			path = CustomTool;
 			sourceTree = "<group>";
@@ -185,6 +237,9 @@
 		8338EB84249CBE9800371C05 /* ThirdModular */ = {
 			isa = PBXGroup;
 			children = (
+				83409F7C24A8502A003C44F2 /* AFNetworking */,
+				8323011124A88B1000CF72BB /* KingfisherImage */,
+				8323011624A89D6D00CF72BB /* XYColorOC */,
 			);
 			path = ThirdModular;
 			sourceTree = "<group>";
@@ -265,8 +320,20 @@
 				8338EB75249CAA0D00371C05 /* Assets.xcassets */,
 				8338EB77249CAA0D00371C05 /* LaunchScreen.storyboard */,
 				8338EB7A249CAA0D00371C05 /* Info.plist */,
+				8323010324A851DF00CF72BB /* APPSwift-Bridging-Header.h */,
 			);
 			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		83409F7C24A8502A003C44F2 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				8323010824A8531800CF72BB /* APPHttpTool.h */,
+				8323010724A8531800CF72BB /* APPHttpTool.m */,
+				8323010A24A8746800CF72BB /* APPHttpCacheTool.h */,
+				8323010B24A8746800CF72BB /* APPHttpCacheTool.m */,
+			);
+			path = AFNetworking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +370,7 @@
 				TargetAttributes = {
 					8338EB68249CAA0C00371C05 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -384,19 +452,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */,
+				8323010C24A8746800CF72BB /* APPHttpCacheTool.m in Sources */,
 				83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */,
 				831A4F1524A0B40300646A1C /* MineVC.swift in Sources */,
 				8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */,
+				8323011924A89DCF00CF72BB /* APPXYColorApi.m in Sources */,
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
 				831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
 				831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */,
 				83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */,
+				8323010924A8531800CF72BB /* APPHttpTool.m in Sources */,
+				83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */,
 				8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */,
+				8323011324A88B4000CF72BB /* APPImageLoad.swift in Sources */,
+				8323010E24A8782000CF72BB /* APPNetTool.swift in Sources */,
 				83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */,
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
 				83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */,
+				8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */,
+				8323011024A889A000CF72BB /* APPModel.swift in Sources */,
 				83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */,
 				831A4F0A24A0577B00646A1C /* APPTabBarController.swift in Sources */,
 				8338EB93249CC22D00371C05 /* APPCustomDefine.swift in Sources */,
@@ -545,7 +622,9 @@
 			baseConfigurationReference = 25386012E17DB1DE5368877D /* Pods-APPSwift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = GN2Z387HMN;
 				INFOPLIST_FILE = APPSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -556,6 +635,8 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.northfeng.APPSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "APPSwift/APPSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -566,7 +647,9 @@
 			baseConfigurationReference = BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = GN2Z387HMN;
 				INFOPLIST_FILE = APPSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -576,6 +659,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.northfeng.APPSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "APPSwift/APPSwift-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -6,7 +6,7 @@
 //  Copyright © 2020 north_feng. All rights reserved.
 //
 
-class APPUserInfoModel: Convertible  {
+class APPUserInfoModel: BaseModel  {
     
     required init() {}
 }

@@ -13,11 +13,11 @@
 
 //--------------------------------------- 第三方头文件 ---------------------------------------
 @_exported import SnapKit//布局
-@_exported import KakaJSON//JSON数据 转 Model
+//@_exported import KakaJSON//JSON数据 转 Model
 
 //用法https://www.cnblogs.com/metaphors/p/9405432.html
 //@_exported import SwiftyJSON//SwiftyJSON使用来处理JSON数据，把 字符串、data——>转成JSON
-@_exported import Kingfisher//图片加载
+//@_exported import Kingfisher//图片加载
 
 //--------------------------------------------------------------------------------------------
 
