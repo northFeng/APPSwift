@@ -21,6 +21,9 @@
 		8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011424A89B1C00CF72BB /* APPColorDefine.swift */; };
 		8323011924A89DCF00CF72BB /* APPXYColorApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 8323011824A89DCF00CF72BB /* APPXYColorApi.m */; };
 		8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */; };
+		8323011F24A9CB5700CF72BB /* APPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011E24A9CB5700CF72BB /* APPExtension.swift */; };
+		8323012124A9E32600CF72BB /* APPViewTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323012024A9E32600CF72BB /* APPViewTool.swift */; };
+		8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323012224A9E34F00CF72BB /* APPDateTool.swift */; };
 		8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB6C249CAA0C00371C05 /* AppDelegate.swift */; };
 		8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB72249CAA0C00371C05 /* Main.storyboard */; };
 		8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB75249CAA0D00371C05 /* Assets.xcassets */; };
@@ -58,6 +61,9 @@
 		8323011724A89DCF00CF72BB /* APPXYColorApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPXYColorApi.h; sourceTree = "<group>"; };
 		8323011824A89DCF00CF72BB /* APPXYColorApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPXYColorApi.m; sourceTree = "<group>"; };
 		8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPFunctionApi.swift; sourceTree = "<group>"; };
+		8323011E24A9CB5700CF72BB /* APPExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPExtension.swift; sourceTree = "<group>"; };
+		8323012024A9E32600CF72BB /* APPViewTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPViewTool.swift; sourceTree = "<group>"; };
+		8323012224A9E34F00CF72BB /* APPDateTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPDateTool.swift; sourceTree = "<group>"; };
 		8338EB69249CAA0C00371C05 /* APPSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338EB6C249CAA0C00371C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8338EB73249CAA0C00371C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -154,8 +160,18 @@
 			isa = PBXGroup;
 			children = (
 				8323011B24A8A37E00CF72BB /* APPFunctionApi.swift */,
+				8323012024A9E32600CF72BB /* APPViewTool.swift */,
+				8323012224A9E34F00CF72BB /* APPDateTool.swift */,
 			);
 			path = CustomFunction;
+			sourceTree = "<group>";
+		};
+		8323011D24A9CB2B00CF72BB /* CustomExtend */ = {
+			isa = PBXGroup;
+			children = (
+				8323011E24A9CB5700CF72BB /* APPExtension.swift */,
+			);
+			path = CustomExtend;
 			sourceTree = "<group>";
 		};
 		8338EB60249CAA0C00371C05 = {
@@ -230,6 +246,7 @@
 			children = (
 				8338EB89249CBF3200371C05 /* CustomView */,
 				8323011A24A8A33600CF72BB /* CustomFunction */,
+				8323011D24A9CB2B00CF72BB /* CustomExtend */,
 			);
 			path = CustomTool;
 			sourceTree = "<group>";
@@ -461,6 +478,8 @@
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
 				831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
+				8323011F24A9CB5700CF72BB /* APPExtension.swift in Sources */,
+				8323012124A9E32600CF72BB /* APPViewTool.swift in Sources */,
 				831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */,
 				83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */,
 				8323010924A8531800CF72BB /* APPHttpTool.m in Sources */,
@@ -472,6 +491,7 @@
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
 				83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */,
+				8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */,
 				8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */,
 				8323011024A889A000CF72BB /* APPModel.swift in Sources */,
 				83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */,
