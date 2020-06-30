@@ -15,30 +15,29 @@ class APPFunctionApi {
     ///json 转 字典
     static func dictionaryFromJson(json:Any?) -> [String:Any] {
         
-        var dic:[String:Any] = [String:Any]()
+        var dic:[String:Any]? = nil
         
-        var jsonDta:Data = Data()
+        var jsonDta:Data? = nil
         
         if json is [String:Any] {
             //字典
-            dic = json as! [String:Any]
+            dic = json as? [String:Any]
         }else if json is String {
             //字符串
             let jsonString = json as! String
-            jsonDta = jsonString.data(using: .utf8) ?? Data()
+            jsonDta = jsonString.data(using: .utf8)
         }else if json is Data {
             //数据
             let dataJson = json as! Data
             jsonDta = dataJson
         }
         
-        
-        let dicJson = try? JSONSerialization.jsonObject(with: jsonDta, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
-        
-        if dicJson != nil {
-            dic = dicJson ?? [String:Any]()
+        if let dataJson = jsonDta {
+            let dicJson = try? JSONSerialization.jsonObject(with: dataJson, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+            dic = dicJson
         }
-        return dic
+        
+        return dic ?? [:]
     }
     
     //MARK: ************************* 字符串 编码处理 *************************

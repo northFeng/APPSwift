@@ -15,6 +15,5 @@ class HomeVC: APPBaseController {
        
         self.view.backgroundColor = UIColor.white
         
-        var size:UInt = APPFileManager.getFileSizeOfPath(filePath:kAPP_File_DocumentPath!) ?? 0
     }
 }

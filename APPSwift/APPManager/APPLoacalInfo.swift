@@ -41,8 +41,8 @@ struct APPLoacalInfo {
     }
     
     ///app版本号
-    static func appVersion() -> String? {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    static func appVersion() -> String {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
     
     ///APP名称
@@ -69,13 +69,105 @@ struct APPLoacalInfo {
         
         let appUrl = "http://itunes.apple.com/lookup?id=\(APPKeyInfo.APPId)"//中国 .com/cn/lookup?id=123444
         
+        var appStoreVersion = ""//商店版本号
+        
+        
         let url:URL? = URL(string: appUrl)
         
         if let appurl = url {
             
             //APP商店的信息
-            let appInfoString = String(contentsOf: appurl, encoding: .utf8)
+            let appInfoString = try? String(contentsOf: appurl, encoding: .utf8)
+            
+            let infoData:Data? = appInfoString?.data(using: .utf8)
+            
+            if let dataAPP = infoData {
+                
+                let appInfoDic = try? JSONSerialization.jsonObject(with: dataAPP, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+                
+                let arrayInfo:[Any]? = appInfoDic?["results"] as? [Any]
+                
+                let resultDic:[String:Any]? = arrayInfo?[0] as? [String:Any]
+                
+                //版本号
+                let version:String? = resultDic?["version"] as? String
+                
+                appStoreVersion = version ?? ""
+            }
         }
         
+        return appStoreVersion
     }
+    
+    ///判断是否有新版本更新
+    static func appHaveUpdate() -> String {
+        
+        let appStoreVersion = APPLoacalInfo.appStoreVersion()
+        
+        APPManager.appManager.appVersion = appStoreVersion
+        
+        let appLocalVerson = APPLoacalInfo.appVersion()
+        
+        let isUpdate = APPLoacalInfo.compareVersion(version1: appStoreVersion, version2: appLocalVerson)
+        
+        if isUpdate {
+            return appStoreVersion
+        }else{
+            return ""
+        }
+    }
+
+    ///版本大小比较  version1 > version2 ：true     version1 <= version2 ：false
+    static func compareVersion(version1:String, version2:String) -> Bool {
+        
+        var isHaveUpdate:Bool = false//是否更新
+        
+        if version1.count > 0 && version2.count > 0 && version1 != version2 {
+            let arrayOne:[String] = version1.components(separatedBy: ".")
+            let arrayTwo:[String] = version2.components(separatedBy: ".")
+            
+            //取最长的
+            let count = arrayOne.count >= arrayTwo.count ? arrayOne.count : arrayTwo.count
+            
+            for index in 0..<count {
+                
+                let numStrOne = index < arrayOne.count ? arrayOne[index] : ""
+                let numStrTwo = index < arrayTwo.count ? arrayTwo[index] : ""
+                
+                if numStrOne.count > 0 && numStrTwo.count > 0 {
+                    
+                    //进行比较
+                    let num1:Int = Int(numStrOne) ?? 0
+                    let num2:Int = Int(numStrTwo) ?? 0
+                    
+                    if num1 > num2 {
+                        isHaveUpdate = true
+                        break;
+                    } else if num1 < num2 {
+                        //本地版本大于商店版本 ——> 这种情况只有未上线版本会出现
+                        isHaveUpdate = false
+                        break
+                    } else {
+                        //相等 继续循环
+                    }
+                    
+                } else {
+                    if numStrOne.count == 0 && numStrTwo.count > 0 {
+                        //本地版本提前更新 && 本地版本号 长度变长
+                        isHaveUpdate = false
+                        break
+                    } else if numStrOne.count > 0 && numStrTwo.count == 0{
+                        //线上版本出现新版本
+                        isHaveUpdate = true
+                        break
+                    }
+                }
+            }
+            
+        }
+        
+        return isHaveUpdate
+    }
+    
+    
 }

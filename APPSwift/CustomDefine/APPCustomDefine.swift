@@ -12,12 +12,12 @@ import UIKit
 ///全局打印函数
 func Print<T>(_ message:T, file:String = #file, funcName:String = #function, lineNum:Int = #line){
     
-    //#if DEBUG
+    #if DEBUG
     let file = (file as NSString).lastPathComponent;
     
     print("\(file):(\(lineNum))--\(message)");
     
-    //#endif
+    #endif
     
     //debugPrint("系统debugPrint输出")
 }

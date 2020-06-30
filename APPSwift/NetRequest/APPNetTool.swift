@@ -73,7 +73,7 @@ class APPNetTool {
 
 
     //MARK: ************************* 常规get请求 *************************
-    class func getData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    static func getData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
     }
@@ -84,7 +84,7 @@ class APPNetTool {
     }
 
     //MARK: ************************* 常规post请求 *************************
-    class func postData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    static func postData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
     }
@@ -96,7 +96,7 @@ class APPNetTool {
 
 
     //MARK: ************************* 普通请求 *************************
-    class func getNetRequestData(url:String, params:[String:Any], block:NetResultData) {
+    static func getNetRequestData(url:String, params:[String:Any], block:NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
         
@@ -123,7 +123,7 @@ class APPNetTool {
         }
     }
 
-    class func postNetRequestData(url:String, params:[String:Any], block:NetResultData) {
+    static func postNetRequestData(url:String, params:[String:Any], block:NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
         
@@ -152,7 +152,7 @@ class APPNetTool {
 
     //pod 'Networking', '~> 4'  https://github.com/3lvis/Networking
     //MARK: ************************* 封装AFNetworking *************************
-    class func getRequestNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
+    static func getRequestNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
         
@@ -163,7 +163,7 @@ class APPNetTool {
         }
     }
 
-    class func postRequestNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
+    static func postRequestNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
        
@@ -174,7 +174,7 @@ class APPNetTool {
     }
 
     ///模型转换
-    class func jsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
+    static func jsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
 
         var model:Any?;
         if json is [String:Any] {
@@ -196,7 +196,7 @@ class APPNetTool {
     }
 
     ///model 转  字典
-    class func modelToJsonObject(model:BaseModel) -> [String : Any] {
+    static func modelToJsonObject(model:BaseModel) -> [String : Any] {
         
         let jsonDic:[String : Any] = model.kj.JSONObject()
         
@@ -204,10 +204,19 @@ class APPNetTool {
     }
 
     ///model 转  字符串
-    class func modelToJsonString(model:BaseModel) -> String {
+    static func modelToJsonString(model:BaseModel) -> String {
         
         let jsonString:String = model.kj.JSONString()
         
         return jsonString
+    }
+    
+    ///model 转 data
+    static func modelToJsonData(model:BaseModel) -> Data {
+        
+        let jsonString:String = model.kj.JSONString()
+        let data = jsonString.data(using: .utf8)
+        
+        return data ?? Data()
     }
 }

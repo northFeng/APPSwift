@@ -17,7 +17,7 @@ struct APPKeyInfo {
     private static let releaseHostUrl = "https://api.wdkid.com.cn/api/"
     
     ///APPId
-    static let APPId = "1438700286"
+    static let APPId = "1493177024"
     
     ///App Store商店地址
     static let appStoreUrl = String(format: "https://itunes.apple.com/app/id%@", APPKeyInfo.APPId)
