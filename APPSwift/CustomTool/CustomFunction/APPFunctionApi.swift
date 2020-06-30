@@ -128,7 +128,7 @@ class APPFunctionApi {
         let option = NSStringDrawingOptions.usesLineFragmentOrigin
         let textRect = textStr.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: heightFix),options: option,attributes: [NSAttributedString.Key.font:font, NSAttributedString.Key.paragraphStyle:paragraphStyle],context:nil)
         
-        width = textRect.width
+        width = textRect.width + 1//适配iOS10，必须多一点
         
         return width
     }

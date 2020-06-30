@@ -40,6 +40,7 @@
 		83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */; };
 		83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */; };
 		83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */; };
+		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPKeyInfo.swift; sourceTree = "<group>"; };
 		83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoacalInfo.swift; sourceTree = "<group>"; };
 		83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPFileManager.swift; sourceTree = "<group>"; };
+		83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPAlertTool.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -247,6 +249,7 @@
 				8338EB89249CBF3200371C05 /* CustomView */,
 				8323011A24A8A33600CF72BB /* CustomFunction */,
 				8323011D24A9CB2B00CF72BB /* CustomExtend */,
+				83EB9F4B24AB215800A94BE0 /* CustomAlert */,
 			);
 			path = CustomTool;
 			sourceTree = "<group>";
@@ -351,6 +354,14 @@
 				8323010B24A8746800CF72BB /* APPHttpCacheTool.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		83EB9F4B24AB215800A94BE0 /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */,
+			);
+			path = CustomAlert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -491,6 +502,7 @@
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
 				83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */,
+				83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */,
 				8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */,
 				8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */,
 				8323011024A889A000CF72BB /* APPModel.swift in Sources */,

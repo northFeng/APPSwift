@@ -22,6 +22,31 @@ extension String {
     
 }
 
+//MARK: ************************* Array扩展 *************************
+extension Array {
+    ///获取下标元素
+    func getItem_gf(_ index:Int) -> Any? {
+        if self.count > 0 && index >= 0 && index < self.count {
+            return self[index]
+        }else{
+            return nil
+        }
+    }
+    
+    ///添加元素
+    mutating func addItem_gf(_ item:Any?) {
+        if let elemet = item {
+            self.append(elemet as! Element)
+        }
+    }
+    
+    ///删除一个元素
+    mutating func removeItem_gf(_ index:Int) {
+        if index <= self.count - 1 && index >= 0 && self.count > 0 {
+            self.remove(at: index)
+        }
+    }
+}
 
 //MARK: ************************* UIView扩展 *************************
 extension UIView {
@@ -127,5 +152,17 @@ extension UIView {
     ///最大Y
     var gf_MaxY:CGFloat {
         self.gf_Y + self.gf_Height
+    }
+}
+
+//MARK: ************************* UIButton扩展 *************************
+extension UIButton {
+    
+    ///给按钮添加富文本
+    func gf_addTitle(title:String, font:UIFont, color:UIColor, state:UIControl.State = .normal) {
+        
+        let attrString = NSAttributedString(string: title, attributes: [NSAttributedString.Key.font:font,NSAttributedString.Key.foregroundColor:color])
+        
+        self.setAttributedTitle(attrString, for: state)
     }
 }
