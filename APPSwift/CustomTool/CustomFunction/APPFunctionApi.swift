@@ -42,7 +42,7 @@ class APPFunctionApi {
     
     //MARK: ************************* 字符串 编码处理 *************************
     ///编码字符串--->base64字符串
-    class func base64_encodeBase64String(encodeStr:String) -> String? {
+    static func base64_encodeBase64String(encodeStr:String) -> String? {
         
         let encodeData = encodeStr.data(using: .utf8)
         
@@ -52,7 +52,7 @@ class APPFunctionApi {
     }
     
     ///编码字符串--->base64data
-    class func base64_encodeBase64String(encodeData:Data) -> String {
+    static func base64_encodeBase64String(encodeData:Data) -> String {
         
         let encodeStr = encodeData.base64EncodedString()
         
@@ -60,7 +60,7 @@ class APPFunctionApi {
     }
     
     ///解码----->原字符串
-    class func base64_decodeBase64String(base64Str:String) -> String? {
+    static func base64_decodeBase64String(base64Str:String) -> String? {
         
         let decodeStr:String? = String(data: Data(base64Encoded: base64Str) ?? Data(), encoding: .utf8)
         
@@ -68,7 +68,7 @@ class APPFunctionApi {
     }
     
     ///解码----->原Data
-    class func base64_decodeBase64Data(base64Data:Data) -> Data? {
+    static func base64_decodeBase64Data(base64Data:Data) -> Data? {
         
         let decodeData:Data? = Data(base64Encoded: base64Data)
         
@@ -76,7 +76,7 @@ class APPFunctionApi {
     }
     
     ///字符串编码
-    class func string_encode(string:String) -> String {
+    static func string_encode(string:String) -> String {
         
         let allowedCharacters = NSCharacterSet.urlQueryAllowed
         
@@ -86,7 +86,7 @@ class APPFunctionApi {
     }
     
     ///字符串解码
-    class func string_deCode(string:String) -> String {
+    static func string_deCode(string:String) -> String {
         
         guard let encodeString = string.removingPercentEncoding else { return "" }
         
@@ -96,7 +96,7 @@ class APPFunctionApi {
     
     //MARK: ************************* 字符串功能 *************************
     ///
-    class func string_getTextHeight(text:String, font:UIFont, spacing:CGFloat, widthFix:CGFloat) -> CGFloat {
+    static func string_getTextHeight(text:String, font:UIFont, spacing:CGFloat, widthFix:CGFloat) -> CGFloat {
         
         let textStr = text.count > 0 ? text : ""
         
@@ -115,7 +115,7 @@ class APPFunctionApi {
     }
     
     ///获取文字的宽度
-    class func string_getTextWidth(text:String, font:UIFont, spacing:CGFloat, heightFix:CGFloat) -> CGFloat {
+    static func string_getTextWidth(text:String, font:UIFont, spacing:CGFloat, heightFix:CGFloat) -> CGFloat {
         
         let textStr = text.count > 0 ? text : ""
         
@@ -134,7 +134,7 @@ class APPFunctionApi {
     }
     
     ///获取富文本字符串
-    class func string_getAttributeString(text:String, font:UIFont, color:UIColor, spacing:CGFloat, alignment:NSTextAlignment) -> NSAttributedString {
+    static func string_getAttributeString(text:String, font:UIFont, color:UIColor, spacing:CGFloat, alignment:NSTextAlignment) -> NSAttributedString {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
@@ -146,7 +146,7 @@ class APPFunctionApi {
     }
     
     ///获取文字段内指定文字所有的范围集合1
-    class func string_getSameStringRangeArray_1(superStr:String, searchStr:String) -> [NSRange] {
+    static func string_getSameStringRangeArray_1(superStr:String, searchStr:String) -> [NSRange] {
         
         var rangArray:[NSRange] = [NSRange]()
         
@@ -175,7 +175,7 @@ class APPFunctionApi {
     }
     
     //////获取文字段内指定文字所有的范围集合2
-    class func string_getSameStringRangeArray_2(superStr:String, searchStr: String) -> [Range<String.Index>] {
+    static func string_getSameStringRangeArray_2(superStr:String, searchStr: String) -> [Range<String.Index>] {
         var rangeArray = [Range<String.Index>]()
         var searchedRange: Range<String.Index>
         
@@ -196,19 +196,71 @@ class APPFunctionApi {
     }
     
     ///获取文字段内指定文字所有的范围集合3
-    func string_getSameStringRangeArray_3(superStr:String, searchStr: String) -> [NSRange] {
+    static func string_getSameStringRangeArray_3(superStr:String, searchStr: String) -> [NSRange] {
         return APPFunctionApi.string_getSameStringRangeArray_2(superStr: superStr, searchStr: searchStr).map { (range) -> NSRange in
             APPFunctionApi.range_toNSRange(fromRange: range, superStr: superStr)
         }
     }
     
+    ///同一个字符 显示高亮
+    static func string_getSameStrHighlight(text:String, font:UIFont, color:UIColor ,word:String, highFont:UIFont, highColor:UIColor) -> NSAttributedString {
+        
+        let totalString = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.font:font,NSAttributedString.Key.foregroundColor:color])
+        
+        var locationArr = [Int]()
+        let range:Range? = text.range(of: word)
+        
+        if let rangeTem = range {
+            
+            var rangeNS:NSRange = NSRange(rangeTem,in: text)
+            
+            if rangeNS.location != NSNotFound {
+               
+                //声明一个临时字符串,记录截取之后的字符串
+                var subStr = text
+                
+                var location:Int = 0
+                var limNum:Int = 0
+                
+                while rangeNS.location != NSNotFound {
+                    
+                    location = limNum
+                    if location == 0 {
+                        location = rangeNS.location
+                    }
+                }
+                
+                //记录位置
+                locationArr.append(location)
+                
+                
+                //每次记录之后，把找到的字符串截取掉
+                subStr = String(subStr[subStr.index(subStr.startIndex, offsetBy: rangeNS.location + rangeNS.length)...])
+                
+                let range2:Range? = text.range(of: word)
+                if let rangTem2 = range2 {
+                    rangeNS = NSRange(rangTem2,in: text)
+                    limNum = rangeNS.location + (location + word.count)
+                }else{
+                    rangeNS = NSRange(location: NSNotFound,length: NSNotFound)
+                }
+            }
+        }
+        
+        for index in locationArr {
+            totalString.setAttributes([NSAttributedString.Key.font:highFont,NSAttributedString.Key.foregroundColor:highColor], range: NSMakeRange(index, word.count))
+        }
+        
+        return totalString
+    }
+    
     //MARK: ************************* NSRange <——> Range *************************
-    class func range_toNSRange(fromRange range : Range<String.Index>, superStr:String) -> NSRange {
+    static func range_toNSRange(fromRange range : Range<String.Index>, superStr:String) -> NSRange {
         
         return NSRange(range, in: superStr)
     }
     
-    class func rnageNs_toRange(fromRange range:NSRange, superStr:String) -> Range<String.Index>? {
+    static func rnageNs_toRange(fromRange range:NSRange, superStr:String) -> Range<String.Index>? {
         
         return Range(range,in: superStr)
     }
