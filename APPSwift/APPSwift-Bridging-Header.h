@@ -11,3 +11,5 @@
 #import "APPHttpTool.h"//网络请求类
 
 #import "APPXYColorApi.h"//CGColor 动态颜色
+
+#import "APPAlertApi.h"//吐字

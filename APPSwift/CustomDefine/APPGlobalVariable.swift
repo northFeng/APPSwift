@@ -15,4 +15,9 @@ let kGlobal_NetworkingReachabilityChangeNotification = "GFNetworkingReachability
 ///登录变化通知
 let kGlobal_LoginStateChange = "APPLoginStateChangeNotice"
 
+///获取数据出错
+let kError_NoData = "数据获取失败"
+
+///网络失败
+let kError_NetFail = "网络不给力.."
 
