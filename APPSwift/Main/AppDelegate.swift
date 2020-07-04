@@ -35,10 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        //APP配置信息
+        self.appConfiguration()
+        
         //设置根视图
         self.setRootViewController()
         
-        
+    
         return true
     }
 
@@ -47,27 +50,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //MARK: ************************* AppDelegate扩展 ——> RootConTroller *************************
 extension AppDelegate {
     
+    ///APP配置
+    func appConfiguration() {
+        
+        
+    }
+    
+    ///设置根视图
     func setRootViewController() {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        
         // 让当前UIWindow变成keyWindow，并显示出来
         self.window?.makeKeyAndVisible()
         
+        //tabBar
+        let tabBar = APPTabBarController.tabBarVC
+        
+        ///导航条
+        let navi = APPNavigationController.appNavi
+        navi.navigationBar.isHidden = true//隐藏系统导航条
+        
+        //设置根视图
+        self.window!.rootViewController = navi
+        
+        Print("------------1-----------")
         let homeVC = HomeVC()
         let middleVC = MiddleVC()
         let mineVC = MineVC()
         
-        let tabBar = APPTabBarController()
-        tabBar.viewControllers = [homeVC,middleVC,mineVC]
+        Print("------------2-----------")
+        tabBar.viewControllers = [homeVC,middleVC,mineVC] // ——> 这补直接触发 HomeVC上viewLoad加载方法
         tabBar.createItems(defaultIndex: 0, normalImageNames: ["home_n","order_n","mine_n"], selectImageNames: ["home_s","order_s","mine_s"], itemsTitles: ["首页","发现","我的"])
-        
-        ///导航条
-        let navi = APPNavigationController(rootViewController: tabBar)
-        navi.navigationBar.isHidden = true//隐藏系统导航条
-        
-        //设置根视图
-        self.window?.rootViewController = navi
-        
     }
 }

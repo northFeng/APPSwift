@@ -11,6 +11,7 @@ import UIKit
 
 class APPNavigationController: UINavigationController {
     
+    static let appNavi = APPNavigationController(rootViewController: APPTabBarController.tabBarVC)
     
     override func viewDidLoad() {
         super .viewDidLoad()

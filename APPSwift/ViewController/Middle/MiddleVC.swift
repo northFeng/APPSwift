@@ -11,7 +11,7 @@ class MiddleVC: APPBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Print("-------6--------")
         self.view.backgroundColor = UIColor.gray
     }
 }

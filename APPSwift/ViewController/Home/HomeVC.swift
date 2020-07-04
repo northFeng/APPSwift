@@ -10,9 +10,9 @@ import UIKit
 
 class HomeVC: APPBaseController {
     
-    var array1 = [String]()
+    var array1 = [1,2,3,4,5]
     
-    var array2 = [String]()
+    var array2 = ["a","b","c","d","f"]
     
     
     
@@ -21,7 +21,14 @@ class HomeVC: APPBaseController {
        
         self.view.backgroundColor = UIColor.white
         
-        Print("时间戳---\(APPDateTool.date_currentTimeStamp(precision: 1))")
         
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        APPAlertTool.showLoading()
+    }
+    
 }
+
+

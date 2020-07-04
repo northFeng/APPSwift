@@ -12,10 +12,10 @@ class APPAlertTool {
     
     ///获取APP内最顶层的VC
     static func topViewControllerOfAPP() -> UIViewController? {
-        
+                
         let navi:UIViewController? = UIApplication.shared.delegate?.window??.rootViewController
         
-        let topVC = self.topViewControllerWithRootViewController(rootViewController: navi)
+        let topVC = self.topViewControllerWithRootViewController(rootViewController: navi)//APPNavigationController.appNavi
         
         return topVC
     }
@@ -34,7 +34,13 @@ class APPAlertTool {
 
     private static func topViewControllerWithRootViewController(rootViewController:UIViewController?) -> UIViewController? {
         
-        if rootViewController is UITabBarController {
+        if rootViewController is UINavigationController {
+            
+            let navigationController = rootViewController as! UINavigationController
+            
+            return self.topViewControllerWithRootViewController(rootViewController: navigationController.visibleViewController)
+            
+        }else if rootViewController is UITabBarController {
             
             let tabBarController = rootViewController as! UITabBarController
             
@@ -45,12 +51,6 @@ class APPAlertTool {
             let presentedViewController = rootViewController?.presentedViewController!
             
             return self.topViewControllerWithRootViewController(rootViewController: presentedViewController)
-            
-        }else if rootViewController is UINavigationController {
-            
-            let navigationController = rootViewController as! UINavigationController
-            
-            return self.topViewControllerWithRootViewController(rootViewController: navigationController)
             
         }else{
             return rootViewController
