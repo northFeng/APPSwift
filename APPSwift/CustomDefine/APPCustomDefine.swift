@@ -217,3 +217,39 @@ func modelToJsonObject(model:BaseModel) -> [String : Any] {
 func modelToJsonString(model:BaseModel) -> String {
     APPNetTool.modelToJsonString(model: model)
 }
+
+///Model 转 Data
+func modelToJsonData(model:BaseModel) -> Data {
+    APPNetTool.modelToJsonData(model: model)
+}
+
+//MARK: ************************* 吐字 && loading *************************
+
+///APP内的窗口 view
+let appWindow:UIView? = UIApplication.shared.delegate?.window!!
+
+
+///吐字
+func AlertMessage(_ msg:String, onView:UIView? = nil) {
+    
+    if onView != nil {
+        APPAlertTool.showMessage(message: msg, view: onView)
+    }else{
+        APPAlertTool.showMessage(message: msg)
+    }
+}
+
+///只显示 loading
+func AlertLoading(view:UIView? = nil, enable:Bool? = true) {
+    APPAlertTool.showLoading(view: view, enable: enable)
+}
+
+///显示 loading &&文字
+func AlertLoadingMsg(_ msg:String, onView:UIView? = nil) {
+    
+    if onView != nil {
+        APPAlertTool.showLoading(message: msg, view: onView)
+    }else{
+        APPAlertTool.showLoading(message: msg)
+    }
+}

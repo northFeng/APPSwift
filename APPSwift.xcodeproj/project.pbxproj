@@ -34,6 +34,8 @@
 		8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB96249CC48B00371C05 /* APPBaseController.swift */; };
 		8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB99249CDAD700371C05 /* APPNavigationController.swift */; };
 		83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */; };
+		83B1AE3024B0739F00FC7363 /* APPLoadingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */; };
+		83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 83B1AE3124B079FD00FC7363 /* Demo.gif */; };
 		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
 		83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B524A2048100CC5FC0 /* APPManager.swift */; };
 		83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */; };
@@ -78,6 +80,8 @@
 		8338EB96249CC48B00371C05 /* APPBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPBaseController.swift; sourceTree = "<group>"; };
 		8338EB99249CDAD700371C05 /* APPNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationController.swift; sourceTree = "<group>"; };
 		83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPOCInterface.swift; sourceTree = "<group>"; };
+		83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoadingApi.swift; sourceTree = "<group>"; };
+		83B1AE3124B079FD00FC7363 /* Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Demo.gif; sourceTree = "<group>"; };
 		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
 		83B800B524A2048100CC5FC0 /* APPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPManager.swift; sourceTree = "<group>"; };
 		83B800B724A206C200CC5FC0 /* APPUserInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPUserInfoModel.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				8323011124A88B1000CF72BB /* KingfisherImage */,
 				8323011624A89D6D00CF72BB /* XYColorOC */,
 				83BD19B324AF56D800699F9B /* MBProgressHUD */,
+				83B1AE2E24B072BC00FC7363 /* NVActivityIndicatorView */,
 			);
 			path = ThirdModular;
 			sourceTree = "<group>";
@@ -360,6 +365,15 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		83B1AE2E24B072BC00FC7363 /* NVActivityIndicatorView */ = {
+			isa = PBXGroup;
+			children = (
+				83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */,
+				83B1AE3124B079FD00FC7363 /* Demo.gif */,
+			);
+			path = NVActivityIndicatorView;
+			sourceTree = "<group>";
+		};
 		83BD19B324AF56D800699F9B /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8338EB79249CAA0D00371C05 /* LaunchScreen.storyboard in Resources */,
+				83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */,
 				8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */,
 				8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */,
 			);
@@ -500,6 +515,7 @@
 				8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */,
 				8323011924A89DCF00CF72BB /* APPXYColorApi.m in Sources */,
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
+				83B1AE3024B0739F00FC7363 /* APPLoadingApi.swift in Sources */,
 				831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
 				8323011F24A9CB5700CF72BB /* APPExtension.swift in Sources */,

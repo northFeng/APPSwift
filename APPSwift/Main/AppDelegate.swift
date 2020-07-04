@@ -58,7 +58,9 @@ extension AppDelegate {
     
     ///设置根视图
     func setRootViewController() {
-        
+        /**
+         吐字 && 弹框 获取最上层的 VC时，必须这个方法走完！走完之前调用 获取nil！
+         */
         self.window = UIWindow(frame: UIScreen.main.bounds)
         // 让当前UIWindow变成keyWindow，并显示出来
         self.window?.makeKeyAndVisible()
@@ -73,12 +75,10 @@ extension AppDelegate {
         //设置根视图
         self.window!.rootViewController = navi
         
-        Print("------------1-----------")
         let homeVC = HomeVC()
         let middleVC = MiddleVC()
         let mineVC = MineVC()
         
-        Print("------------2-----------")
         tabBar.viewControllers = [homeVC,middleVC,mineVC] // ——> 这补直接触发 HomeVC上viewLoad加载方法
         tabBar.createItems(defaultIndex: 0, normalImageNames: ["home_n","order_n","mine_n"], selectImageNames: ["home_s","order_s","mine_s"], itemsTitles: ["首页","发现","我的"])
     }

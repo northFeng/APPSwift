@@ -26,7 +26,7 @@ class HomeVC: APPBaseController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        APPAlertTool.showLoading()
+        APPLoadingApi.loadingAnimition(onView: self.view)
     }
     
 }

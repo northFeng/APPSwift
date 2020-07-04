@@ -39,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///显示菊花（是否可以手势交互）
 + (void)showLoadingForInterEnabled:(BOOL)enable;
 
+///合并上面三个
++ (void)showLoading:(UIView *)onView enable:(BOOL)enable;
+
 ///隐藏当前VC的view上的菊花
 + (void)hideLoading;
 
