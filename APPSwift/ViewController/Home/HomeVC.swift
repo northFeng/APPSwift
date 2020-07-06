@@ -26,7 +26,9 @@ class HomeVC: APPBaseController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        APPLoadingApi.loadingAnimition(onView: self.view)
+        APPAlertTool.systemAlertListAction(title: "你好", msg: nil, listTitles: ["1","2","3"]) { (result:Bool, idObject:Any) in
+            Print("选择了\(idObject)")
+        }
     }
     
 }
