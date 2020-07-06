@@ -75,7 +75,7 @@ class APPNavigationBarView: UIView {
     ///布局界面
     private func layoutViews() {
         
-        self.backgroundColor = DynamicColor(lightStylecolor: UIColor.white, darkStylecolor: UIColor.black)
+        self.backgroundColor = DynamicColor(UIColor.white, UIColor.black)
 
         //按钮条
         naviBarView.backgroundColor = UIColor.clear
@@ -88,7 +88,7 @@ class APPNavigationBarView: UIView {
         //标题
         titleLabel.backgroundColor = UIColor.clear
         titleLabel.font = UIFont(name: "PingFangSC-Medium", size: 18)
-        titleLabel.textColor = DynamicColor(lightStylecolor: UIColor.black, darkStylecolor: UIColor.white)
+        titleLabel.textColor = DynamicColor(UIColor.black, UIColor.white)
         titleLabel.textAlignment = .center
         naviBarView.addSubview(titleLabel)
         

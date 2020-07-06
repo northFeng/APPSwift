@@ -1,7 +1,7 @@
 //
 //  APPHttpTool.h
 //  APPSwift
-//
+//  AFNetworking网络工具
 //  Created by 峰 on 2020/6/28.
 //  Copyright © 2020 north_feng. All rights reserved.
 //

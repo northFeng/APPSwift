@@ -16,7 +16,7 @@ class APPTabBarController: UITabBarController {
     ///自定义tabBar
     let customTabBar:UIView = UIView()
     ///tabBar颜色
-    let tabBarColr:UIColor = DynamicColor(lightStylecolor: UIColor.white, darkStylecolor: UIColor.black)
+    let tabBarColr:UIColor = DynamicColor(UIColor.white, UIColor.black)
     
     ///按钮items条
     let itemsView:UIView = UIView()

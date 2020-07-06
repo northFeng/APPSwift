@@ -55,7 +55,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(changeVCLightOrDarkModel), name: NSNotification.Name(rawValue: kGlobal_LightOrDarkModelChange), object: nil)
         
         
-        self.view.backgroundColor = DynamicColor(lightStylecolor: UIColor.white, darkStylecolor: UIColor.black)
+        self.view.backgroundColor = DynamicColor(UIColor.white, UIColor.black)
         
         //设置导航条样式
         naviBar.title = self.title ?? ""

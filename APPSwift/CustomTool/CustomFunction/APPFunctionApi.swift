@@ -95,7 +95,19 @@ class APPFunctionApi {
     
     
     //MARK: ************************* 字符串功能 *************************
-    ///
+    ///从富文本 获取文字高度
+    static func string_getTextHeight(textAttr:NSAttributedString, widthFix:CGFloat) -> CGFloat {
+        let text = textAttr.string
+        let dicAttr = textAttr.attributes(at: 0, effectiveRange: nil)
+        
+        let option = NSStringDrawingOptions.usesLineFragmentOrigin
+        let textRect = text.boundingRect(with: CGSize(width: widthFix, height: CGFloat.greatestFiniteMagnitude),options: option,attributes: dicAttr,context:nil)
+        
+        let height = textRect.height
+        
+        return height
+    }
+    ///获取文字高度
     static func string_getTextHeight(text:String, font:UIFont, spacing:CGFloat, widthFix:CGFloat) -> CGFloat {
         
         let textStr = text.count > 0 ? text : ""

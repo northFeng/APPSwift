@@ -96,8 +96,8 @@ let kScaleW = kScreenWidth/375.0
 let kScaleH = kScreenHeight/667.0
 
 ///适配iPad比例 ( iPhone 1.  iPad 1.3)
-var kIpadScale:Float {
-    var scale:Float = 1.0
+var kIpadScale:CGFloat {
+    var scale:CGFloat = 1.0
     
     if UIDevice.current.userInterfaceIdiom == .phone {
         scale = 1.0
@@ -108,13 +108,18 @@ var kIpadScale:Float {
 }
 
 ///适配iPad尺寸
-func FitIpad(num:Float) -> Float {
+func FitIpad(_ num:CGFloat) -> CGFloat {
     
     if UIDevice.current.userInterfaceIdiom == .phone {
         return num * 1.0
     }else{
         return num * 1.5
     }
+}
+
+///获取CGRect
+func CG_Rect(_ x:CGFloat, _ y:CGFloat, _ width:CGFloat, _ height:CGFloat) -> CGRect {
+    CGRect(origin: CGPoint(x: x, y: y), size: CGSize(width: width, height: height))
 }
 
 //MARK: ******************************** NaviBar && TabBar 常量宏  ********************************
@@ -138,7 +143,7 @@ let kBottomSafeHeight = kStatusBarHeight > 20 ? 34.0 : 0.0
 //MARK: ******************************** 定义颜色函数 && 动态颜色 *********************************
 
 ///颜色16进制字符串 —> UIColor
-func COLOR(color:String, alpha:CGFloat = 1.0) -> UIColor {
+func COLOR(_ color:String, alpha:CGFloat = 1.0) -> UIColor {
     // return APPColorFunction.color(withHexString: color, alpha: 1.0)
     
     APPColorDefine.colorHexString(color:color, alpha:alpha)
@@ -151,7 +156,7 @@ func RGB(r:Int, g:Int, b:Int, alpha:CGFloat = 1.0) -> UIColor {
 }
 
 ///动态颜色
-func DynamicColor(lightStylecolor:UIColor, darkStylecolor:UIColor) -> UIColor {
+func DynamicColor(_ lightStylecolor:UIColor, _ darkStylecolor:UIColor) -> UIColor {
     
     APPColorDefine.colorDynamicColor(lightStylecolor:lightStylecolor, darkStylecolor:darkStylecolor)
 }
@@ -209,24 +214,24 @@ func JsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
 }
 
 ///Model 转 DicJson
-func modelToJsonObject(model:BaseModel) -> [String : Any] {
+func ModelToJsonObject(model:BaseModel) -> [String : Any] {
     APPNetTool.modelToJsonObject(model: model)
 }
 
 ///Model 转 String
-func modelToJsonString(model:BaseModel) -> String {
+func ModelToJsonString(model:BaseModel) -> String {
     APPNetTool.modelToJsonString(model: model)
 }
 
 ///Model 转 Data
-func modelToJsonData(model:BaseModel) -> Data {
+func ModelToJsonData(model:BaseModel) -> Data {
     APPNetTool.modelToJsonData(model: model)
 }
 
 //MARK: ************************* 吐字 && loading *************************
 
 ///APP内的窗口 view
-let appWindow:UIView? = UIApplication.shared.delegate?.window!!
+let kAppWindow:UIView? = UIApplication.shared.delegate?.window!!
 
 
 ///吐字
