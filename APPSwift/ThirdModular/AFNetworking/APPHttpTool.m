@@ -15,7 +15,7 @@
 
 #import "APPHttpCacheTool.h"//缓存类
 
-#import "APPSwift-Swift.h"//swift类
+#import "APPSwift-Swift.h"//swift总类(隐藏的，直接使用)
 
 @interface APPHttpTool ()
 
@@ -165,16 +165,7 @@ static NSMutableArray<NSURLSessionTask *> *_allSessionTask;
         NSLog(@"请求结果=%@",responseObject);
         
         if (success) {
-            NSInteger code = [responseObject[@"code"] integerValue];
-            success(responseObject,code);
-            
-            //后台协商进行用户登录异常提示 && 强制用户退出
-            if (code == 20019) {
-                
-                //用户登录过期 && 执行退出
-                //[[APPManager sharedInstance] forcedExitUserWithShowControllerItemIndex:2];
-                [APPOCInterface forcedExitUserWithShowControllerItemIndexWithIndex:0];
-            }
+            success(responseObject,200);
         }
         
     } failCompletion:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
@@ -475,104 +466,83 @@ static NSMutableArray<NSURLSessionTask *> *_allSessionTask;
 + (void)getRequestNetDicDataUrl:(NSString *)url params:(NSDictionary *)params WithBlock:(NetResult)block{
     
     [APPHttpTool getWithUrl:url params:params success:^(id response, NSInteger code) {
-        
-        NSString *errorMessage = [response objectForKey:@"message"];
-        //id dataDic = [response objectForKey:@"data"];
-        
-        id dataDic = [response objectForKey:@"data"];
-        if ([dataDic isKindOfClass:[NSNull class]]) {
-            dataDic = @{};
-        }
-        
-        if (code == resultCode) {
-            //请求成功
-            if (block) {
-                block(YES,dataDic,100);
-            }
-        }else{
-            // 错误处理
-            if (block) {
-                block(NO,errorMessage,code);
-            }
-        }
-        
+        [self netSucessAnalyticalNetdata:response block:block];
     } fail:^(NSError *error) {
-        
-        NSString *errorMessage = HTTPErrorOthersMessage;//error.localizedDescription;
-        switch (error.code) {
-            case NSURLErrorCancelled:
-                //被取消
-                errorMessage = HTTPErrorCancleMessage;
-                break;
-            case NSURLErrorTimedOut:
-                //超时
-                errorMessage = HTTPErrorTimeOutMessage;
-                break;
-            case NSURLErrorNotConnectedToInternet:
-                //断网
-                errorMessage = HTTPErrorNotConnectedMessage;
-                break;
-                
-            default:
-                
-                break;
-        }
-        if (block) {
-            block(NO,errorMessage,99);
-        }
+        [self netFailAnalyticalNetdata:error block:block];
     }];
 }
 
 ///post请求一个字典
-+ (void)postRequestNetDicDataUrl:(NSString *)url params:(NSDictionary *)params WithBlock:(NetResult)block{
++ (void)postRequestNetDicDataUrl:(NSString *)url params:(NSDictionary *)params WithBlock:(NetResult)block {
     
     [APPHttpTool postWithUrl:url params:params success:^(id response, NSInteger code) {
-        
-        NSString *errorMessage = [response objectForKey:@"msg"];
-        //id dataDic = [response objectForKey:@"data"];
-        
-        id dataDic = [response objectForKey:@"data"];
-        if ([dataDic isKindOfClass:[NSNull class]]) {
-            dataDic = @{};
-        }
-        
-        if (code == resultCode) {
-            //请求成功
-            if (block) {
-                block(YES,dataDic,100);
-            }
-        }else{
-            // 错误处理
-            if (block) {
-                block(NO,errorMessage,code);
-            }
-        }
-        
+        [self netSucessAnalyticalNetdata:response block:block];
     } fail:^(NSError *error) {
-        
-        NSString *errorMessage = HTTPErrorOthersMessage;//error.localizedDescription;
-        switch (error.code) {
-            case NSURLErrorCancelled:
-                //被取消
-                errorMessage = HTTPErrorCancleMessage;
-                break;
-            case NSURLErrorTimedOut:
-                //超时
-                errorMessage = HTTPErrorTimeOutMessage;
-                break;
-            case NSURLErrorNotConnectedToInternet:
-                //断网
-                errorMessage = HTTPErrorNotConnectedMessage;
-                break;
-                
-            default:
-                
-                break;
-        }
-        if (block) {
-            block(NO,errorMessage,99);
-        }
+        [self netFailAnalyticalNetdata:error block:block];
     }];
+}
+
+///统一处理数据 成功
++ (void)netSucessAnalyticalNetdata:(id)netData block:(NetResult)block {
+    
+    //code
+    NSNumber *codeNum = [netData objectForKey:@"code"];
+    NSInteger code = codeNum.integerValue;
+    
+    //返回消息
+    NSString *errorMessage = [netData objectForKey:@"msg"];
+    id dataDic = [netData objectForKey:@"data"];//数据
+    
+    if ([dataDic isKindOfClass:[NSNull class]]) {
+        dataDic = @{};
+    }
+    
+    if (code == resultCode) {
+        //请求成功
+        if (block) {
+            block(YES,dataDic,100);
+        }
+    }else{
+        // 错误处理
+        if (block) {
+            block(NO,errorMessage,code);
+        }
+    }
+
+    //后台协商进行用户登录异常提示 && 强制用户退出
+    if (code == 20019) {
+
+        //用户登录过期 && 执行退出
+        //[[APPManager sharedInstance] forcedExitUserWithShowControllerItemIndex:2];
+        [APPOCInterface forcedExitUserWithShowControllerItemIndexWithIndex:0];
+    }
+}
+
+///统一处理数据 失败
++ (void)netFailAnalyticalNetdata:(NSError *)error block:(NetResult)block {
+    
+    NSString *errorMessage = HTTPErrorOthersMessage;//error.localizedDescription;
+    switch (error.code) {
+        case NSURLErrorCancelled:
+            //被取消
+            errorMessage = HTTPErrorCancleMessage;
+            break;
+        case NSURLErrorTimedOut:
+            //超时
+            errorMessage = HTTPErrorTimeOutMessage;
+            break;
+        case NSURLErrorNotConnectedToInternet:
+            //断网
+            errorMessage = HTTPErrorNotConnectedMessage;
+            break;
+            
+        default:
+            
+            break;
+    }
+    if (block) {
+        block(NO,errorMessage,99);
+    }
 }
 
 #pragma mark - ************************* 特殊网络请求 *************************

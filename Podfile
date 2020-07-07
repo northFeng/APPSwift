@@ -17,11 +17,16 @@ pod 'Kingfisher','5.13.1'
 
 #JSON模型转换 李明杰写的 https://github.com/kakaopensource/KakaJSON
 pod 'KakaJSON', '~> 1.1.2'
+#模型转换2
+pod 'ObjectMapper','~>4.2.0'
 #常用的
 pod 'SwiftyJSON', '~>4.0'
 
 #加载视图
 pod 'NVActivityIndicatorView','~>4.8.0'
+
+#数据存储
+pod 'KeychainAccess','~>4.2.0'
 
 
 #**************** OC常用第三方框架**************
