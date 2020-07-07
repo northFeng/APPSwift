@@ -99,7 +99,7 @@ class APPAlertTool {
     
     //MARK: ************************* 系统提示弹框 *************************
     
-    ///系统 消息提示框 && 确定按钮
+    ///系统弹框 ——>  消息提示框 && 确定按钮
     static func systemAlertMsg(title:String, msg:String?, btnTitle:String? = "确定", blockAction:APPBackClosure? = nil) {
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         
@@ -117,7 +117,7 @@ class APPAlertTool {
         topVC?.present(alertController, animated: true, completion: nil)
     }
     
-    ///系统 消息提示框  && 左右按钮 && 回调
+    ///系统弹框 ——> 消息提示框  && 左右按钮 && 回调
     static func systemAlertActionEvent(title:String, msg:String?, letBtnTitle:String? = "取消", leftBlock:APPBackClosure? = nil, rightBtnTitle:String? = "确定", rightBlock:APPBackClosure? = nil) {
         let alertController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         
@@ -145,7 +145,7 @@ class APPAlertTool {
         topVC?.present(alertController, animated: true, completion: nil)
     }
     
-    ///消息提示列表选择
+    ///系统弹框 ——>消息提示列表选择
     static func systemAlertListAction(title:String, msg:String?, listTitles:[String], blockAction:@escaping APPBackClosure) {
     
         let alertTellController = UIAlertController(title: title, message: msg, preferredStyle: .actionSheet)
@@ -168,6 +168,28 @@ class APPAlertTool {
         let topVC = self.topViewControllerOfAPP()
         topVC?.present(alertTellController, animated: true, completion: nil)
     }
+    
+    //MARK: ************************* 自定义弹框 *************************
+    ///自定义弹框 ——> 确定按钮 弹框
+    static func customAlertMsg(title:String = "", msg:String, blockOk:APPBackClosure?) {
+        let alertView = APPCustomAlertView()
+        alertView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: kAPPWidth, height: kAPPHeight))
+        alertView.showAlertOneBtn(title: title, msg: msg, blockOk: blockOk)
+    }
+    
+    ///自定义弹框 ——> 两个按钮 弹框
+    static func customAlertAction(title:String = "", msg:String, leftTitle:String = "取消", rightTitle:String = "确定", leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
+        let alertView = APPCustomAlertView()
+        alertView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: kAPPWidth, height: kAPPHeight))
+        alertView.showAlertTwoBtn(title: title, msg: msg, leftTitle: leftTitle, rightTitle: rightTitle, leftBlock: leftBlock, rightBlock: rightBlock)
+    }
+    
+    ///自定义弹框 ——> 文字样式、按钮样式
+    static func customAlertVariable(title:NSAttributedString? = nil, msgAttri:NSAttributedString, leftAttri:NSAttributedString? = nil, rightAttri:NSAttributedString? = nil, leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
+        let alertView = APPCustomAlertView()
+        alertView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: kAPPWidth, height: kAPPHeight))
+        alertView.showAlertCustom(title: title, msgAttri: msgAttri, leftAttri: leftAttri, rightAttri: rightAttri, leftBlock: leftBlock, rightBlock: rightBlock)
+    }
 }
 
 
@@ -176,30 +198,36 @@ class APPAlertTool {
 fileprivate class APPCustomAlertView: UIView {
     
     ///backView
-    let backView = UIView()
+    private let backView = UIView()
+    ///bc宽
+    private let bvWidth = 285.0*kIpadScale
+    ///bc高
+    private var bvHeight:CGFloat = 0.0
+    
     
     ///标题
-    let titleLabel = UILabel()
+    private let titleLabel = UILabel()
     
     ///描述
-    let birfLabel = UILabel()
-    let birfColor = DynamicColor(COLOR("#384A74"), UIColor.lightText)
+    private let birfLabel = UILabel()
+    private let birfFont = UIFont.systemFont(ofSize: FitIpad(14))
+    private let birfColor = DynamicColor(COLOR("#384A74"), UIColor.lightText)
     
     ///竖线
-    let lineS = UIView()
+    private let lineS = UIView()
     
     
     ///取消按钮
-    let cancleBtn = UIButton(type: .custom)
+    private let cancleBtn = UIButton(type: .custom)
     
     ///确定按钮
-    let okBtn = UIButton(type: .custom)
+    private let okBtn = UIButton(type: .custom)
     
     ///取消回调
-    var cancleBlock:APPBackClosure?
+    private var cancleBlock:APPBackClosure?
     
     ///确定回调
-    var okBlock:APPBackClosure?
+    private var okBlock:APPBackClosure?
     
     
     init() {
@@ -215,23 +243,25 @@ fileprivate class APPCustomAlertView: UIView {
     }
     
     ///创建view
-    func createView() {
+    private func createView() {
         //设置 backView 基本属性
-        backView.frame = CG_Rect((kScreenWidth - 285*kIpadScale)/2.0, kScreenHeight*0.35, 285*kIpadScale, 285*kIpadScale*(176.0/285.0))
+        backView.backgroundColor = DynamicColor(UIColor.white, COLOR("#2C2C2C"))
+        backView.frame = CG_Rect((kAPPWidth - bvWidth)/2.0, kAPPHeight*0.35, bvWidth, 100)
+        backView.clipsToBounds = true
         backView.layer.cornerRadius = 16
         backView.alpha = 0
         self.addSubview(backView)
         
         //标题
         titleLabel.textColor = DynamicColor(COLOR("#384A74"), UIColor.lightText)
-        titleLabel.font = kFontOfCustom(name: kMediumFont, font: 14*kIpadScale)
+        titleLabel.font = UIFont(name: kMediumFont, size: FitIpad(14))
         titleLabel.textAlignment = .center
         titleLabel.text = "温馨提示"
         backView.addSubview(titleLabel)
         
         //描述
         birfLabel.textColor = birfColor
-        birfLabel.font = kFontOfSystem(font: 14*kIpadScale)
+        birfLabel.font = birfFont
         birfLabel.textAlignment = .center
         birfLabel.text = ""
         birfLabel.numberOfLines = 10;//最大10行文字
@@ -248,20 +278,20 @@ fileprivate class APPCustomAlertView: UIView {
         //取消按钮
         cancleBtn.setTitle("取消", for: .normal)
         cancleBtn.setTitleColor(DynamicColor(COLOR("#717B99"), UIColor.lightText), for: .normal)
-        cancleBtn.titleLabel?.font = kFontOfCustom(name: kMediumFont, font: 14*kIpadScale)
+        cancleBtn.titleLabel?.font = UIFont(name: kMediumFont, size: FitIpad(14))
         backView.addSubview(cancleBtn)
         
         //确定按钮
         okBtn.setTitle("确认", for: .normal)
         okBtn.setTitleColor(COLOR("#65BAFF"), for: .normal)
-        okBtn.titleLabel?.font = kFontOfCustom(name: kMediumFont, font: 14*kIpadScale)
+        okBtn.titleLabel?.font = UIFont(name: kMediumFont, size: FitIpad(14))
         backView.addSubview(okBtn)
         
         titleLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(15)
             make.right.equalToSuperview().offset(-15)
-            make.top.equalToSuperview().offset(20*kIpadScale)
-            make.height.equalTo(20*kIpadScale)
+            make.top.equalToSuperview().offset(FitIpad(20))
+            make.height.equalTo(FitIpad(20))
         }
         
         birfLabel.snp.makeConstraints { (make) in
@@ -271,7 +301,7 @@ fileprivate class APPCustomAlertView: UIView {
         
         lineH.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(48*kIpadScale)
+            make.bottom.equalToSuperview().offset(-FitIpad(48))
             make.height.equalTo(0.5)
         }
         
@@ -282,7 +312,7 @@ fileprivate class APPCustomAlertView: UIView {
             make.width.equalTo(0.5)
         }
         
-        lineS.isHidden = false
+        lineS.isHidden = true
         cancleBtn.isHidden = true
         okBtn.isHidden = true
         
@@ -291,9 +321,9 @@ fileprivate class APPCustomAlertView: UIView {
     }
     
     ///点击取消
-    @objc func onClickBtnCancle() {
+    @objc private func onClickBtnCancle() {
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.15, animations: {
             self.backView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             self.backView.alpha = 0
         }) { (finished) in
@@ -306,9 +336,9 @@ fileprivate class APPCustomAlertView: UIView {
     }
     
     ///点击确定
-    @objc func onClickBtnOk() {
+    @objc private func onClickBtnOk() {
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.15, animations: {
             self.backView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             self.backView.alpha = 0
         }) { (finished) in
@@ -321,117 +351,156 @@ fileprivate class APPCustomAlertView: UIView {
     }
     
     ///样式一 ：确定按钮
-    func showAlertOneBtn(title:String? = "", msg:String, blockOk:@escaping APPBackClosure) {
+    func showAlertOneBtn(title:String = "", msg:String, blockOk:APPBackClosure?) {
         titleLabel.text = title
-        birfLabel.attributedText = APPFunctionApi.string_getAttributeString(text: msg, font: kFontOfSystem(font: FitIpad(14)), color: birfColor, spacing: 2, alignment: .center)
+        birfLabel.attributedText = APPFunctionApi.string_getAttributeString(text: msg, font: birfFont, color: birfColor, spacing: 2, alignment: .center)
         okBlock = blockOk
         
         okBtn.isHidden = false
         okBtn.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(FitIpad(48))
+            make.bottom.equalToSuperview().offset(-4)
+            make.height.equalTo(FitIpad(40))
             make.width.equalTo(FitIpad(100))
         }
         
-        if let textTtitle = title {
-            if textTtitle.count == 0 {
-                //没有标题 ——> 更新描述约束
-                birfLabel.snp.updateConstraints { (make) in
-                    make.top.equalToSuperview().offset(FitIpad(20))
-                }
+        if title.count == 0 {
+            //没有标题 ——> 更新描述约束
+            birfLabel.snp.updateConstraints { (make) in
+                make.top.equalToSuperview().offset(FitIpad(20))
             }
         }
         
-        self.showAlertView()
+        let birfHeight = APPFunctionApi.string_getTextHeight(text: msg, font: birfFont, spacing: 2, widthFix: bvWidth - 30)
+        
+        self.showAlertView(birfHeight: birfHeight, title: title)
     }
     
     ///样式二：两个按钮
-    func showAlertTwoBtn(title:String? = "", msg:String, leftTitle:String = "取消", rightTitle:String = "确定", leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
+    func showAlertTwoBtn(title:String = "", msg:String, leftTitle:String = "取消", rightTitle:String = "确定", leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
         titleLabel.text = title
-        birfLabel.attributedText = APPFunctionApi.string_getAttributeString(text: msg, font: kFontOfSystem(font: FitIpad(14)), color: birfColor, spacing: 2, alignment: .center)
+        birfLabel.attributedText = APPFunctionApi.string_getAttributeString(text: msg, font: birfFont, color: birfColor, spacing: 2, alignment: .center)
         cancleBtn.setTitle(leftTitle, for: .normal)
         okBtn.setTitle(rightTitle, for: .normal)
         
         cancleBlock = leftBlock
         okBlock = rightBlock
         
-        lineS.isHidden = false
-        cancleBtn.isHidden = false
-        okBtn.isHidden = false
+        self.showTwoBtnAndMasory()//显示两个按钮
         
-        cancleBtn.snp.makeConstraints { (make) in
-            make.right.equalTo(lineS).offset(-10)
-            make.centerY.equalTo(lineS)
-            make.width.equalTo(FitIpad(100))
-            make.height.equalTo(FitIpad(48))
-        }
-        
-        okBtn.snp.makeConstraints { (make) in
-            make.left.equalTo(lineS).offset(10)
-            make.centerY.equalTo(lineS)
-            make.width.equalTo(FitIpad(100))
-            make.height.equalTo(FitIpad(48))
-        }
-        
-        if let textTtitle = title {
-            if textTtitle.count == 0 {
-                //没有标题 ——> 更新描述约束
-                birfLabel.snp.updateConstraints { (make) in
-                    make.top.equalToSuperview().offset(FitIpad(20))
-                }
+        if title.count == 0 {
+            //没有标题 ——> 更新描述约束
+            birfLabel.snp.updateConstraints { (make) in
+                make.top.equalToSuperview().offset(FitIpad(20))
             }
         }
         
-        self.showAlertView()
+        let birfHeight = APPFunctionApi.string_getTextHeight(text: msg, font: birfFont, spacing: 2, widthFix: bvWidth - 30)
+        
+        self.showAlertView(birfHeight: birfHeight, title: title)
     }
     
     ///样式三：万能版本
-    func showAlertCustom(title:String? = "", msg:String, leftTitle:NSAttributedString?, rightTitle:NSAttributedString?, leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
+    func showAlertCustom(title:NSAttributedString? = nil, msgAttri:NSAttributedString, leftAttri:NSAttributedString? = nil, rightAttri:NSAttributedString? = nil, leftBlock:APPBackClosure? = nil, rightBlock:APPBackClosure? = nil) {
         
-        titleLabel.text = title
-        birfLabel.attributedText = APPFunctionApi.string_getAttributeString(text: msg, font: kFontOfSystem(font: FitIpad(14)), color: birfColor, spacing: 2, alignment: .center)
-        cancleBtn.setAttributedTitle(leftTitle, for: .normal)
-        okBtn.setAttributedTitle(rightTitle, for: .normal)
+        titleLabel.attributedText = title
+        birfLabel.attributedText = msgAttri
         
+        if leftAttri != nil {
+            cancleBtn.setAttributedTitle(leftAttri, for: .normal)
+        }
+        if rightAttri != nil {
+            okBtn.setAttributedTitle(rightAttri, for: .normal)
+        }
+
         cancleBlock = leftBlock
         okBlock = rightBlock
         
+        if title == nil {
+            //没有标题 ——> 更新描述约束
+            birfLabel.snp.updateConstraints { (make) in
+                make.top.equalToSuperview().offset(FitIpad(20))
+            }
+        }
+        
+        //设置按钮布局
+        if leftAttri != nil && rightAttri != nil {
+            //两个按钮
+            self.showTwoBtnAndMasory()//显示两个按钮
+        }else if rightAttri == nil {
+            //显示左边按钮
+            cancleBtn.isHidden = false
+            cancleBtn.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-4)
+                make.height.equalTo(FitIpad(40))
+                make.width.equalTo(FitIpad(100))
+            }
+        }else {
+            //默认显示右边按钮
+            okBtn.isHidden = false
+            okBtn.snp.makeConstraints { (make) in
+                make.centerX.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-4)
+                make.height.equalTo(FitIpad(40))
+                make.width.equalTo(FitIpad(100))
+            }
+        }
+        
+        //计算高度
+        let birfHeight = APPFunctionApi.string_getTextAttriHeight(textAttr: msgAttri, widthFix: bvWidth - 30)//birf文字的高度
+        
+        self.showAlertView(birfHeight: birfHeight, title: title?.string ?? "")
+    }
+    
+    private func showAlertView(birfHeight:CGFloat, title:String) {
+        
+        bvHeight = 0
+        
+        if title.count > 0 {
+            //有标题
+            bvHeight += FitIpad(40 + 15) + birfHeight + FitIpad(25) + FitIpad(48)
+        }else{
+            //没有标题
+            bvHeight += FitIpad(20) + birfHeight + FitIpad(25) + FitIpad(48)
+        }
+            
+        backView.frame = CG_Rect((kAPPWidth - bvWidth)/2.0, kAPPHeight*0.35, bvWidth, bvHeight)
+        
+        let windowView:UIView? = UIApplication.shared.delegate?.window as? UIView
+        
+        windowView?.addSubview(self)
+        
+        backView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        backView.alpha = 0.5
+        
+        UIView.animate(withDuration: 0.1) {
+            self.backView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            self.backView.alpha = 1.0
+        }
+    }
+    
+    
+    private func showTwoBtnAndMasory() {
         lineS.isHidden = false
         cancleBtn.isHidden = false
         okBtn.isHidden = false
         
+        let btnWidth:CGFloat = (bvWidth - 1 - 10*2) / 2.0
+        
         cancleBtn.snp.makeConstraints { (make) in
-            make.right.equalTo(lineS).offset(-10)
+            make.right.equalTo(lineS).offset(-5)
             make.centerY.equalTo(lineS)
-            make.width.equalTo(FitIpad(100))
-            make.height.equalTo(FitIpad(48))
+            make.width.equalTo(FitIpad(btnWidth))
+            make.height.equalTo(FitIpad(40))
         }
         
         okBtn.snp.makeConstraints { (make) in
-            make.left.equalTo(lineS).offset(10)
+            make.left.equalTo(lineS).offset(5)
             make.centerY.equalTo(lineS)
-            make.width.equalTo(FitIpad(100))
-            make.height.equalTo(FitIpad(48))
+            make.width.equalTo(FitIpad(btnWidth))
+            make.height.equalTo(FitIpad(40))
         }
-        
-        if let textTtitle = title {
-            if textTtitle.count == 0 {
-                //没有标题 ——> 更新描述约束
-                birfLabel.snp.updateConstraints { (make) in
-                    make.top.equalToSuperview().offset(FitIpad(20))
-                }
-            }
-        }
-        
-        self.showAlertView()
     }
-    
-    func showAlertView() {
-        
-        let birfHeight = APPFunctionApi.string_getTextHeight(text: <#T##String#>, font: <#T##UIFont#>, spacing: <#T##CGFloat#>, widthFix: <#T##CGFloat#>)
-        
-    }
-    
     
 }

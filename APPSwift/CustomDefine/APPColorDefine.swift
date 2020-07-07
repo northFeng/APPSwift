@@ -82,4 +82,14 @@ struct APPColorDefine {
     static func layerBackgroundColor(colorView:UIView, layer:CALayer, dynamicCOlor:UIColor) {
         APPXYColorApi.layerSupView(colorView, layer: layer, dynamicBackgrounColor: dynamicCOlor)
     }
+    
+    //MARK: ************************* 定义颜色 *************************
+    ///基础黑色
+    static let black = COLOR("#000000")
+    
+    ///弹框暗黑模式黑色
+    static let blcakAlert = COLOR("2C2C2C")
+    
+    ///基础白色
+    static let white = COLOR("#FFFFFF")
 }

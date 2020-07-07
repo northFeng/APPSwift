@@ -99,7 +99,7 @@ class APPTabBarController: UITabBarController {
     //MARK: ************************* 私有方法 *************************
     private func createItemsBtn() {
         ///按钮宽度
-        let btnWidth:CGFloat = kScreenWidth / CGFloat(titleArray.count)
+        let btnWidth:CGFloat = kAPPWidth / CGFloat(titleArray.count)
         
         for index in 0..<titleArray.count {
             

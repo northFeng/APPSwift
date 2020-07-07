@@ -72,11 +72,11 @@ let kAPP_File_HomePath = NSHomeDirectory()
 
 //MARK: ************************* 自定常量宏 *************************
 
-///屏幕宽
-let kScreenWidth = UIScreen.main.bounds.size.width
+///APP屏幕宽
+let kAPPWidth = UIScreen.main.bounds.size.width
 
-///屏幕高
-let kScreenHeight = UIScreen.main.bounds.size.height
+///APP屏幕高
+let kAPPHeight = UIScreen.main.bounds.size.height
 
 ///状态栏高度
 let kStatusBarHeight = UIApplication.shared.statusBarFrame.size.height
@@ -90,10 +90,10 @@ func kScaleHeight(x:Float, y:Float, width:Float) -> Float {
 }
 
 ///屏幕宽度比例
-let kScaleW = kScreenWidth/375.0
+let kScaleW = kAPPWidth/375.0
 
 ///屏幕高度比例
-let kScaleH = kScreenHeight/667.0
+let kScaleH = kAPPHeight/667.0
 
 ///适配iPad比例 ( iPhone 1.  iPad 1.3)
 var kIpadScale:CGFloat {
@@ -173,14 +173,14 @@ let kMediumFont = "PingFangSC-Medium"
 let kSemiboldFont = "PingFangSC-Semibold"
 
 ///系统字体
-func kFontOfSystem(font:CGFloat) -> UIFont {
+func FontOfSystem(font:CGFloat) -> UIFont {
     return UIFont.systemFont(ofSize: font)
 }
 
 ///非系统字体
-func kFontOfCustom(name:String,font:CGFloat) -> UIFont? {
+func FontOfCustom(name:String,font:CGFloat) -> UIFont {
 
-    return UIFont(name: name, size: font)
+    return UIFont(name: name, size: font) ?? UIFont.systemFont(ofSize: font)
 }
 
 
