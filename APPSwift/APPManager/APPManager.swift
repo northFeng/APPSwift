@@ -36,17 +36,11 @@ class APPManager {
         //初始化本地数据 初始化本地用户信息(也可以指定到某个沙盒文件中去)
         let locaalData:Any? = UserDefaults.standard.object(forKey: Current_Login_User)
         
-        var base64Data:NSData?
+        let base64Data:Data? = locaalData as? Data
         
-        if let data = locaalData as? NSData {
-            base64Data = data
-        }
-        
-        if base64Data != nil {
+        if let dataEncode = base64Data {
             
-            let dataEncode = base64Data! as Data
-
-            let dataUser = NSData(base64Encoded: dataEncode)
+            let dataUser:Data? = Data(base64Encoded: dataEncode)
             
             userInfo = dataUser?.kj.model(APPUserInfoModel.self)//model转换
             
@@ -59,15 +53,18 @@ class APPManager {
     }
     
     ///存储用户信息
-    func storUserInfo(info:[String:Any]) {
+    func storeUserInfo(info:[String:Any]) {
         
         userInfo = info.kj.model(APPUserInfoModel.self)
         isLogined = true
         isLoginOverdue = false
         
-        //let jsonStr:String = JSONString(from: userInfo ?? "")
+        var dataUser:Data = ModelToJsonData(model: userInfo!)
         
+        dataUser = dataUser.base64EncodedData()
 
+        UserDefaults.standard.set(dataUser, forKey: Current_Login_User)//存储新数据
+        UserDefaults.standard.synchronize()
     }
     
     ///清楚用户信息

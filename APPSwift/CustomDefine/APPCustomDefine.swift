@@ -240,6 +240,11 @@ func AlertLoadingMsg(_ msg:String, onView:UIView? = nil) {
 
 //MARK: ************************* JSON 转换 Model *************************
 
+///JSON 转 字典
+func JsonToDictionary(json:Any) -> [String:Any] {
+    APPFunctionApi.dictionaryFromJson(json: json)
+}
+
 ///JSON 转 Model
 func JsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
     APPNetTool.jsonToModel(json: json, Model: Model)

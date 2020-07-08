@@ -10,7 +10,7 @@ import Foundation
 
 import KeychainAccess
 
-struct APPCache {
+struct APPCacheApi {
     
     private static let dataManager = Keychain(service: "APPCache")//Keychain(service: "APPCahe", accessGroup: "12ABCD3E4F.shared")
     

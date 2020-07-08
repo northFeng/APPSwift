@@ -41,25 +41,25 @@ class APPFunctionApi {
     }
     
     //MARK: ************************* 字符串 编码处理 *************************
-    ///编码字符串--->base64字符串
-    static func base64_encodeBase64String(encodeStr:String) -> String? {
+    ///string --->base64 字符串
+    static func base64_encodeBase64String(string:String) -> String? {
         
-        let encodeData = encodeStr.data(using: .utf8)
+        let data = string.data(using: .utf8)
         
-        let base64Str:String? = encodeData?.base64EncodedString()
+        let base64Str:String? = data?.base64EncodedString()
         
         return base64Str
     }
     
-    ///编码字符串--->base64data
-    static func base64_encodeBase64String(encodeData:Data) -> String {
+    ///data--->base64 字符串
+    static func base64_encodeBase64String(data:Data) -> String {
         
-        let encodeStr = encodeData.base64EncodedString()
+        let encodeStr = data.base64EncodedString() //data.base64EncodedData() 转化成 base64Data
         
         return encodeStr
     }
     
-    ///解码----->原字符串
+    ///解码String----->原字符串
     static func base64_decodeBase64String(base64Str:String) -> String? {
         
         let decodeStr:String? = String(data: Data(base64Encoded: base64Str) ?? Data(), encoding: .utf8)
@@ -67,7 +67,7 @@ class APPFunctionApi {
         return decodeStr
     }
     
-    ///解码----->原Data
+    ///解码Data----->原Data
     static func base64_decodeBase64Data(base64Data:Data) -> Data? {
         
         let decodeData:Data? = Data(base64Encoded: base64Data)
