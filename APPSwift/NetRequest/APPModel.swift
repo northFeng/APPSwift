@@ -10,6 +10,8 @@ import Foundation
 
 import KakaJSON//JSON数据 转 Model
 
+import ObjectMapper//模型转换
+
 /**
  为了方便起见：所有的model的属性全部直接初始化！
  */
@@ -52,3 +54,29 @@ class BaseModel: Convertible {
     
     required init() {} //所有继承 BaseModel的类，则不用写这个方法了
 }
+
+
+/**  写法太麻烦了    用法：https://www.jianshu.com/p/609fbdb62274
+ class User:, Mappable {
+     var name: String?
+     var age: Int?
+     var nickname: String?
+     var job: String?
+     
+     required init?(map: Map) {
+         
+     }
+     func mapping(map: Map) {
+         name <- map["name"]
+         age <- map["age"]
+         nickname <- map["nickname"]
+         job <- map["job"]
+     }
+ }
+ let jsonString = "{\"name\":\"objectmapper\",\"age\": 18,\"nickname\": \"mapper\",\"job\": \"swifter\"}"
+ let user = User(JSONString: jsonString)
+ let user = Mapper<User>().map(JSONString: JSONString)
+ 
+ let JSONString = user.toJSONString(prettyPrint: true)
+ let JSONString = Mapper().toJSONString(user, prettyPrint: true)
+ */

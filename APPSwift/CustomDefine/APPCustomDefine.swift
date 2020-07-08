@@ -206,28 +206,6 @@ func ImageGet(path:String) -> UIImage {
     return UIImage(contentsOfFile: path) ?? UIImage()
 }
 
-//MARK: ************************* JSON 转换 Model *************************
-
-///JSON 转 Model
-func JsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
-    APPNetTool.jsonToModel(json: json, Model: Model)
-}
-
-///Model 转 DicJson
-func ModelToJsonObject(model:BaseModel) -> [String : Any] {
-    APPNetTool.modelToJsonObject(model: model)
-}
-
-///Model 转 String
-func ModelToJsonString(model:BaseModel) -> String {
-    APPNetTool.modelToJsonString(model: model)
-}
-
-///Model 转 Data
-func ModelToJsonData(model:BaseModel) -> Data {
-    APPNetTool.modelToJsonData(model: model)
-}
-
 //MARK: ************************* 吐字 && loading *************************
 
 ///APP内的窗口 view
@@ -257,4 +235,27 @@ func AlertLoadingMsg(_ msg:String, onView:UIView? = nil) {
     }else{
         APPAlertTool.showLoading(message: msg)
     }
+}
+
+
+//MARK: ************************* JSON 转换 Model *************************
+
+///JSON 转 Model
+func JsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
+    APPNetTool.jsonToModel(json: json, Model: Model)
+}
+
+///Model 转 DicJson
+func ModelToJsonObject(model:BaseModel) -> [String : Any] {
+    APPNetTool.modelToJsonObject(model: model)
+}
+
+///Model 转 String
+func ModelToJsonString(model:BaseModel) -> String {
+    APPNetTool.modelToJsonString(model: model)
+}
+
+///Model 转 Data
+func ModelToJsonData(model:BaseModel) -> Data {
+    APPNetTool.modelToJsonData(model: model)
 }

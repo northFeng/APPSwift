@@ -173,7 +173,7 @@ class APPNetTool {
     }
 
     //MARK: ************************* Model <——> 模型 *************************
-    ///模型转换
+    ///模型转换 jsonToModel(json:data, Model: Model.self)
     static func jsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
 
         var model:Any?;
@@ -189,6 +189,10 @@ class APPNetTool {
             
             model = jsonArray.kj.modelArray(Model.self)
             
+        } else if json is String {
+            //字符串
+            let jsonString = json as! String
+            model = jsonString.kj.model(Model.self)
         } else {
             model = nil
         }

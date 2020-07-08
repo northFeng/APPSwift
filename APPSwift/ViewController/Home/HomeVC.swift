@@ -43,9 +43,7 @@ class HomeVC: APPBaseController {
         }
         
         APPCache.setString(text: "点击的京东到家", key: "ffff")
-        
-        Print("------》\(APPCache.getString(key: "ffff"))")
-        
+                    
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
