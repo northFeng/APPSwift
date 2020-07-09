@@ -17,7 +17,9 @@
 
 //用法https://www.cnblogs.com/metaphors/p/9405432.html
 //@_exported import SwiftyJSON//SwiftyJSON使用来处理JSON数据，把 字符串、data——>转成JSON
-//@_exported import Kingfisher//图片加载
+
+//RAS (OC版RAC)
+@_exported import ReactiveSwift
 
 //--------------------------------------------------------------------------------------------
 

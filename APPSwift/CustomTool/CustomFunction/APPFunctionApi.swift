@@ -9,7 +9,7 @@
 import Foundation
 
 
-class APPFunctionApi {
+struct APPFunctionApi {
     
     //MARK: ************************* 数据 转 字典 *************************
     ///json 转 字典

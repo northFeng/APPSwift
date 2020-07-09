@@ -14,12 +14,19 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var array2 = ["a","b","c","d","f"]
     
-    let tableView = UITableView(frame: CG_Rect(0, 100, kAPPWidth, kAPPHeight - 100), style: .grouped)
+    let tableView = UITableView(frame: CG_Rect(0, 0, kAPPWidth, kAPPHeight - 100), style: .grouped)
     
     let con = UIRefreshControl(frame: CG_Rect(0, -100, kAPPWidth, 100))
     
+    let button = UIButton(type: .custom)
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        Print("viewDidLoad")
         
         self.createView()
         self.bindViewModel()
@@ -39,19 +46,21 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     ///数据绑定
     func bindViewModel() {
         
+        
+        
     }
     
     //MARK: ************************* Action && Event *************************
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        con.beginRefreshing()
-        
+        let homeVC = HomeVC()
+        Print("touch")
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            self.con.endRefreshing()
+            Print("pushVC")
+            self.navigationController?.pushViewController(homeVC, animated: true)
         }
     }
     
-    
-    
+
     //MARK: ************************* 逻辑处理 *************************
     
     

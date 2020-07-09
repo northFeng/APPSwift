@@ -8,7 +8,7 @@
 
 import Foundation
 
-class APPDateTool {
+struct APPDateTool {
     
     ///获取当前时间@"yyyy-MM-dd HH:mm
     static func date_currentTime(timeType:String) -> String {

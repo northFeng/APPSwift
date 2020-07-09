@@ -9,7 +9,7 @@
 import Foundation
 
 
-class APPViewTool {
+struct APPViewTool {
     
     ///创建view
     static func view_createView(bgColor:UIColor) -> UIView {

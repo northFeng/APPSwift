@@ -28,6 +28,16 @@ pod 'NVActivityIndicatorView','~>4.8.0'
 #数据存储
 pod 'KeychainAccess','~>4.2.0'
 
+#刷新框架
+#pod 'SDRefreshView'
+
+#RAC框架
+pod 'ReactiveSwift', '~> 6.3.0'
+
+#RXSwift框架
+pod 'RxSwift','~> 4.0'
+pod 'RxCocoa','~> 4.0'
+
 
 #**************** OC常用第三方框架**************
 pod 'AFNetworking','~>3.2.1'

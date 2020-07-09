@@ -35,6 +35,7 @@
 		8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB96249CC48B00371C05 /* APPBaseController.swift */; };
 		8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB99249CDAD700371C05 /* APPNavigationController.swift */; };
 		83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */; };
+		83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */; };
 		83B1AE3024B0739F00FC7363 /* APPLoadingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */; };
 		83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 83B1AE3124B079FD00FC7363 /* Demo.gif */; };
 		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
@@ -83,6 +84,7 @@
 		8338EB96249CC48B00371C05 /* APPBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPBaseController.swift; sourceTree = "<group>"; };
 		8338EB99249CDAD700371C05 /* APPNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationController.swift; sourceTree = "<group>"; };
 		83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPOCInterface.swift; sourceTree = "<group>"; };
+		83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "干货集中营-RAC+RXSwift+MVVM .webarchive"; sourceTree = "<group>"; };
 		83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoadingApi.swift; sourceTree = "<group>"; };
 		83B1AE3124B079FD00FC7363 /* Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Demo.gif; sourceTree = "<group>"; };
 		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		8338EB6B249CAA0C00371C05 /* APPSwift */ = {
 			isa = PBXGroup;
 			children = (
+				83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */,
 				8338EB80249CBE0A00371C05 /* APPManager */,
 				8338EB81249CBE2000371C05 /* CustomDefine */,
 				8338EB82249CBE6A00371C05 /* NetRequest */,
@@ -466,6 +469,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */,
 				8338EB79249CAA0D00371C05 /* LaunchScreen.storyboard in Resources */,
 				83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */,
 				8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */,
