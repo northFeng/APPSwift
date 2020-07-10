@@ -14,19 +14,12 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var array2 = ["a","b","c","d","f"]
     
-    let tableView = UITableView(frame: CG_Rect(0, 0, kAPPWidth, kAPPHeight - 100), style: .grouped)
-    
-    let con = UIRefreshControl(frame: CG_Rect(0, -100, kAPPWidth, 100))
-    
+    let tableView = UITableView(frame: CG_Rect(0, 100, kAPPWidth, kAPPHeight - 100), style: .grouped)
+        
     let button = UIButton(type: .custom)
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Print("viewDidLoad")
         
         self.createView()
         self.bindViewModel()
@@ -34,7 +27,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     ///数据计算
     override func initData() {
-        
+    
     }
     
     //设置状态栏
@@ -46,8 +39,23 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     ///数据绑定
     func bindViewModel() {
         
-        
-        
+        tableView.mj_header = MJRefreshStateHeader(refreshingBlock: {
+            [unowned self] in
+            sleep(2)
+            self.array1 = []
+            self.stopRefresh()
+        })
+        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            [unowned self] in
+            sleep(2)
+            self.array1 = []
+            self.stopRefresh()
+        })
+    }
+    
+    func stopRefresh() {
+        tableView.mj_header?.endRefreshing()
+        tableView.mj_footer?.endRefreshing()
     }
     
     //MARK: ************************* Action && Event *************************
@@ -105,6 +113,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //点击cell
+        self.navigationController?.pushViewController(HomeVC(), animated: true)
     }
     
 
@@ -124,9 +133,6 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         //tableView.register(UINib(nibName: "", bundle: nil), forCellReuseIdentifier: "cell")
         self.view.addSubview(tableView)
         
-        con.tintColor = UIColor.red
-        con.attributedTitle = NSAttributedString(string: "刷新")
-        tableView.addSubview(con)
     }
     
     

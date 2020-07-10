@@ -28,8 +28,8 @@ pod 'NVActivityIndicatorView','~>4.8.0'
 #数据存储
 pod 'KeychainAccess','~>4.2.0'
 
-#刷新框架
-#pod 'SDRefreshView'
+#刷新框架 暂用OC框架
+pod 'MJRefresh','~>3.4.3'
 
 #RAC框架
 pod 'ReactiveSwift', '~> 6.3.0'

@@ -18,8 +18,12 @@
 //用法https://www.cnblogs.com/metaphors/p/9405432.html
 //@_exported import SwiftyJSON//SwiftyJSON使用来处理JSON数据，把 字符串、data——>转成JSON
 
-//RAS (OC版RAC)
-@_exported import ReactiveSwift
+//RAS (OC版RAC) 会与 KKJson框架冲突
+//@_exported import ReactiveSwift
+
+//RxSwift 讲解系列https://www.jianshu.com/p/f61a5a988590
+//@_exported import RxSwift
+//@_exported import RxCocoa//纯Swift开发 这个框架不需要， RxCocoa：是基于 RxSwift针对于 iOS开发的一个库，它通过 Extension 的方法给原生的比如 UI 控件添加了 Rx 的特性，使得我们更容易订阅和响应这些控件的事件。
 
 //--------------------------------------------------------------------------------------------
 

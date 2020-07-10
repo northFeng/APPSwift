@@ -202,22 +202,22 @@ class APPNavigationBarView: UIView {
     //MARK: ************************* 点击事件 *************************
     ///点击左边第一个按钮
     @objc func leftFirstButtonClick() -> Void {
-        if delegate?.responds(to: #selector(leftFirstButtonClick)) ?? false {
-            delegate?.leftFirstButtonClick()
+        if let dele = delegate {
+            dele.leftFirstButtonClick()
         }
     }
     
     ///点击右边第一个按钮
     @objc func rightFirstButtonClick() -> Void {
-        if delegate?.responds(to: #selector(rightFirstButtonClick)) ?? false {
-            delegate?.rightFirstButtonClick()
+        if let dele = delegate {
+            dele.rightFirstButtonClick()
         }
     }
     
     ///点击右边第二个按钮
     @objc func rightSecondButtonClick() -> Void {
-        if delegate?.responds(to: #selector(rightSecondButtonClick)) ?? false {
-            delegate?.rightSecondButtonClick()
+        if let dele = delegate {
+            dele.rightSecondButtonClick()
         }
     }
 }

@@ -31,6 +31,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     
     
     deinit {
+        Print("----\(NSStringFromClass(type(of: self)))已释放----")
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -69,7 +70,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
         if self.navigationController?.viewControllers.count ?? 0 > 1 {
             //设置返回按钮
             naviBar.isHidden = false//显示导航条
-            naviBar.setLeftFirstButtonStyle(imgName: "back_s2")
+            naviBar.setLeftFirstButtonStyle(imgName: "back_s")
         }else{
             naviBar.isHidden = true//隐藏
         }
@@ -192,7 +193,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     
     //MARK: ************************* 导航条代理 *************************
     func leftFirstButtonClick() {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     func rightFirstButtonClick() {
