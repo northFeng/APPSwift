@@ -18,11 +18,16 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         
     let button = UIButton(type: .custom)
     
+    var dataArray:[[String:Any]]? = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.createView()
         self.bindViewModel()
+        
+        tableView.mj_header?.beginRefreshing()
     }
     
     ///数据计算
@@ -41,21 +46,35 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         
         tableView.mj_header = MJRefreshStateHeader(refreshingBlock: {
             [unowned self] in
-            sleep(2)
-            self.array1 = []
-            self.stopRefresh()
+            self.netData()
         })
-        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
-            [unowned self] in
-            sleep(2)
-            self.array1 = []
-            self.stopRefresh()
-        })
+//        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+//            [unowned self] in
+//            sleep(2)
+//            self.array1 = []
+//            self.stopRefresh()
+//        })
     }
     
     func stopRefresh() {
         tableView.mj_header?.endRefreshing()
         tableView.mj_footer?.endRefreshing()
+    }
+    
+    func netData() {
+        AlertLoading()
+        APPNetTool.getNetData(url: "v2/front/tag/getTagList", params: ["tagType":"1"]) { (result:Bool, idObject:Any, code:Int) in
+            AlertHideLoading()
+            self.tableView.mj_header?.endRefreshing()
+            if result {
+                let jsonArray = idObject as! [[String:Any]]
+                self.dataArray = jsonArray
+                
+                self.tableView.reloadData()
+            } else {
+                AlertMessage(idObject as! String)
+            }
+        }
     }
     
     //MARK: ************************* Action && Event *************************
@@ -75,18 +94,25 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     //MARK: ************************* tableViewDelegate *************************
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3//返回组数
+        return 1//返回组数
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10//返回行数
+        return dataArray?.count ?? 0//返回行数
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //返回 cell
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        cell.textLabel?.text = "第\(String(indexPath.section))组的\(indexPath.row)行" 
+        let model = dataArray![indexPath.row]
+        
+        let chName:String = model["chName"] as! String
+        let enName:String = model["enName"] as! String
+        
+        cell.textLabel?.text = chName + enName
+        
+        ImageLoadImage(imgView: cell.imageView!, url: model["picUrl"] as? String)
         
         return cell
     }
@@ -108,7 +134,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40//返回cell高度
+        return 100//返回cell高度
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

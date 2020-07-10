@@ -53,6 +53,12 @@ extension AppDelegate {
     ///APP配置
     func appConfiguration() {
         
+        //设置界面按钮只能点击一个
+        UIButton.appearance().isExclusiveTouch = true
+        
+        //设置键盘适配界面
+        APPKeyboardApi.setKeyBoardlayout()
+        
         
     }
     

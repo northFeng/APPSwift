@@ -36,17 +36,23 @@ class APPNetTool {
 
     static let resultCode = 20000;//成功码
 
-    var AFSession:Session {
-        AF.sessionConfiguration.httpAdditionalHeaders = ["type":"ios"]
-        AF.sessionConfiguration.timeoutIntervalForRequest = 15;//请求超时15秒
+    
+    ///设置请求头信息
+    var AFHeaders:HTTPHeaders {
+       
+        var headers = [String:String]()
+        headers["type"] = "ios"
+        headers["timestamp"] = APPDateTool.date_currentTimeStampString(precision: 1000)
+       
+        AF.sessionConfiguration.timeoutIntervalForRequest = 15//请求超时20秒
         
-        return AF
+        return HTTPHeaders(headers)
     }
 
     ///请求数据
-    func requestData(method:HTTPMethod, url:String, parameters:[String:Any], success:NetSuccess, fail:NetFailure) {
+    func requestData(method:HTTPMethod, url:String, parameters:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
-        AFSession.request(url, method: method, parameters: parameters).responseJSON { response in
+        AF.request(url, method: method, parameters: parameters, headers: AFHeaders).responseJSON { response in
             
             /**
              switch response.result {
@@ -68,85 +74,96 @@ class APPNetTool {
                  print(error)
              }
              */
+            
+            
+            switch response.result {
+            
+            case .success:
+                //处理成功
+                if let jsonData = response.value  {
+                    success(jsonData,200)
+                }
+            case .failure:
+                //处理失败
+                if let error = response.value {
+                    fail(error as! Error)
+                }
+                break
+            }
         }
     }
 
 
     //MARK: ************************* 常规get请求 *************************
-    static func getData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    static func getData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
     }
 
-    func getData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    func getData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
     }
 
     //MARK: ************************* 常规post请求 *************************
-    static func postData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    static func postData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
     }
 
-    func postData(url:String, params:[String:Any], success:NetSuccess, fail:NetFailure) {
+    func postData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
     }
 
 
     //MARK: ************************* 普通请求 *************************
-    static func getNetData(url:String, params:[String:Any], block:NetResultData) {
+    static func getNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
         
         self.getData(url: httpUrl, params: params, success: { (response, code) in
-            
-            let jsonData:[String:Any] = response as! [String:Any]
-            
-            let message:String = jsonData["message"] as! String
-            
-            var data = jsonData["data"]
-            
-            if data == nil {
-                data = [String:Any]()
-            }
-            
-            if code == resultCode {
-                block(true, data, 100)
-            }else{
-                block(false, message, code)
-            }
-            
+            //统一处理结果
+            self.netSucessAnalyticalNetdata(response: response, block: block)
         }) { (error:Error) in
             block(false, HTTPErrorOthersMessage, 99)
         }
     }
 
-    static func postNetData(url:String, params:[String:Any], block:NetResultData) {
+    static func postNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
         
         self.postData(url: httpUrl, params: params, success: { (response, code) in
-            
-            let jsonData:[String:Any] = response as! [String:Any]
-            
-            let message:String = jsonData["message"] as! String
-            
-            var data = jsonData["data"]
-            
-            if data == nil {
-                data = [String:Any]()
-            }
-            
-            if code == resultCode {
-                block(true, data, 100)
-            }else{
-                block(false, message, code)
-            }
-            
+            //统一处理结果
+            self.netSucessAnalyticalNetdata(response: response, block: block)
         }) { (error:Error) in
             block(false, HTTPErrorOthersMessage, 99)
+        }
+    }
+    
+    ///统一处理数据
+    static func netSucessAnalyticalNetdata(response:Any?, block:@escaping NetResultData) {
+        
+        let jsonData:[String:Any]? = response as? [String:Any]
+        
+        let code:Int = jsonData?["code"] as? Int ?? 99
+        
+        let message:String = jsonData?["message"] as? String ?? HTTPErrorOthersMessage
+        
+        let data = jsonData?["data"]
+        
+        if code == resultCode {
+            block(true, data, 100)
+        }else{
+            block(false, message, code)
+        }
+        
+        //后台协商进行用户登录异常提示 && 强制用户退出
+        if (code == 20019) {
+
+            //用户登录过期 && 执行退出
+            APPManager.appManager.forcedExitUserWithShowController(showIndex: 0)
         }
     }
 

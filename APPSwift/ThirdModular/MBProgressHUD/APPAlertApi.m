@@ -173,7 +173,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.userInteractionEnabled = NO;
-        hud.bezelView.backgroundColor = DynamicColor([UIColor blackColor], COLOR(@"#2C2C2C"));
+        hud.bezelView.backgroundColor = DynamicColor(COLOR(@"#000000"), COLOR(@"#2C2C2C"));
         hud.contentColor = UIColor.whiteColor;
         hud.offset = CGPointMake(0, -kScreenHeight*0.1);//2/5处 (5/10 - 4/10)
     }
@@ -188,7 +188,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:onView animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.userInteractionEnabled = NO;
-        hud.bezelView.backgroundColor = DynamicColor([UIColor blackColor], COLOR(@"#2C2C2C"));
+        hud.bezelView.backgroundColor = DynamicColor(COLOR(@"#000000"), COLOR(@"#2C2C2C"));
         hud.contentColor = UIColor.whiteColor;
         hud.offset = CGPointMake(0, -kScreenHeight*0.1);//2/5处 (5/10 - 4/10)
     }
@@ -204,7 +204,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.userInteractionEnabled = !enable;
-        hud.bezelView.backgroundColor = DynamicColor([UIColor whiteColor], COLOR(@"#2C2C2C"));
+        hud.bezelView.backgroundColor = DynamicColor([UIColor blackColor], COLOR(@"#2C2C2C"));
         hud.contentColor = [UIColor whiteColor];//菊花颜色
         hud.offset = CGPointMake(0, -kScreenHeight*0.1);//2/5处 (5/10 - 4/10)
     }
@@ -221,7 +221,7 @@
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.userInteractionEnabled = !enable;
-        hud.bezelView.backgroundColor = DynamicColor([UIColor whiteColor], COLOR(@"#2C2C2C"));
+        hud.bezelView.backgroundColor = DynamicColor([UIColor blackColor], COLOR(@"#2C2C2C"));
         hud.contentColor = [UIColor whiteColor];//菊花颜色
         hud.offset = CGPointMake(0, -kScreenHeight*0.1);//2/5处 (5/10 - 4/10)
     }

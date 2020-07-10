@@ -186,14 +186,17 @@ func FontOfCustom(name:String,font:CGFloat) -> UIFont {
 
 //MARK: ************************* 图片加载框架 *************************
 ///加载图片
-func ImageViewLoadImage(imgView:UIImageView, url:String) {
-    
-    APPImageLoad.ImageViewLoadImage(imgView: imgView, url: url)
+func ImageLoadImage(imgView:UIImageView, url:String?) {
+    if let urlStr = url {
+        APPImageLoad.ImageViewLoadImage(imgView: imgView, url: urlStr)
+    }
 }
 
 ///加载图片 && 占位图
-func ImageViewLoadImage(imgView:UIImageView, url:String, _ placeholderImgName:String) {
-    APPImageLoad.ImageViewLoadImage(imgView: imgView, url: url, placeholderImgName: placeholderImgName)
+func ImageLoadImage(imgView:UIImageView, url:String?, _ placeholderImgName:String) {
+    if let urlStr = url {
+        APPImageLoad.ImageViewLoadImage(imgView: imgView, url: urlStr, placeholderImgName: placeholderImgName)
+    }
 }
 
 ///常规获取图片 （图片会缓存到 内存中）
@@ -235,6 +238,11 @@ func AlertLoadingMsg(_ msg:String, onView:UIView? = nil) {
     }else{
         APPAlertTool.showLoading(message: msg)
     }
+}
+
+///隐藏 loading && 文字
+func AlertHideLoading(onView:UIView? = nil) {
+    APPAlertTool.hideLoading(view: onView)
 }
 
 

@@ -490,7 +490,7 @@ static NSMutableArray<NSURLSessionTask *> *_allSessionTask;
     NSInteger code = codeNum.integerValue;
     
     //返回消息
-    NSString *errorMessage = [netData objectForKey:@"msg"];
+    NSString *errorMessage = [netData objectForKey:@"message"];
     id dataDic = [netData objectForKey:@"data"];//数据
     
     if ([dataDic isKindOfClass:[NSNull class]]) {

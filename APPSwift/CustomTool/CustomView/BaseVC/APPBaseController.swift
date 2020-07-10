@@ -31,7 +31,7 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     
     
     deinit {
-        Print("----\(NSStringFromClass(type(of: self)))已释放----")
+        Print("---- \(NSStringFromClass(type(of: self))) 退出已释放 ----")
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -47,6 +47,8 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     ///视图加载
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Print("---- \(NSStringFromClass(type(of: self))) 进入 ----")
         
         //注册登录通知
         NotificationCenter.default.addObserver(self, selector: #selector(loginStateChange), name: NSNotification.Name(rawValue: kGlobal_LoginStateChange), object: nil)
