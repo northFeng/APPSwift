@@ -85,8 +85,9 @@ class APPNetTool {
                 }
             case .failure:
                 //处理失败
-                if let error = response.value {
-                    fail(error as! Error)
+                Print("---\(type(of: response.error))")
+                if let error = response.error {
+                    fail(error as! AFError)
                 }
                 break
             }
