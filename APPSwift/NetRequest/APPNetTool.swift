@@ -14,18 +14,57 @@ import Alamofire//网络请求
 //官方文档：https://github.com/Alamofire/Alamofire
 //https://www.cnblogs.com/jukaiit/p/9283498.html
 //简书翻译中文版：https://www.jianshu.com/p/4381fe8e10b6   高级用法：https://github.com/Lebron1992/learning-notes/blob/master/docs/alamofire5/03%20-%20Alamofire%205%20的使用%20-%20高级用法.md
-
+//Alamofire全面讲解系列 https://www.jianshu.com/p/f39ad2a3c10b
 //MARK: ************************* 请求工具类 *************************
 
 ///网络请求回调
-typealias NetSuccess = (Any?, Int)->Void
-typealias NetFailure = (Error)->Void
-typealias NetResultData = (Bool, Any?, Int)->Void
+typealias NetSuccess = (Any?, Int)->Void //网络请求成功回调
+typealias NetFailure = (Any)->Void //网络失败回调
+typealias NetResultData = (Bool, Any?, Int)->Void //网络请求回调（包括成功 与 失败）
 
 class APPNetTool {
 
     //创建一个静态或者全局变量，保存当前单例实例值
-    private static let netTool = APPNetTool()
+    static let netTool = APPNetTool()
+    
+    
+    //MARK: ************************* 网络状态监控 *************************
+    enum NetworkStatus:Int {
+        case StatusUnknown = -1 //未知网络
+        case StatusNotReachable = 0 //没有网络
+        case StatusReachableViaWWAN = 1 //蜂窝网络
+        case StatusReachableViaWiFi = 2 //WiFi
+    }
+    var networkStats:NetworkStatus = NetworkStatus.StatusReachableViaWWAN
+    let netManager = NetworkReachabilityManager(host: "www.baidu.com")
+    
+    ///开始网络监测
+    func startNetworkMonitoring() {
+        
+        netManager?.startListening(onQueue: DispatchQueue.global(), onUpdatePerforming: { (status) in
+            switch status {
+            case .unknown:
+                //It is unknown whether the network is reachable. 未知网络
+                self.networkStats = .StatusUnknown
+            case .notReachable:
+                //The network is not reachable. 网络不可访问
+                self.networkStats = .StatusNotReachable
+            case .reachable(let netType):
+                switch netType {
+                case .ethernetOrWiFi:
+                    //The connection type is either over Ethernet or WiFi.
+                    self.networkStats = .StatusReachableViaWWAN
+                case .cellular:
+                    //The connection type is a cellular connection. 蜂窝网络
+                    self.networkStats = .StatusReachableViaWiFi
+                }
+            }
+            Print("网络状态变化--->\(String(describing: self.networkStats))")
+            //网络发生变化在此进行通知
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kGlobal_NetworkingReachabilityChangeNotification), object: self.networkStats)
+        })
+    }
+    
 
     //MARK: ************************* 网络请求失败常用语 *************************
     static let HTTPErrorCancleMessage = "请求被取消"
@@ -87,7 +126,7 @@ class APPNetTool {
                 //处理失败
                 Print("---\(type(of: response.error))")
                 if let error = response.error {
-                    fail(error as! AFError)
+                    fail(error)//AFError
                 }
                 break
             }
@@ -126,7 +165,7 @@ class APPNetTool {
         self.getData(url: httpUrl, params: params, success: { (response, code) in
             //统一处理结果
             self.netSucessAnalyticalNetdata(response: response, block: block)
-        }) { (error:Error) in
+        }) { (error) in
             block(false, HTTPErrorOthersMessage, 99)
         }
     }
@@ -138,7 +177,7 @@ class APPNetTool {
         self.postData(url: httpUrl, params: params, success: { (response, code) in
             //统一处理结果
             self.netSucessAnalyticalNetdata(response: response, block: block)
-        }) { (error:Error) in
+        }) { (error) in
             block(false, HTTPErrorOthersMessage, 99)
         }
     }
@@ -167,6 +206,12 @@ class APPNetTool {
             APPManager.appManager.forcedExitUserWithShowController(showIndex: 0)
         }
     }
+    
+    ///统一处理失败 处理
+    static func netFailAnalyticalNetData(error:AFError, block:@escaping NetResultData) {
+        var errorMsg = HTTPErrorOthersMessage //默认网络不给力
+        
+    }
 
     //pod 'Networking', '~> 4'  https://github.com/3lvis/Networking
     //MARK: ************************* 封装AFNetworking *************************
@@ -191,7 +236,7 @@ class APPNetTool {
     }
 
     //MARK: ************************* Model <——> 模型 *************************
-    ///模型转换 jsonToModel(json:data, Model: Model.self)
+    ///模型转换 jsonToModel(json:data, Model: Model.self)    ——> AnyClass.Type ——> Convertible.Type ——> BaseModel.Type
     static func jsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
 
         var model:Any?;

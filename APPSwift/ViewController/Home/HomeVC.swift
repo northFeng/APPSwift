@@ -18,7 +18,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         
     let button = UIButton(type: .custom)
     
-    var dataArray:[[String:Any]]? = []
+    var dataArray:[WordModel]? = []
     
     
     override func viewDidLoad() {
@@ -68,13 +68,17 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
             self.tableView.mj_header?.endRefreshing()
             if result {
                 let jsonArray = idObject as! [[String:Any]]
-                self.dataArray = jsonArray
-                
+                let data = JsonToModel(json: jsonArray, Model: WordModel.self)
+                if let dataArray = data as? [WordModel] {
+                    self.dataArray = dataArray
+                }
                 self.tableView.reloadData()
             } else {
                 AlertMessage(idObject as! String)
             }
         }
+        
+        
     }
     
     //MARK: ************************* Action && Event *************************
@@ -105,14 +109,14 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         //返回 cell
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let model = dataArray![indexPath.row]
+        let wordModel = dataArray![indexPath.row]
         
-        let chName:String = model["chName"] as! String
-        let enName:String = model["enName"] as! String
+        let chName:String = wordModel.chName
+        let enName:String = wordModel.enName
         
         cell.textLabel?.text = chName + enName
         
-        ImageLoadImage(imgView: cell.imageView!, url: model["picUrl"] as? String)
+        ImageLoadImage(imgView: cell.imageView!, url: wordModel.picUrl)
         
         return cell
     }
@@ -164,4 +168,13 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
 }
 
+
+class WordModel: BaseModel {
+    var tagId = ""
+    var updateTime = ""
+    var chName = ""
+    var enName = ""
+    var picUrl = ""
+    var tagType:Int = 0
+}
 

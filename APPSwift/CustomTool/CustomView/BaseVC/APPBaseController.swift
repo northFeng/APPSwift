@@ -153,11 +153,11 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     @objc func loginStateChange() {
         Print("登录状态发声变化")
     }
-    
+    ///网络状态变化
     @objc func reachabilityNetStateChanged(noti:NSNotification) {
         
     }
-    
+    ///APP 主题模式变化
     @objc func changeVCLightOrDarkModel() {
         
         if #available(iOS 13.0, *) {

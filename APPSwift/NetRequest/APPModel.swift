@@ -10,12 +10,22 @@ import Foundation
 
 import KakaJSON//JSON数据 转 Model
 
-import ObjectMapper//模型转换
-
+//官方用法教程：https://www.cnblogs.com/mjios/category/1526581.html
 /**
  为了方便起见：所有的model的属性全部直接初始化！
  */
-
+//方便统一管理
+/**
+ // 有时类型可能是个变量，比如
+ var type: Convertible.Type = Cat.self
+  
+ // 调用带有type参数的方法即可
+ // 由于传入的类型是Convertible.Type变量，因此返回值类型是Convertible，到时根据需求强制转换成自己想要的类型
+ let cat1 = json.kj.model(type: type) as? Cat
+  
+ // 或者调用全局函数
+ let cat2 = model(from: json, type: type) as? Cat
+ */
 class BaseModel: Convertible {
     
     //类的属性，最后直接初始化一个值！
@@ -55,7 +65,7 @@ class BaseModel: Convertible {
     required init() {} //所有继承 BaseModel的类，则不用写这个方法了
 }
 
-
+//import ObjectMapper//模型转换
 /**  写法太麻烦了    用法：https://www.jianshu.com/p/609fbdb62274
  class User:, Mappable {
      var name: String?

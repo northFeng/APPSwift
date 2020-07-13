@@ -53,6 +53,9 @@ extension AppDelegate {
     ///APP配置
     func appConfiguration() {
         
+         //开启网络监测类
+        APPNetTool.netTool.startNetworkMonitoring()
+        
         //设置界面按钮只能点击一个
         UIButton.appearance().isExclusiveTouch = true
         
