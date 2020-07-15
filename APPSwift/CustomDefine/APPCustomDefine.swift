@@ -43,7 +43,10 @@ let IOSLess10:Bool = ((UIDevice.current.systemVersion as NSString).integerValue 
 let IOSAbove13:Bool = ((UIDevice.current.systemVersion as NSString).integerValue > 13)
 
 ///是否为手机（用来判断是iPhone && iPad）
-let kIsiPhone:Bool = true
+let kiPhone:Bool = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone
+
+///是否为iPad
+let kiPad:Bool = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad
 
 //--------------------------------------------------------------------------------------------
 

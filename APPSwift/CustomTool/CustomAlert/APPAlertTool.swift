@@ -98,6 +98,7 @@ class APPAlertTool {
     }
     
     //MARK: ************************* 系统提示弹框 *************************
+    //系统弹框 在 iPhone 和 iPad 上 有区别的 https://www.jianshu.com/p/8740a7ddc99d
     
     ///系统弹框 ——>  消息提示框 && 确定按钮
     static func systemAlertMsg(title:String, msg:String?, btnTitle:String? = "确定", blockAction:APPBackClosure? = nil) {
@@ -145,10 +146,17 @@ class APPAlertTool {
         topVC?.present(alertController, animated: true, completion: nil)
     }
     
-    ///系统弹框 ——>消息提示列表选择
+    ///系统弹框 ——>消息提示列表选择  （注意这个，在iPad）
     static func systemAlertListAction(title:String, msg:String?, listTitles:[String], blockAction:@escaping APPBackClosure) {
     
-        let alertTellController = UIAlertController(title: title, message: msg, preferredStyle: .actionSheet)
+        var alertTellController:UIAlertController
+        if kiPhone {
+            //iPhone
+            alertTellController = UIAlertController(title: title, message: msg, preferredStyle: .actionSheet)
+        }else{
+            //iPad
+            alertTellController = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        }
         
         for index in 0..<listTitles.count {
             

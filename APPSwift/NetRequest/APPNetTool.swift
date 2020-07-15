@@ -19,24 +19,37 @@ import Alamofire//网络请求
 
 ///网络请求回调
 typealias NetSuccess = (Any?, Int)->Void //网络请求成功回调
-typealias NetFailure = (Any)->Void //网络失败回调
+typealias NetFailure = (AFError)->Void //网络失败回调
 typealias NetResultData = (Bool, Any?, Int)->Void //网络请求回调（包括成功 与 失败）
 
+///APP请求类
 class APPNetTool {
-
+    
     //创建一个静态或者全局变量，保存当前单例实例值
     static let netTool = APPNetTool()
     
-    
-    //MARK: ************************* 网络状态监控 *************************
+    //网络状态类型
     enum NetworkStatus:Int {
         case StatusUnknown = -1 //未知网络
         case StatusNotReachable = 0 //没有网络
         case StatusReachableViaWWAN = 1 //蜂窝网络
         case StatusReachableViaWiFi = 2 //WiFi
+        
+        func aaa() {
+            
+        }
     }
     var networkStats:NetworkStatus = NetworkStatus.StatusReachableViaWWAN
     let netManager = NetworkReachabilityManager(host: "www.baidu.com")
+    
+    //网络请求管理数组
+    var allDataRequest = [DataRequest]()
+    
+}
+
+
+//MARK: ************************* 网络状态监控 *************************
+extension APPNetTool {
     
     ///开始网络监测
     func startNetworkMonitoring() {
@@ -64,9 +77,12 @@ class APPNetTool {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: kGlobal_NetworkingReachabilityChangeNotification), object: self.networkStats)
         })
     }
-    
+}
 
-    //MARK: ************************* 网络请求失败常用语 *************************
+//MARK: ************************* 网络请求 *************************
+extension APPNetTool {
+    
+    /**************************** 网络请求失败常用语 **************************/
     static let HTTPErrorCancleMessage = "请求被取消"
     static let HTTPErrorTimeOutMessage = "请求超时"
     static let HTTPErrorNotConnectedMessage = "网络连接断开"
@@ -91,7 +107,7 @@ class APPNetTool {
     ///请求数据
     func requestData(method:HTTPMethod, url:String, parameters:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
-        AF.request(url, method: method, parameters: parameters, headers: AFHeaders).responseJSON { response in
+        let request:DataRequest = AF.request(url, method: method, parameters: parameters, headers: AFHeaders).responseJSON { response in
             
             /**
              switch response.result {
@@ -114,27 +130,29 @@ class APPNetTool {
              }
              */
             
-            
+            //DataResponse 类型
             switch response.result {
             
             case .success:
                 //处理成功
                 if let jsonData = response.value  {
-                    success(jsonData,200)
+                    success(jsonData,100)
+                }else{
+                    success([:],100)
                 }
             case .failure:
                 //处理失败
-                Print("---\(type(of: response.error))")
                 if let error = response.error {
                     fail(error)//AFError
                 }
-                break
             }
         }
+        
+        allDataRequest.append(request)
     }
 
 
-    //MARK: ************************* 常规get请求 *************************
+    //MARK: 常规get请求
     static func getData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
@@ -145,7 +163,7 @@ class APPNetTool {
         self.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
     }
 
-    //MARK: ************************* 常规post请求 *************************
+    //MARK: 常规post请求
     static func postData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
         self.netTool.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
@@ -157,7 +175,7 @@ class APPNetTool {
     }
 
 
-    //MARK: ************************* 普通请求 *************************
+    //MARK: 普通请求
     static func getNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
@@ -166,7 +184,8 @@ class APPNetTool {
             //统一处理结果
             self.netSucessAnalyticalNetdata(response: response, block: block)
         }) { (error) in
-            block(false, HTTPErrorOthersMessage, 99)
+            //统一处理错误
+            self.netFailAnalyticalNetData(error: error, block: block)
         }
     }
 
@@ -178,7 +197,8 @@ class APPNetTool {
             //统一处理结果
             self.netSucessAnalyticalNetdata(response: response, block: block)
         }) { (error) in
-            block(false, HTTPErrorOthersMessage, 99)
+            //统一处理错误
+            self.netFailAnalyticalNetData(error: error, block: block)
         }
     }
     
@@ -210,11 +230,29 @@ class APPNetTool {
     ///统一处理失败 处理
     static func netFailAnalyticalNetData(error:AFError, block:@escaping NetResultData) {
         var errorMsg = HTTPErrorOthersMessage //默认网络不给力
+        let errorCode = error.responseCode ?? -1
         
+        switch errorCode {
+        case NSURLErrorCancelled:
+            //被取消
+            errorMsg = HTTPErrorCancleMessage
+        case NSURLErrorTimedOut:
+            //超时
+            errorMsg = HTTPErrorTimeOutMessage
+        case NSURLErrorNotConnectedToInternet:
+            //断网
+            errorMsg = HTTPErrorNotConnectedMessage
+        default:
+            errorMsg = HTTPErrorOthersMessage
+        }
+        
+        block(false,errorMsg,99)
     }
+}
 
-    //pod 'Networking', '~> 4'  https://github.com/3lvis/Networking
-    //MARK: ************************* 封装AFNetworking *************************
+//MARK: ************************* 封装AFNetworking *************************
+extension APPNetTool {
+    ///get请求（AFNetworking框架）
     static func getRequestData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
@@ -225,6 +263,7 @@ class APPNetTool {
         }
     }
 
+    ///post请求（AFNetworking框架）
     static func postRequestData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
@@ -234,8 +273,11 @@ class APPNetTool {
             block(result, idObject, code);
         }
     }
+}
 
-    //MARK: ************************* Model <——> 模型 *************************
+//MARK: ************************* Model <——> 模型 *************************
+extension APPNetTool {
+    
     ///模型转换 jsonToModel(json:data, Model: Model.self)    ——> AnyClass.Type ——> Convertible.Type ——> BaseModel.Type
     static func jsonToModel(json:Any, Model:BaseModel.Type) -> Any? {
 
