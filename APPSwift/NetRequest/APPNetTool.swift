@@ -17,10 +17,22 @@ import Alamofire//网络请求
 //Alamofire全面讲解系列 https://www.jianshu.com/p/f39ad2a3c10b
 //MARK: ************************* 请求工具类 *************************
 
+///网络请求 响应code
+enum APPNetStatus {
+    ///请求成功
+    case sucess(code:Int)
+    ///后台请求成功 数据code异常
+    case fail(code:Int)
+    ///http错误
+    case failHttp(code:Int)
+    ///只携带code
+    case result(code:Int)
+}
+
 ///网络请求回调
 typealias NetSuccess = (Any?, Int)->Void //网络请求成功回调
 typealias NetFailure = (AFError)->Void //网络失败回调
-typealias NetResultData = (Bool, Any?, Int)->Void //网络请求回调（包括成功 与 失败）
+typealias NetResultData = (Bool, Any?, APPNetStatus)->Void //网络请求回调（包括成功 与 失败）
 
 ///APP请求类
 class APPNetTool {
@@ -34,10 +46,6 @@ class APPNetTool {
         case StatusNotReachable = 0 //没有网络
         case StatusReachableViaWWAN = 1 //蜂窝网络
         case StatusReachableViaWiFi = 2 //WiFi
-        
-        func aaa() {
-            
-        }
     }
     var networkStats:NetworkStatus = NetworkStatus.StatusReachableViaWWAN
     let netManager = NetworkReachabilityManager(host: "www.baidu.com")
@@ -88,10 +96,10 @@ extension APPNetTool {
     static let HTTPErrorNotConnectedMessage = "网络连接断开"
     static let HTTPErrorOthersMessage = "网络不给力"
     static let HTTPErrorServerMessage = "服务器繁忙"
+    static let HTTPErrorDataMessage = "数据错误"
 
-    static let resultCode = 20000;//成功码
+    private static let resultCode = 20000;//与后台商定成功码
 
-    
     ///设置请求头信息
     var AFHeaders:HTTPHeaders {
        
@@ -136,9 +144,9 @@ extension APPNetTool {
             case .success:
                 //处理成功
                 if let jsonData = response.value  {
-                    success(jsonData,100)
+                    success(jsonData,200)
                 }else{
-                    success([:],100)
+                    success([:],200)
                 }
             case .failure:
                 //处理失败
@@ -176,6 +184,7 @@ extension APPNetTool {
 
 
     //MARK: 普通请求
+    ///普通get请求
     static func getNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
@@ -189,6 +198,7 @@ extension APPNetTool {
         }
     }
 
+    ///普通post请求
     static func postNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
         
         let httpUrl:String = APPKeyInfo.hostUrl() + url
@@ -207,16 +217,16 @@ extension APPNetTool {
         
         let jsonData:[String:Any]? = response as? [String:Any]
         
-        let code:Int = jsonData?["code"] as? Int ?? 99
+        let code:Int = jsonData?["code"] as? Int ?? resultCode
         
-        let message:String = jsonData?["message"] as? String ?? HTTPErrorOthersMessage
+        let message:String = jsonData?["message"] as? String ?? HTTPErrorDataMessage
         
-        let data = jsonData?["data"]
+        let data = jsonData?["data"]//内容数据
         
         if code == resultCode {
-            block(true, data, 100)
+            block(true, data, APPNetStatus.sucess(code: code))
         }else{
-            block(false, message, code)
+            block(false, message, APPNetStatus.fail(code: code))
         }
         
         //后台协商进行用户登录异常提示 && 强制用户退出
@@ -229,9 +239,17 @@ extension APPNetTool {
     
     ///统一处理失败 处理
     static func netFailAnalyticalNetData(error:AFError, block:@escaping NetResultData) {
-        var errorMsg = HTTPErrorOthersMessage //默认网络不给力
-        let errorCode = error.responseCode ?? -1
         
+        var errorMsg = HTTPErrorOthersMessage //默认网络不给力
+        
+        ///errorMsg = error.errorDescription ?? ""
+        
+        let errorInfo:Error? = error.underlyingError
+        Print("请求出错：\(String(describing: errorInfo))")
+        
+        let errorNS:NSError? = errorInfo as NSError?
+        
+        let errorCode:Int = errorNS?.code ?? 404
         switch errorCode {
         case NSURLErrorCancelled:
             //被取消
@@ -246,7 +264,7 @@ extension APPNetTool {
             errorMsg = HTTPErrorOthersMessage
         }
         
-        block(false,errorMsg,99)
+        block(false, errorMsg, APPNetStatus.failHttp(code: errorCode))
     }
 }
 
@@ -259,7 +277,7 @@ extension APPNetTool {
         
         APPHttpTool.getRequestNetDicDataUrl(httpUrl, params: params) { (result:Bool, idObject:Any, code:Int) in
             
-            block(result, idObject, code);//逃逸闭包注意 循环引用
+            block(result, idObject, APPNetStatus.result(code: code));//逃逸闭包注意 循环引用
         }
     }
 
@@ -270,7 +288,7 @@ extension APPNetTool {
        
         APPHttpTool.postRequestNetDicDataUrl(httpUrl, params: params) { (result:Bool, idObject:Any, code:Int) in
             
-            block(result, idObject, code);
+            block(result, idObject, APPNetStatus.result(code: code));
         }
     }
 }

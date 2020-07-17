@@ -63,18 +63,26 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     func netData() {
         AlertLoading()
-        APPNetTool.getNetData(url: "v2/front/tag/getTagList", params: ["tagType":"1"]) { (result:Bool, idObject:Any, code:Int) in
+        APPNetTool.getNetData(url: "v2/front/tag/getTagList", params: ["tagType":"1"]) { (result, data, status) in
             AlertHideLoading()
             self.tableView.mj_header?.endRefreshing()
             if result {
-                let jsonArray = idObject as! [[String:Any]]
+                let jsonArray = data as! [[String:Any]]
                 let data = JsonToModel(json: jsonArray, Model: WordModel.self)
                 if let dataArray = data as? [WordModel] {
                     self.dataArray = dataArray
                 }
                 self.tableView.reloadData()
+                
+                if case APPNetStatus.sucess(let code) = status {
+                    Print("结果code：\(code)")
+                }
+                
             } else {
-                AlertMessage(idObject as! String)
+                AlertMessage(data as! String)
+                if case let APPNetStatus.failHttp(code) = status {
+                    Print("结果code：\(code)")
+                }
             }
         }
         
@@ -177,4 +185,3 @@ class WordModel: BaseModel {
     var picUrl = ""
     var tagType:Int = 0
 }
-

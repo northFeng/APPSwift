@@ -500,7 +500,7 @@ static NSMutableArray<NSURLSessionTask *> *_allSessionTask;
     if (code == resultCode) {
         //请求成功
         if (block) {
-            block(YES,dataDic,100);
+            block(YES,dataDic,resultCode);
         }
     }else{
         // 错误处理
@@ -541,7 +541,7 @@ static NSMutableArray<NSURLSessionTask *> *_allSessionTask;
             break;
     }
     if (block) {
-        block(NO,errorMessage,99);
+        block(NO,errorMessage,error.code);
     }
 }
 

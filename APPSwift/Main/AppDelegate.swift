@@ -91,4 +91,9 @@ extension AppDelegate {
         tabBar.viewControllers = [homeVC,middleVC,mineVC] // ——> 这补直接触发 HomeVC上viewLoad加载方法
         tabBar.createItems(defaultIndex: 0, normalImageNames: ["home_n","order_n","mine_n"], selectImageNames: ["home_s","order_s","mine_s"], itemsTitles: ["首页","发现","我的"])
     }
+    
+    ///检查版本更新
+    func checkTheLatestVersion() {
+        
+    }
 }
