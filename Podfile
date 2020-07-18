@@ -27,14 +27,16 @@ pod 'NVActivityIndicatorView','~>4.8.0'
 
 #数据存储
 pod 'KeychainAccess','~>4.2.0'
+#Cache.swift https://github.com/hyperoslo/Cache
+#pod 'Cache'//缓存数据
 
 #刷新框架 暂用OC框架
 pod 'MJRefresh','~>3.4.3'
 
-#RAC框架
+#RAC框架  官方文档 https://reactivecocoa.io/reactiveswift/docs/latest/index.html
 pod 'ReactiveSwift', '~> 6.3.0'
 
-#RXSwift框架
+#RXSwift框架 https://www.jianshu.com/p/f61a5a988590
 pod 'RxSwift','~> 4.0'
 pod 'RxCocoa','~> 4.0'
 

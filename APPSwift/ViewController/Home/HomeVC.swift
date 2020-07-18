@@ -20,6 +20,9 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var dataArray:[WordModel]? = []
     
+    var param = 0
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +64,10 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         tableView.mj_footer?.endRefreshing()
     }
     
+    
     func netData() {
         AlertLoading()
-        APPNetTool.getNetData(url: "v2/front/tag/getTagList", params: ["tagType":"1"]) { (result, data, status) in
+        APPNetTool.getNetDataCache(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
             AlertHideLoading()
             self.tableView.mj_header?.endRefreshing()
             if result {
@@ -86,17 +90,35 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
             }
         }
         
+//        APPNetTool.getNetData(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
+//            AlertHideLoading()
+//            self.tableView.mj_header?.endRefreshing()
+//            if result {
+//                let jsonArray = data as! [[String:Any]]
+//                let data = JsonToModel(json: jsonArray, Model: WordModel.self)
+//                if let dataArray = data as? [WordModel] {
+//                    self.dataArray = dataArray
+//                }
+//                self.tableView.reloadData()
+//
+//                if case APPNetStatus.sucess(let code) = status {
+//                    Print("结果code：\(code)")
+//                }
+//
+//            } else {
+//                AlertMessage(data as! String)
+//                if case let APPNetStatus.failHttp(code) = status {
+//                    Print("结果code：\(code)")
+//                }
+//            }
+//        }
         
+        //param += 1
     }
     
     //MARK: ************************* Action && Event *************************
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let homeVC = HomeVC()
-        Print("touch")
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            Print("pushVC")
-            self.navigationController?.pushViewController(homeVC, animated: true)
-        }
+        
     }
     
 

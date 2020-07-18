@@ -99,7 +99,7 @@ extension APPNetTool {
     static let HTTPErrorDataMessage = "数据错误"
 
     private static let resultCode = 20000;//与后台商定成功码
-
+    
     ///设置请求头信息
     var AFHeaders:HTTPHeaders {
        
@@ -111,11 +111,28 @@ extension APPNetTool {
         
         return HTTPHeaders(headers)
     }
+    
+    ///请求方式
+    enum NetMethod {
+        ///get请求
+        case get
+        ///post请求
+        case post
+    }
 
     ///请求数据
-    func requestData(method:HTTPMethod, url:String, parameters:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
+    func requestData(method:NetMethod, url:String, parameters:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
         
-        let request:DataRequest = AF.request(url, method: method, parameters: parameters, headers: AFHeaders).responseJSON { response in
+        var httpMethod = HTTPMethod.post
+        
+        switch method {
+        case .get:
+            httpMethod = HTTPMethod.get
+        case .post:
+            httpMethod = HTTPMethod.post
+        }
+        
+        let request:DataRequest = AF.request(url, method: httpMethod, parameters: parameters, headers: AFHeaders).responseJSON { response in
             
             /**
              switch response.result {
@@ -137,6 +154,7 @@ extension APPNetTool {
                  print(error)
              }
              */
+            self.removeDataRequest(URL: url)//移除观察
             
             //DataResponse 类型
             switch response.result {
@@ -158,60 +176,75 @@ extension APPNetTool {
         
         allDataRequest.append(request)
     }
-
-
-    //MARK: 常规get请求
-    static func getData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
-        
-        self.netTool.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
-    }
-
-    func getData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
-        
-        self.requestData(method: HTTPMethod.get, url: url, parameters: params, success: success, fail: fail )
-    }
-
-    //MARK: 常规post请求
-    static func postData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
-        
-        self.netTool.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
-    }
-
-    func postData(url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
-        
-        self.requestData(method: HTTPMethod.post, url: url, parameters: params, success: success, fail: fail )
-    }
-
-
-    //MARK: 普通请求
-    ///普通get请求
-    static func getNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
-        
-        let httpUrl:String = APPKeyInfo.hostUrl() + url
-        
-        self.getData(url: httpUrl, params: params, success: { (response, code) in
-            //统一处理结果
-            self.netSucessAnalyticalNetdata(response: response, block: block)
-        }) { (error) in
-            //统一处理错误
-            self.netFailAnalyticalNetData(error: error, block: block)
-        }
-    }
-
-    ///普通post请求
-    static func postNetData(url:String, params:[String:Any], block:@escaping NetResultData) {
-        
-        let httpUrl:String = APPKeyInfo.hostUrl() + url
-        
-        self.postData(url: httpUrl, params: params, success: { (response, code) in
-            //统一处理结果
-            self.netSucessAnalyticalNetdata(response: response, block: block)
-        }) { (error) in
-            //统一处理错误
-            self.netFailAnalyticalNetData(error: error, block: block)
+    
+    ///移除 DataRequest元素
+    func removeDataRequest(URL:String) {
+        for index in 0..<allDataRequest.count {
+            let dataRequest = allDataRequest.getItem_gf(index)
+                    
+            if dataRequest?.request?.url?.absoluteString.hasPrefix(URL) ?? false {
+                allDataRequest.remove(at: index)//移除
+                break
+            }
         }
     }
     
+    ///取消所有的请求
+    func cancelAllRequest() {
+        objc_sync_enter(allDataRequest)
+        
+        for request in allDataRequest {
+            request.cancel()//取消请求
+        }
+        allDataRequest.removeAll()//移除所有request
+        
+        objc_sync_exit(allDataRequest)
+    }
+    
+    ///根据URL取消请求
+    func cancelRequest(url:String) {
+        objc_sync_enter(allDataRequest)
+        
+        for index in 0..<allDataRequest.count {
+            let request:DataRequest? = allDataRequest.getItem_gf(index)
+            if request?.request?.url?.absoluteString.hasPrefix(url) ?? false {
+                request!.cancel()
+                allDataRequest.removeItem_gf(request!)
+            }
+        }
+        
+        objc_sync_exit(allDataRequest)
+    }
+    
+    ///是否包含请求
+    func containRequest(url:String) -> Bool {
+        var contain = false
+        
+        for index in 0..<allDataRequest.count {
+            let request:DataRequest? = allDataRequest.getItem_gf(index)
+            if request?.request?.url?.absoluteString.hasPrefix(url) ?? false {
+                contain = true
+                break
+            }
+        }
+        
+        return contain
+    }
+
+
+    //MARK: 常规请求
+    static func getData(method:NetMethod = .post, url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
+        
+        self.netTool.requestData(method: method, url: url, parameters: params, success: success, fail: fail )
+    }
+
+    func getData(method:NetMethod = .post, url:String, params:[String:Any], success:@escaping NetSuccess, fail:@escaping NetFailure) {
+        
+        self.requestData(method: method, url: url, parameters: params, success: success, fail: fail )
+    }
+
+    
+    //MARK: 根据APP内数据进行处理 结果统一处理
     ///统一处理数据
     static func netSucessAnalyticalNetdata(response:Any?, block:@escaping NetResultData) {
         
@@ -249,7 +282,8 @@ extension APPNetTool {
         
         let errorNS:NSError? = errorInfo as NSError?
         
-        let errorCode:Int = errorNS?.code ?? 404
+        let errorCode:Int = errorNS?.code ?? -999 //如果 errorNS为nil，则证明 请求被取消
+        
         switch errorCode {
         case NSURLErrorCancelled:
             //被取消
@@ -265,6 +299,71 @@ extension APPNetTool {
         }
         
         block(false, errorMsg, APPNetStatus.failHttp(code: errorCode))
+    }
+}
+
+//MARK: ************************* APP内常规请求 *************************
+extension APPNetTool {
+    ///普通请求
+    static func getNetData(method:NetMethod = .post, url:String, params:[String:Any], block:@escaping NetResultData) {
+        
+        let URL = APPKeyInfo.hostUrl() + url
+        
+        self.getData(method: method, url: URL, params: params, success: { (response, code) in
+            //统一处理结果
+            self.netSucessAnalyticalNetdata(response: response, block: block)
+        }) { (error) in
+            //统一处理错误
+            self.netFailAnalyticalNetData(error: error, block: block)
+        }
+    }
+}
+
+//MARK: ************************* APP特殊网络请求 缓存 & 多次请求 *************************
+extension APPNetTool {
+    
+    ///获取缓存数据 + 请求最新的数据&&更新缓存数据
+    static func getNetDataCache(method:NetMethod = .post, url:String, params:[String:Any], block:@escaping NetResultData) {
+        let URL = APPKeyInfo.hostUrl() + url
+        
+        let dataCache = HTTPCache.getCache(URL: URL, parameters: params)
+        
+        if dataCache != nil {
+            //有缓存数据
+            self.netSucessAnalyticalNetdata(response: dataCache, block: block)
+        }else{
+            //没有缓存数据 ——> 请求
+            self.getData(method: method, url: URL, params: params, success: { (response, code) in
+                //对数据进行保存
+                let jsonData:[String:Any]? = response as? [String:Any]
+                if jsonData != nil {
+                    HTTPCache.setCache(responseData: jsonData!, URL: URL, parameters: params)
+                }
+                //统一处理结果
+                self.netSucessAnalyticalNetdata(response: response, block: block)
+            }) { (error) in
+                //统一处理错误
+                self.netFailAnalyticalNetData(error: error, block: block)
+            }
+        }
+    }
+    
+    ///取消上一次同一请求，获取最新次的请求
+    static func getNetDataCancelUp(method:NetMethod = .post, url:String, params:[String:Any], block:@escaping NetResultData) {
+        let URL = APPKeyInfo.hostUrl() + url
+        
+        netTool.cancelRequest(url: URL)
+        self.getNetData(method: method, url: url, params: params, block: block)
+    }
+    
+    ///重复请求只请求第一次
+    static func getNetDataOnce(method:NetMethod = .post, url:String, params:[String:Any], block:@escaping NetResultData) {
+        let URL = APPKeyInfo.hostUrl() + url
+        
+        if netTool.containRequest(url: URL) == false {
+            //没有正在请求的
+            self.getNetData(method: method, url: url, params: params, block: block)
+        }
     }
 }
 
@@ -345,5 +444,96 @@ extension APPNetTool {
         let data = jsonString.data(using: .utf8)
         
         return data ?? Data()
+    }
+    
+    ///JSON转Data
+    static func jsonToData(jsonDic:Dictionary<String, Any>) -> Data? {
+
+        if JSONSerialization.isValidJSONObject(jsonDic) {
+            //利用自带的json库转换成Data
+            //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+            let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
+            //Data转换成String打印输出
+            //let str = String(data:data!, encoding: String.Encoding.utf8)
+            
+            return data
+        }else{
+            return nil
+        }
+    }
+    
+    ///Data转Dic
+    static func dataToDictionary(data:Data) -> Dictionary<String, Any>? {
+
+        let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+        
+        let dic:[String:Any]? = json as? Dictionary<String, Any>
+        
+        return dic
+    }
+}
+
+
+//MARK: ************************* HTTPCache *************************
+import KeychainAccess
+
+fileprivate struct HTTPCache {
+    
+    ///缓存管理者
+    static let cacheManager = Keychain(service: "APPHTTPCache")
+    
+    
+    /// 异步缓存网络数据，根据请求的URL与parameters做KEY存储数据, 缓存多级页面的数据
+    /// - Parameters:
+    ///   - responseData: 服务器返回的数据
+    ///   - URL: 请求的URL地址
+    ///   - parameters: 请求的参数
+    static func setCache(responseData:[String:Any], URL:String, parameters:[String:Any]) {
+        
+        let data:Data? = APPNetTool.jsonToData(jsonDic: responseData)
+        
+        if let dataCache = data {
+            let key = self.cacheKey(URL: URL, parameters: parameters)
+            try? cacheManager.set(dataCache, key: key)
+        }
+    }
+    
+    
+    /// 根据请求的URL与parameters 取出缓存数据
+    /// - Parameters:
+    ///   - URL: 请求的URL地址
+    ///   - parameters: 请求的参数
+    /// - Returns: 缓存的服务器数据
+    static func getCache(URL:String, parameters:[String:Any]) -> [String:Any]? {
+        let key = self.cacheKey(URL: URL, parameters: parameters)
+        let data = try? cacheManager.getData(key)
+        
+        var dicJson:[String:Any]?
+        if let dataCache = data {
+            let json = try? JSONSerialization.jsonObject(with: dataCache, options: .mutableContainers)
+            dicJson = json as? Dictionary<String, Any>
+        }
+        return dicJson
+    }
+    
+    ///清除网络缓存数据
+    static func clearCache() {
+        try? cacheManager.removeAll()
+    }
+    
+    
+    ///获取key
+    private static func cacheKey(URL:String, parameters:[String:Any]) -> String {
+        if parameters.count > 0 {
+            let paramData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+            
+            var paramStr = ""
+            if let dataParam = paramData {
+                paramStr = String(data: dataParam, encoding: .utf8) ?? ""
+            }
+            return (URL + paramStr).md5_gf()
+        }else{
+            return URL.md5_gf()
+        }
     }
 }

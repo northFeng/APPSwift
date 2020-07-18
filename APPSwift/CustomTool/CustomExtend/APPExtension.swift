@@ -9,6 +9,7 @@
 import Foundation
 
 //MARK: ************************* String扩展 *************************
+import CommonCrypto
 extension String {
     
     ///字符串截取
@@ -18,14 +19,28 @@ extension String {
         return String(self[start...end])
     }
     
-    
+    ///MD5加密
+    func md5_gf() -> String {
+        let strs = self
+        let str = strs.cString(using: String.Encoding.utf8)
+         let strLen = CUnsignedInt(strs.lengthOfBytes(using: String.Encoding.utf8))
+         let digestLen = Int(CC_MD5_DIGEST_LENGTH)
+         let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
+         CC_MD5(str!, strLen, result)
+         let hash = NSMutableString()
+         for i in 0 ..< digestLen {
+             hash.appendFormat("%02x", result[i])
+         }
+         result.deallocate()
+         return String(format: hash as String)
+    }
     
 }
 
 //MARK: ************************* Array扩展 *************************
 extension Array {
     ///获取下标元素
-    func getItem_gf(_ index:Int) -> Any? {
+    func getItem_gf(_ index:Int) -> Element? {
         if self.count > 0 && index >= 0 && index < self.count {
             return self[index]
         }else{
@@ -34,17 +49,47 @@ extension Array {
     }
     
     ///添加元素
-    mutating func addItem_gf(_ item:Any?) {
+    mutating func addItem_gf(_ item:Element?) {
         if let elemet = item {
-            self.append(elemet as! Element)
+            self.append(elemet)
         }
     }
     
     ///删除一个元素
-    mutating func removeItem_gf(_ index:Int) {
+    mutating func removeAtIndex_gf(_ index:Int) {
         if index <= self.count - 1 && index >= 0 && self.count > 0 {
             self.remove(at: index)
         }
+    }
+    
+    ///删除某个元素
+    mutating func removeItem_gf(_ item:Element) {
+        for index in indexs(item).reversed() {
+            self.remove(at: index)
+        }
+    }
+    
+    ///获取相同元素的所有位置
+    mutating func indexs(_ item:Element) -> [Int] {
+        var indexs = [Int]()
+        for index in 0..<count where self[index] as AnyObject === item as AnyObject  {
+            indexs.append(index)
+        }
+        return indexs
+    }
+    
+    ///获取元素首次出现的位置
+    func indexFirst(_ item:Element) -> Int? {
+        for (index, value) in self.enumerated() where value as AnyObject === item as AnyObject {
+            
+            return index
+        }
+        return nil
+    }
+    
+    ///获取元素最后出现的位置
+    mutating func indexLast(_ item:Element) -> Int? {
+        return indexs(item).last
     }
 }
 

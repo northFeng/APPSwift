@@ -19,3 +19,6 @@
 
 //键盘管理退出
 #import "APPKeyBoardApi.h"
+
+//YYCache
+#import <YYCache/YYCache.h>
