@@ -76,10 +76,14 @@ let kAPP_File_HomePath = NSHomeDirectory()
 //MARK: ************************* 自定常量宏 *************************
 
 ///APP屏幕宽
-let kAPPWidth = UIScreen.main.bounds.size.width
+var kAPPWidth: CGFloat {
+    UIScreen.main.bounds.size.width
+}
 
 ///APP屏幕高
-let kAPPHeight = UIScreen.main.bounds.size.height
+var kAPPHeight: CGFloat {
+    UIScreen.main.bounds.size.height
+}
 
 ///状态栏高度
 let kStatusBarHeight = UIApplication.shared.statusBarFrame.size.height

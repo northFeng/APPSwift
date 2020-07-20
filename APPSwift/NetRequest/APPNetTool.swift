@@ -475,7 +475,7 @@ extension APPNetTool {
 
 
 //MARK: ************************* HTTPCache *************************
-import KeychainAccess
+import KeychainAccess //注意保存路径问题！
 
 fileprivate struct HTTPCache {
     
