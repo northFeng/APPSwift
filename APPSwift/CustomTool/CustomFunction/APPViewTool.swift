@@ -67,12 +67,12 @@ struct APPViewTool {
     }
     
     ///三： 文字   颜色、字体、文字 —> 默认& 选中   按钮
-    static func view_createButtonTitle(title_n:String, font_n:UIFont, color_n:UIColor, title_s:String, font_s:UIFont, color_s:UIColor, bgColor:UIColor) -> UIButton {
+    static func view_createButtonTitle(title_n:String, font_n:UIFont, color_n:UIColor, title_s:String? = nil, font_s:UIFont? = nil, color_s:UIColor, bgColor:UIColor) -> UIButton {
         let button = UIButton(type: .custom)
         let attrString_n = NSAttributedString(string: title_n, attributes: [NSAttributedString.Key.font:font_n,NSAttributedString.Key.foregroundColor:color_n])
         button.setAttributedTitle(attrString_n, for: .normal)
         
-        let attrString_s = NSAttributedString(string: title_s, attributes: [NSAttributedString.Key.font:font_s,NSAttributedString.Key.foregroundColor:color_s])
+        let attrString_s = NSAttributedString(string: title_s ?? title_n, attributes: [NSAttributedString.Key.font:font_s ?? font_n,NSAttributedString.Key.foregroundColor:color_s])
         button.setAttributedTitle(attrString_s, for: .selected)
         
         button.backgroundColor = bgColor
