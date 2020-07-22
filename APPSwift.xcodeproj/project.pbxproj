@@ -37,6 +37,7 @@
 		83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */; };
 		8371E1BF24C714AB003EA255 /* APPSegmentBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371E1BE24C714AB003EA255 /* APPSegmentBtnView.swift */; };
 		83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */; };
+		8397A41724C84252001B9449 /* APPStoreApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8397A41624C84252001B9449 /* APPStoreApi.swift */; };
 		83B1AE3024B0739F00FC7363 /* APPLoadingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */; };
 		83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 83B1AE3124B079FD00FC7363 /* Demo.gif */; };
 		83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */; };
@@ -47,7 +48,6 @@
 		83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */; };
 		83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BD19B524AF572200699F9B /* APPAlertApi.m */; };
 		83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2769924B852A500DFBB13 /* APPKeyboardApi.m */; };
-		83D63BD024B49C8500D49464 /* APPCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D63BCF24B49C8500D49464 /* APPCache.swift */; };
 		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +88,7 @@
 		83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPOCInterface.swift; sourceTree = "<group>"; };
 		8371E1BE24C714AB003EA255 /* APPSegmentBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPSegmentBtnView.swift; sourceTree = "<group>"; };
 		83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "干货集中营-RAC+RXSwift+MVVM .webarchive"; sourceTree = "<group>"; };
+		8397A41624C84252001B9449 /* APPStoreApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPStoreApi.swift; sourceTree = "<group>"; };
 		83B1AE2F24B0739F00FC7363 /* APPLoadingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoadingApi.swift; sourceTree = "<group>"; };
 		83B1AE3124B079FD00FC7363 /* Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Demo.gif; sourceTree = "<group>"; };
 		83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPTextImageButton.swift; sourceTree = "<group>"; };
@@ -100,7 +101,6 @@
 		83BD19B524AF572200699F9B /* APPAlertApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAlertApi.m; sourceTree = "<group>"; };
 		83C2769824B852A500DFBB13 /* APPKeyboardApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPKeyboardApi.h; sourceTree = "<group>"; };
 		83C2769924B852A500DFBB13 /* APPKeyboardApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPKeyboardApi.m; sourceTree = "<group>"; };
-		83D63BCF24B49C8500D49464 /* APPCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPCache.swift; sourceTree = "<group>"; };
 		83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPAlertTool.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,12 +276,12 @@
 		8338EB84249CBE9800371C05 /* ThirdModular */ = {
 			isa = PBXGroup;
 			children = (
+				8397A41324C8416E001B9449 /* DataStore */,
 				83409F7C24A8502A003C44F2 /* AFNetworking */,
 				8323011124A88B1000CF72BB /* KingfisherImage */,
 				8323011624A89D6D00CF72BB /* XYColorOC */,
 				83BD19B324AF56D800699F9B /* MBProgressHUD */,
 				83B1AE2E24B072BC00FC7363 /* NVActivityIndicatorView */,
-				83D63BCE24B4928500D49464 /* KeychainAccess */,
 				83C2769724B8527200DFBB13 /* IQKeyboardManager */,
 			);
 			path = ThirdModular;
@@ -381,6 +381,14 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		8397A41324C8416E001B9449 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				8397A41624C84252001B9449 /* APPStoreApi.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
 		83B1AE2E24B072BC00FC7363 /* NVActivityIndicatorView */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,14 +414,6 @@
 				83C2769924B852A500DFBB13 /* APPKeyboardApi.m */,
 			);
 			path = IQKeyboardManager;
-			sourceTree = "<group>";
-		};
-		83D63BCE24B4928500D49464 /* KeychainAccess */ = {
-			isa = PBXGroup;
-			children = (
-				83D63BCF24B49C8500D49464 /* APPCache.swift */,
-			);
-			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
 		83EB9F4B24AB215800A94BE0 /* CustomAlert */ = {
@@ -571,8 +571,8 @@
 				83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */,
 				8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */,
 				8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */,
-				83D63BD024B49C8500D49464 /* APPCache.swift in Sources */,
 				8323011024A889A000CF72BB /* APPModel.swift in Sources */,
+				8397A41724C84252001B9449 /* APPStoreApi.swift in Sources */,
 				83B800B824A206C200CC5FC0 /* APPUserInfoModel.swift in Sources */,
 				83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */,
 				831A4F0A24A0577B00646A1C /* APPTabBarController.swift in Sources */,

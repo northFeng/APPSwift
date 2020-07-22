@@ -86,7 +86,7 @@ var kAPPHeight: CGFloat {
 }
 
 ///状态栏高度
-let kStatusBarHeight = UIApplication.shared.statusBarFrame.size.height
+let kStatusBarHeight:CGFloat = UIApplication.shared.statusBarFrame.size.height
 
 ///一般 屏幕宽度比例
 let KSCALE = UIScreen.main.bounds.size.width / 375.0
@@ -132,19 +132,19 @@ func CG_Rect(_ x:CGFloat, _ y:CGFloat, _ width:CGFloat, _ height:CGFloat) -> CGR
 //MARK: ******************************** NaviBar && TabBar 常量宏  ********************************
 
 ///导航条ItemBar的高度
-let kNaviBar_ItemBarHeight = 44.0
+let kNaviBar_ItemBarHeight:CGFloat = 44.0
 
 ///底部TabBarItem的高度
-let kTabBar_ItemsHeight = 49.0
+let kTabBar_ItemsHeight:CGFloat = 49.0
 
 ///导航条高度
-let kTopNaviBarHeight = kStatusBarHeight > 20 ? 88.0 : 64.0
+let kTopNaviBarHeight:CGFloat = kStatusBarHeight > 20 ? 88.0 : 64.0
 
 ///底部TabBar高度
-let kTabBarHeight = kStatusBarHeight > 20 ? 83.0 : 49.0
+let kTabBarHeight:CGFloat = kStatusBarHeight > 20 ? 83.0 : 49.0
 
 ///刘海屏手机 弧边安全高度
-let kBottomSafeHeight = kStatusBarHeight > 20 ? 34.0 : 0.0
+let kBottomSafeHeight:CGFloat = kStatusBarHeight > 20 ? 34.0 : 0.0
 
 
 //MARK: ******************************** 定义颜色函数 && 动态颜色 *********************************
@@ -257,7 +257,7 @@ func AlertHideLoading(onView:UIView? = nil) {
 
 ///JSON 转 字典
 func JsonToDictionary(json:Any) -> [String:Any] {
-    APPFunctionApi.dictionaryFromJson(json: json)
+    APPFunctionApi.jsonToDictionary(json: json)
 }
 
 ///JSON 转 Model

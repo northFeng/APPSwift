@@ -13,7 +13,7 @@ struct APPFunctionApi {
     
     //MARK: ************************* 数据 转 字典 *************************
     ///json 转 字典
-    static func dictionaryFromJson(json:Any?) -> [String:Any] {
+    static func jsonToDictionary(json:Any?) -> [String:Any] {
         
         var dic:[String:Any]? = nil
         
@@ -38,6 +38,48 @@ struct APPFunctionApi {
         }
         
         return dic ?? [:]
+    }
+    
+    ///JSON转Data
+    static func jsonToData(jsonDic:Dictionary<String, Any>) -> Data? {
+
+       if JSONSerialization.isValidJSONObject(jsonDic) {
+           //利用自带的json库转换成Data
+           //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+           let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
+           //Data转换成String打印输出
+           //let str = String(data:data!, encoding: String.Encoding.utf8)
+           
+           return data
+       }else{
+           return nil
+       }
+    }
+   
+    ///Data转Dic
+    static func dataToDictionary(data:Data) -> Dictionary<String, Any>? {
+
+       let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+       
+       let dic:[String:Any]? = json as? Dictionary<String, Any>
+       
+       return dic
+    }
+    
+    ///JSON 转 字符串
+    static func jsonToString(jsonDic:Dictionary<String, Any>) -> String? {
+
+        if JSONSerialization.isValidJSONObject(jsonDic) {
+            //利用自带的json库转换成Data
+            //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+            let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
+            //Data转换成String打印输出
+            let str = String(data:data!, encoding: String.Encoding.utf8)
+            
+            return str
+        }else{
+            return nil
+        }
     }
     
     //MARK: ************************* 字符串 编码处理 *************************

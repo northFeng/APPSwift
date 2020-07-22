@@ -25,10 +25,10 @@ pod 'SwiftyJSON', '~>4.0'
 #加载视图
 pod 'NVActivityIndicatorView','~>4.8.0'
 
-#数据存储
+#数据存储 这个是存储到系统内的钥匙串上的
 pod 'KeychainAccess','~>4.2.0'
 #Cache.swift https://github.com/hyperoslo/Cache
-#pod 'Cache'//缓存数据
+pod 'Cache','~>5.3.0'
 
 #刷新框架 暂用OC框架
 pod 'MJRefresh','~>3.4.3'

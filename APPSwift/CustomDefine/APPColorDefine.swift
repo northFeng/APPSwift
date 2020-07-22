@@ -92,4 +92,7 @@ struct APPColorDefine {
     
     ///基础白色
     static let white = COLOR("#FFFFFF")
+    
+    ///系统黑暗模式 白亮文字颜色
+    static let lightText = UIColor.lightText
 }

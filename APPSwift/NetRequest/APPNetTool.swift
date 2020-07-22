@@ -445,42 +445,22 @@ extension APPNetTool {
         
         return data ?? Data()
     }
-    
-    ///JSON转Data
-    static func jsonToData(jsonDic:Dictionary<String, Any>) -> Data? {
-
-        if JSONSerialization.isValidJSONObject(jsonDic) {
-            //利用自带的json库转换成Data
-            //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
-            let data = try? JSONSerialization.data(withJSONObject: jsonDic, options: [])
-            //Data转换成String打印输出
-            //let str = String(data:data!, encoding: String.Encoding.utf8)
-            
-            return data
-        }else{
-            return nil
-        }
-    }
-    
-    ///Data转Dic
-    static func dataToDictionary(data:Data) -> Dictionary<String, Any>? {
-
-        let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-        
-        let dic:[String:Any]? = json as? Dictionary<String, Any>
-        
-        return dic
-    }
 }
 
 
 //MARK: ************************* HTTPCache *************************
-import KeychainAccess //注意保存路径问题！
+import Cache
 
 fileprivate struct HTTPCache {
     
-    ///缓存管理者
-    static let cacheManager = Keychain(service: "APPHTTPCache")
+    ///磁盘保存路径
+    private static let diskPath:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/AppCahceHttp"
+    ///磁盘配置     try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,appropriateFor: nil, create: true).appendingPathComponent("MyPreferences")     过期时间 .date(Date().addingTimeInterval(60*60*24*7))
+    private static let diskConfig = DiskConfig(name: "APPCacheHttpData", expiry: .date(Date().addingTimeInterval(60*60*24*7)), directory: URL(fileURLWithPath: diskPath), protectionType: .complete)
+    ///内存配置
+    private static let memoryConfig = MemoryConfig(expiry: .never, countLimit: 20, totalCostLimit: 0)
+    ///存储对象
+    private static let dataManager = try? Storage(diskConfig: diskConfig, memoryConfig: memoryConfig, transformer: TransformerFactory.forData())
     
     
     /// 异步缓存网络数据，根据请求的URL与parameters做KEY存储数据, 缓存多级页面的数据
@@ -490,11 +470,24 @@ fileprivate struct HTTPCache {
     ///   - parameters: 请求的参数
     static func setCache(responseData:[String:Any], URL:String, parameters:[String:Any]) {
         
-        let data:Data? = APPNetTool.jsonToData(jsonDic: responseData)
+        var data:Data?
         
+        if JSONSerialization.isValidJSONObject(responseData) {
+            //利用自带的json库转换成Data
+            //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+            data = try? JSONSerialization.data(withJSONObject: responseData, options: [])
+        }
+                
         if let dataCache = data {
-            let key = self.cacheKey(URL: URL, parameters: parameters)
-            try? cacheManager.set(dataCache, key: key)
+            let key = self.cacheKey(URL: URL, parameters: parameters)            
+            dataManager?.async.setObject(dataCache, forKey: key, completion: { (result) in
+                switch result {
+                  case .value:
+                    print("saved successfully")
+                  case .error(let error):
+                    print(error)
+                }
+            })
         }
     }
     
@@ -506,7 +499,7 @@ fileprivate struct HTTPCache {
     /// - Returns: 缓存的服务器数据
     static func getCache(URL:String, parameters:[String:Any]) -> [String:Any]? {
         let key = self.cacheKey(URL: URL, parameters: parameters)
-        let data = try? cacheManager.getData(key)
+        let data = try? dataManager?.object(forKey: key)
         
         var dicJson:[String:Any]?
         if let dataCache = data {
@@ -518,7 +511,14 @@ fileprivate struct HTTPCache {
     
     ///清除网络缓存数据
     static func clearCache() {
-        try? cacheManager.removeAll()
+        dataManager?.async.removeAll(completion: { (result) in
+            switch result {
+              case .value:
+                print("removal completes")
+              case .error(let error):
+                print(error)
+            }
+        })
     }
     
     
