@@ -100,6 +100,11 @@ struct APPCacheApi {
     private static let memoryConfig = MemoryConfig(expiry: .never, countLimit: 20, totalCostLimit: 0)
     ///存储对象
     private static let dataManager = try? Storage(diskConfig: diskConfig, memoryConfig: memoryConfig, transformer: TransformerFactory.forData())
+    /** 可以转化各种类型
+    let stringStorage = dataStorage.transformCodable(ofType: String.self)
+    let imageStorage = dataStorage.transformImage()
+    let dateStorage = dataStorage.transformCodable(ofType: Date.self)
+     */
     
     ///是否 包含 某个key
     static func containKey(key:String) -> Bool {
