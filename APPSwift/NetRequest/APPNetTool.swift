@@ -31,7 +31,7 @@ enum APPNetStatus {
 
 ///网络请求回调
 typealias NetSuccess = (Any?, Int)->Void //网络请求成功回调
-typealias NetFailure = (AFError)->Void //网络失败回调
+typealias NetFailure = (AFError, Int)->Void //网络失败回调
 typealias NetResultData = (Bool, Any?, APPNetStatus)->Void //网络请求回调（包括成功 与 失败）
 
 ///APP请求类
@@ -169,7 +169,7 @@ extension APPNetTool {
             case .failure:
                 //处理失败
                 if let error = response.error {
-                    fail(error)//AFError
+                    fail(error,response.response?.statusCode ?? 400)//AFError
                 }
             }
         }
@@ -271,7 +271,7 @@ extension APPNetTool {
     }
     
     ///统一处理失败 处理
-    static func netFailAnalyticalNetData(error:AFError, block:@escaping NetResultData) {
+    static func netFailAnalyticalNetData(error:AFError, httpCode:Int, block:@escaping NetResultData) {
         
         var errorMsg = HTTPErrorOthersMessage //默认网络不给力
         
@@ -298,7 +298,26 @@ extension APPNetTool {
             errorMsg = HTTPErrorOthersMessage
         }
         
-        block(false, errorMsg, APPNetStatus.failHttp(code: errorCode))
+        if httpCode / 400 == 1 {
+            //4XX 客户端错误
+            /**
+             400：当前请求无法被服务器理解，请求参数有误。
+             401：当前请求需要用户验证。请求头里的携带的 数据错误
+             402：该状态码是为了将来可能的需求而预留的。
+             403：服务器已经理解请求，但是拒绝执行它。
+             404：请求失败，请求所希望得到的资源未被在服务器上发现。
+             405：请求行中指定的请求方法不能被用于请求相应的资源
+             408：请求超时。
+             */
+        }
+        
+        if httpCode / 500 == 1 {
+            //5XX 服务器错误
+            errorMsg = "服务器错误：" + HTTPURLResponse.localizedString(forStatusCode: httpCode)
+            //在此可以上传错误信息 到后台
+        }
+        
+        block(false, errorMsg, APPNetStatus.failHttp(code: httpCode))
     }
 }
 
@@ -312,9 +331,9 @@ extension APPNetTool {
         self.getData(method: method, url: URL, params: params, success: { (response, code) in
             //统一处理结果
             self.netSucessAnalyticalNetdata(response: response, block: block)
-        }) { (error) in
+        }) { (error, httpCode) in
             //统一处理错误
-            self.netFailAnalyticalNetData(error: error, block: block)
+            self.netFailAnalyticalNetData(error: error, httpCode: httpCode, block: block)
         }
     }
 }
@@ -341,9 +360,9 @@ extension APPNetTool {
                 }
                 //统一处理结果
                 self.netSucessAnalyticalNetdata(response: response, block: block)
-            }) { (error) in
+            }) { (error, httpCode) in
                 //统一处理错误
-                self.netFailAnalyticalNetData(error: error, block: block)
+                self.netFailAnalyticalNetData(error: error, httpCode: httpCode,block: block)
             }
         }
     }

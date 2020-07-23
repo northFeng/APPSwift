@@ -67,30 +67,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     func netData() {
         AlertLoading()
-        APPNetTool.getNetDataCache(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
-            AlertHideLoading()
-            self.tableView.mj_header?.endRefreshing()
-            if result {
-                let jsonArray = data as! [[String:Any]]
-                let data = JsonToModel(json: jsonArray, Model: WordModel.self)
-                if let dataArray = data as? [WordModel] {
-                    self.dataArray = dataArray
-                }
-                self.tableView.reloadData()
-                
-                if case APPNetStatus.sucess(let code) = status {
-                    Print("结果code：\(code)")
-                }
-                
-            } else {
-                AlertMessage(data as! String)
-                if case let APPNetStatus.failHttp(code) = status {
-                    Print("结果code：\(code)")
-                }
-            }
-        }
-        
-//        APPNetTool.getNetData(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
+//        APPNetTool.getNetDataCache(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
 //            AlertHideLoading()
 //            self.tableView.mj_header?.endRefreshing()
 //            if result {
@@ -100,11 +77,11 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
 //                    self.dataArray = dataArray
 //                }
 //                self.tableView.reloadData()
-//
+//                
 //                if case APPNetStatus.sucess(let code) = status {
 //                    Print("结果code：\(code)")
 //                }
-//
+//                
 //            } else {
 //                AlertMessage(data as! String)
 //                if case let APPNetStatus.failHttp(code) = status {
@@ -113,7 +90,30 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
 //            }
 //        }
         
-        //param += 1
+        APPNetTool.getNetData(method: .get, url: "v2/front/tag/getTagList", params: ["tagType":"1","param":param]) { (result, data, status) in
+            AlertHideLoading()
+            self.tableView.mj_header?.endRefreshing()
+            if result {
+                let jsonArray = data as! [[String:Any]]
+                let data = JsonToModel(json: jsonArray, Model: WordModel.self)
+                if let dataArray = data as? [WordModel] {
+                    self.dataArray = dataArray
+                }
+                self.tableView.reloadData()
+
+                if case APPNetStatus.sucess(let code) = status {
+                    Print("结果code：\(code)")
+                }
+
+            } else {
+                AlertMessage(data as! String)
+                if case let APPNetStatus.failHttp(code) = status {
+                    Print("结果code：\(code)")
+                }
+            }
+        }
+        
+        param += 1
     }
     
     //MARK: ************************* Action && Event *************************
