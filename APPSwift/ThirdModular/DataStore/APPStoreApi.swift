@@ -93,18 +93,20 @@ struct APPCacheApi {
     
     
     ///磁盘保存路径
-    private static let diskPath:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/AppCahceData"
-    ///磁盘配置     try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,appropriateFor: nil, create: true).appendingPathComponent("MyPreferences")     过期时间 .date(Date().addingTimeInterval(60*60*24*7))
-    private static let diskConfig = DiskConfig(name: "APPCacheData", expiry: .never, directory: URL(fileURLWithPath: diskPath), protectionType: .complete)
+    private static let diskPath:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/AppData"
+    ///磁盘配置  name：在设置的路径下面再创建一个name的文件夹     try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,appropriateFor: nil, create: true).appendingPathComponent("MyPreferences")     过期时间 .date(Date().addingTimeInterval(60*60*24*7))
+    private static let diskConfig = DiskConfig(name: "StoreData", expiry: .never, directory: URL(fileURLWithPath: diskPath), protectionType: .complete)
     ///内存配置
     private static let memoryConfig = MemoryConfig(expiry: .never, countLimit: 20, totalCostLimit: 0)
     ///存储对象
     private static let dataManager = try? Storage(diskConfig: diskConfig, memoryConfig: memoryConfig, transformer: TransformerFactory.forData())
-    /** 可以转化各种类型
+    /** 可以转化各种类型  —> Struct  、Enum 、Class 只有三个类型可以转
     let stringStorage = dataStorage.transformCodable(ofType: String.self)
     let imageStorage = dataStorage.transformImage()
     let dateStorage = dataStorage.transformCodable(ofType: Date.self)
      */
+    ///字符串存储管理
+    private static let stringManager = dataManager?.transformCodable(ofType: String.self)
     
     ///是否 包含 某个key
     static func containKey(key:String) -> Bool {
@@ -114,8 +116,6 @@ struct APPCacheApi {
     
     ///存储 字符串
     static func setString(text:String, key:String) {
-
-        let stringManager = dataManager?.transformCodable(ofType: String.self)
         
         stringManager?.async.setObject(text, forKey: key, completion: { (result) in
             switch result {
@@ -146,6 +146,42 @@ struct APPCacheApi {
          */
         
         return text
+    }
+    
+    ///存储字典
+    static func setDictionary(dic:[String:Any], key:String) {
+        
+        var data:Data?
+        
+        if JSONSerialization.isValidJSONObject(dic) {
+            //利用自带的json库转换成Data
+            //如果设置options为JSONSerialization.WritingOptions.prettyPrinted，则打印格式更好阅读
+            data = try? JSONSerialization.data(withJSONObject: dic, options: [])
+        }
+                
+        if let dataCache = data {
+            dataManager?.async.setObject(dataCache, forKey: key, completion: { (result) in
+                switch result {
+                  case .value:
+                    print("saved successfully")
+                  case .error(let error):
+                    print(error)
+                }
+            })
+        }
+    }
+    
+    ///获取字典
+    static func getDictionary(key:String) -> [String:Any]? {
+
+        let data = try? dataManager?.object(forKey: key)
+        
+        var dicJson:[String:Any]?
+        if let dataCache = data {
+            let json = try? JSONSerialization.jsonObject(with: dataCache, options: .mutableContainers)
+            dicJson = json as? Dictionary<String, Any>
+        }
+        return dicJson
     }
     
     ///存储 data

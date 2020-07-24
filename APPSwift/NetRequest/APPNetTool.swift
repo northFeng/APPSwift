@@ -473,9 +473,9 @@ import Cache
 fileprivate struct HTTPCache {
     
     ///磁盘保存路径
-    private static let diskPath:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/AppCahceHttp"
+    private static let diskPath:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/AppData"
     ///磁盘配置     try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask,appropriateFor: nil, create: true).appendingPathComponent("MyPreferences")     过期时间 .date(Date().addingTimeInterval(60*60*24*7))
-    private static let diskConfig = DiskConfig(name: "APPCacheHttpData", expiry: .date(Date().addingTimeInterval(60*60*24*7)), directory: URL(fileURLWithPath: diskPath), protectionType: .complete)
+    private static let diskConfig = DiskConfig(name: "CacheHttpData", expiry: .date(Date().addingTimeInterval(60*60*24*7)), directory: URL(fileURLWithPath: diskPath), protectionType: .complete)
     ///内存配置
     private static let memoryConfig = MemoryConfig(expiry: .never, countLimit: 20, totalCostLimit: 0)
     ///存储对象

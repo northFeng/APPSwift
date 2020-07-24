@@ -119,6 +119,9 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     //MARK: ************************* Action && Event *************************
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        APPCacheApi.setString(text: APPDateTool.date_currentTimeStampString(precision: 1000), key: "1234567")
+        
+        Print("------>\(APPCacheApi.containKey(key: "1234567"))")
     }
     
 
