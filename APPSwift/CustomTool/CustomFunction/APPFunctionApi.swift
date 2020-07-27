@@ -320,4 +320,39 @@ struct APPFunctionApi {
         
         return Range(range,in: superStr)
     }
+    
+    
+    //MARK: ************************* 信息验证 *************************
+    ///手机号验证
+    static func verification_mobile(mobileNum:String) -> Bool {
+        let mobile = "^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$"
+        let CM = "^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$"
+        let CU = "^1(3[0-2]|5[256]|8[56])\\d{8}$"
+        let CT = "^1((33|53|8[09])[0-9]|349)\\d{7}$"
+        
+        let regextestmobile = NSPredicate(format: "SELF MATCHES %@", mobile)
+        let regextestcm = NSPredicate(format: "SELF MATCHES %@", CM)
+        let regextestcu = NSPredicate(format: "SELF MATCHES %@", CU)
+        let regextestct = NSPredicate(format: "SELF MATCHES %@", CT)
+        
+        if (regextestmobile.evaluate(with: mobileNum)) || (regextestcm.evaluate(with: mobileNum)) || (regextestcu.evaluate(with: mobileNum)) || (regextestct.evaluate(with: mobileNum)) {
+            
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    ///密码验证
+    static func verification_password(password:String) -> Bool {
+        let passWord = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$"
+        let regextestpassWord = NSPredicate(format: "SELF MATCHES %@", passWord)
+        
+        if regextestpassWord.evaluate(with: password) == true {
+            return true
+        }else{
+            return false
+        }
+    }
+    
 }

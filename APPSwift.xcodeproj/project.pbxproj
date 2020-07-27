@@ -35,6 +35,8 @@
 		8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB96249CC48B00371C05 /* APPBaseController.swift */; };
 		8338EB9A249CDAD700371C05 /* APPNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB99249CDAD700371C05 /* APPNavigationController.swift */; };
 		83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */; };
+		834ED5A824CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 834ED5A724CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive */; };
+		834ED5AA24CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 834ED5A924CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive */; };
 		8371E1BF24C714AB003EA255 /* APPSegmentBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371E1BE24C714AB003EA255 /* APPSegmentBtnView.swift */; };
 		83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */; };
 		8397A41724C84252001B9449 /* APPStoreApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8397A41624C84252001B9449 /* APPStoreApi.swift */; };
@@ -86,6 +88,8 @@
 		8338EB96249CC48B00371C05 /* APPBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPBaseController.swift; sourceTree = "<group>"; };
 		8338EB99249CDAD700371C05 /* APPNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPNavigationController.swift; sourceTree = "<group>"; };
 		83409F7A24A84DCC003C44F2 /* APPOCInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPOCInterface.swift; sourceTree = "<group>"; };
+		834ED5A724CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Swift中的RactiveCocoa.webarchive"; sourceTree = "<group>"; };
+		834ED5A924CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Swift 4.0 高级-自定义操作符.webarchive"; sourceTree = "<group>"; };
 		8371E1BE24C714AB003EA255 /* APPSegmentBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPSegmentBtnView.swift; sourceTree = "<group>"; };
 		83849D8B24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "干货集中营-RAC+RXSwift+MVVM .webarchive"; sourceTree = "<group>"; };
 		8397A41624C84252001B9449 /* APPStoreApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPStoreApi.swift; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 		831A4F0C24A0B3C600646A1C /* Middle */ = {
 			isa = PBXGroup;
 			children = (
+				834ED5A724CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive */,
+				834ED5A924CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive */,
 				831A4F1224A0B3F500646A1C /* MiddleVC.swift */,
 			);
 			path = Middle;
@@ -486,8 +492,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */,
+				834ED5A824CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive in Resources */,
 				8338EB79249CAA0D00371C05 /* LaunchScreen.storyboard in Resources */,
 				83B1AE3224B079FD00FC7363 /* Demo.gif in Resources */,
+				834ED5AA24CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive in Resources */,
 				8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */,
 				8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */,
 			);
