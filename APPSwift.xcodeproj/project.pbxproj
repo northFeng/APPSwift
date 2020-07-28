@@ -48,6 +48,7 @@
 		83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */; };
 		83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */; };
 		83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */; };
+		83BCD9C224CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83BCD9C124CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive */; };
 		83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BD19B524AF572200699F9B /* APPAlertApi.m */; };
 		83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2769924B852A500DFBB13 /* APPKeyboardApi.m */; };
 		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
@@ -101,6 +102,7 @@
 		83B800B924A3308300CC5FC0 /* APPKeyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPKeyInfo.swift; sourceTree = "<group>"; };
 		83B800BB24A33F3D00CC5FC0 /* APPLoacalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPLoacalInfo.swift; sourceTree = "<group>"; };
 		83B800BD24A33F5400CC5FC0 /* APPFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPFileManager.swift; sourceTree = "<group>"; };
+		83BCD9C124CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "RAC,ReactiveSwift博客园.webarchive"; sourceTree = "<group>"; };
 		83BD19B424AF572200699F9B /* APPAlertApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAlertApi.h; sourceTree = "<group>"; };
 		83BD19B524AF572200699F9B /* APPAlertApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAlertApi.m; sourceTree = "<group>"; };
 		83C2769824B852A500DFBB13 /* APPKeyboardApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPKeyboardApi.h; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				834ED5A724CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive */,
 				834ED5A924CED073003F79CC /* Swift 4.0 高级-自定义操作符.webarchive */,
+				83BCD9C124CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive */,
 				831A4F1224A0B3F500646A1C /* MiddleVC.swift */,
 			);
 			path = Middle;
@@ -491,6 +494,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83BCD9C224CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive in Resources */,
 				83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */,
 				834ED5A824CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive in Resources */,
 				8338EB79249CAA0D00371C05 /* LaunchScreen.storyboard in Resources */,

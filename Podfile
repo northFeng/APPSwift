@@ -34,7 +34,9 @@ pod 'Cache','~>5.3.0'
 pod 'MJRefresh','~>3.4.3'
 
 #RAC框架  官方文档 https://reactivecocoa.io/reactiveswift/docs/latest/index.html
-pod 'ReactiveSwift', '~> 6.3.0'
+#github 链接 https://github.com/ReactiveCocoa/ReactiveCocoa
+#pod 'ReactiveSwift', '~> 6.3.0'
+pod 'ReactiveCocoa','11.0.0'
 
 #RXSwift框架 https://www.jianshu.com/p/f61a5a988590
 pod 'RxSwift','~> 4.0'

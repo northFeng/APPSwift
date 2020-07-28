@@ -7,6 +7,7 @@
 //
 import UIKit
 
+import ReactiveCocoa
 import ReactiveSwift
 
 /**
@@ -17,12 +18,18 @@ typealias APPSignal = Signal<Any,Error>
 
 class MiddleVC: APPBaseController {
     
+    let errorLabel = UILabel(frame: CG_Rect(50, 270, 200, 50))
+    
+    let button = UIButton(type: .custom)
+    
     let textField = UITextField()
     
     var signalA:Signal<String,Error>?
     
     let (signalB,observe) = Signal<String,Error>.pipe()//通常, 应该只通过Signal.pipe()函数来初始化一个热信号.
     
+    ///属性绑定
+    let tfProperty = MutableProperty("")
     
     
     override func viewDidLoad() {
@@ -32,12 +39,23 @@ class MiddleVC: APPBaseController {
         textField.backgroundColor = UIColor.gray
         self.view.addSubview(textField)
         
+        button.frame = CG_Rect(50, 200, 100, 50)
+        button.backgroundColor = UIColor.blue
+        button.setTitle("点击", for: .normal)
+        self.view.addSubview(button)
+        
+        errorLabel.backgroundColor = UIColor.red
+        self.view.addSubview(errorLabel)
+        
         self.rac_signal()
+        
+        //信号绑定
+        self.rac_UI_textField()
+        self.rac_bingValue()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        self.rac_property()
     }
     
     
@@ -168,7 +186,7 @@ class MiddleVC: APPBaseController {
         //信号无效了 你可以在这里进行一些清理工作
     }
     
-    //MARK: ************************* 3、Property/MutableProperty 信号基本使用 （简版信号使用） *************************
+    //MARK: ************************* 3、Property/MutableProperty 信号基本使用 （简版信号使用,） *************************
     ///信号使用
     func rac_property() {
         
@@ -246,7 +264,82 @@ class MiddleVC: APPBaseController {
         
     }
     
-    //MARK: ************************* 5、Action用法 *************************
+    //MARK: ************************* 5、通知信号 / KVO信号  使用 *************************
+    
+    ///通知监听信号
+    func rac_notification() {
+        NotificationCenter.default.reactive.notifications(forName: Notification.Name(rawValue: "notificaiton"), object: nil).observe { (Value) in
+            Print("接受的通知：\(Value)")
+        }
+    }
+    
+    //MARK: ************************* 6、UIKit信号使用 *************************
+    /**  自定义操作符
+     /// 定义优先级组
+     precedencegroup MyPrecedence {
+
+         // higherThan: AdditionPrecedence   // 优先级,比加法运算高
+         lowerThan: AdditionPrecedence       // 优先级, 比加法运算低
+         associativity: none                 // 结合方向:left, right or none
+         assignment: false                   // true=赋值运算符,false=非赋值运算符
+     }
+
+     infix operator +++: MyPrecedence        // 继承 MyPrecedence 优先级组
+     // infix operator +++: AdditionPrecedence // 也可以直接继承加法优先级组(AdditionPrecedence)或其他优先级组
+     func +++(left: Int, right: Int) -> Int {
+
+         return left+right*2
+     }
+      */
+    ///各种UI空间使用
+    func rac_UI_Button() {
+        
+        ///按钮点击
+        button.reactive.controlEvents(UIControl.Event.touchUpInside).observe { (Value) in
+            switch Value {
+            case .value(let value):
+                Print("信号收到：\(value)")
+            case .failed(let error):
+                Print("信号失败：\(error)")
+            case .completed:
+                Print("信号完成")
+            case .interrupted:
+                Print("信号中断")
+            }
+        }
+    }
+    
+    ///输入框
+    func rac_UI_textField() {
+        textField.reactive.continuousTextValues.observe {
+            [unowned self]
+            (Value) in
+            switch Value {
+            case .value(let value):
+                Print("信号收到：\(value)")
+                self.tfProperty.value = value
+            case .failed(let error):
+                Print("信号失败：\(error)")
+            case .completed:
+                Print("信号完成")
+            case .interrupted:
+                Print("信号中断")
+            }
+        }
+    }
+    
+    ///属性绑定
+    func rac_bingValue() {
+        //属性信号绑定
+        errorLabel.reactive.text <~ tfProperty//textField.reactive.continuousTextValues
+    }
+     
+     //MARK: ************************* KVO信号使用 *************************
+     func rac_kvo() {
+        
+     }
+    
+    //MARK: ************************* 7、Action用法 *************************
     ///基本用法
     func rac_action() {
         /**
@@ -285,33 +378,16 @@ class MiddleVC: APPBaseController {
                did received Event: VALUE COMPLETED
                did received Event: COMPLETED
          */
+        
     }
     
-    
-    //MARK: ************************* UIKit信号使用 *************************
-    /**  自定义操作符
-     /// 定义优先级组
-     precedencegroup MyPrecedence {
-
-         // higherThan: AdditionPrecedence   // 优先级,比加法运算高
-         lowerThan: AdditionPrecedence       // 优先级, 比加法运算低
-         associativity: none                 // 结合方向:left, right or none
-         assignment: false                   // true=赋值运算符,false=非赋值运算符
-     }
-
-     infix operator +++: MyPrecedence        // 继承 MyPrecedence 优先级组
-     // infix operator +++: AdditionPrecedence // 也可以直接继承加法优先级组(AdditionPrecedence)或其他优先级组
-     func +++(left: Int, right: Int) -> Int {
-
-         return left+right*2
-     }
-     
-     
-     //MARK: ************************* KVO信号使用 *************************
-     func rac_kvo() {
-     }
-     */
-    
+    //MARK: ************************* 8、Scheduler(调度器)延时加载 *************************
+    ///Scheduler(调度器)延时加载
+    func rac_scheduler() {
+        QueueScheduler.main.schedule(after: Date.init(timeIntervalSinceNow: 0.3)) {
+            Print("主线程调用延时操作")
+        }
+    }
     
     //MARK: ************************* 信号的过滤 && 合并信号 *************************
     ///map 用于转换事件流中的值，并用结果创建新流。
