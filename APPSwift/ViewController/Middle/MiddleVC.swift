@@ -54,6 +54,14 @@ class MiddleVC: APPBaseController {
         self.rac_bingValue()
     }
     
+    //设置状态栏
+    override func setNaviBarStyle() {
+        
+        self.naviBar.isHidden = false
+        
+        self.title = "ReactiveSwift"
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }

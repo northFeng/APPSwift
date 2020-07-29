@@ -25,8 +25,16 @@ class APPBaseController: UIViewController,APPNavigationBarViewDelegate {
     
     override var title: String? {
         willSet {
-            naviBar.title = title ?? ""
+            naviBar.title = newValue ?? ""
         }
+        /** 尽量不破坏原有属性
+         set {
+             naviBar.title = newValue ?? ""
+         }
+         get {
+             naviBar.title
+         }
+         */
     }
     
     

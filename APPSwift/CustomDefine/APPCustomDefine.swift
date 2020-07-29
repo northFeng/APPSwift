@@ -15,7 +15,7 @@ func Print<T>(_ message:T, file:String = #file, funcName:String = #function, lin
     #if DEBUG
     let file = (file as NSString).lastPathComponent;
     
-    print("\(file):(\(lineNum))***:\(message)");
+    print("\(file)(\(lineNum)):\(message)");
     
     #endif
     

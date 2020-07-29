@@ -14,40 +14,40 @@ class APPTabBarController: UITabBarController {
     static let tabBarVC:APPTabBarController = APPTabBarController()
 
     ///自定义tabBar
-    let customTabBar:UIView = UIView()
+    private let customTabBar:UIView = UIView()
     ///tabBar颜色
-    let tabBarColr:UIColor = DynamicColor(UIColor.white, UIColor.black)
+    private let tabBarColr:UIColor = DynamicColor(UIColor.white, UIColor.black)
     
     ///按钮items条
-    let itemsView:UIView = UIView()
+    private let itemsView:UIView = UIView()
     
     ///分割线
-    let segmentLineView:UIView = UIView()
-    let lineColor = UIColor.gray
+    private let segmentLineView:UIView = UIView()
+    private let lineColor = UIColor.gray
     
     
     
     ///记录上一次选中的按钮
-    var lastSelectBackBtn:UIButton = UIButton(type: .custom)
+    private var lastSelectBackBtn:UIButton = UIButton(type: .custom)
     ///记录上一次选中的图片
-    var lastSelectImage:UIImageView = UIImageView()
+    private var lastSelectImage:UIImageView = UIImageView()
     ///记录上一次的label
-    var lastSelectLab:UILabel = UILabel()
+    private var lastSelectLab:UILabel = UILabel()
     
     ///按钮数组
-    var backBtnArray:[UIButton] = [UIButton]()
+    private var backBtnArray:[UIButton] = [UIButton]()
     
     ///标题数组
-    var titleArray:[String] = [String]()
+    private var titleArray:[String] = [String]()
     ///默认图片数组
-    var normalImgsArray = [UIImage]()
+    private var normalImgsArray = [UIImage]()
     ///选中图片数组
-    var selectImgsArray = [UIImage]()
+    private var selectImgsArray = [UIImage]()
     
     //文字配置
-    let textFont = UIFont.systemFont(ofSize: 11)
-    let textNormalColor = UIColor.gray
-    let textSelectColor = UIColor.blue
+    private let textFont = UIFont.systemFont(ofSize: 11)
+    private let textNormalColor = UIColor.gray
+    private let textSelectColor = UIColor.blue
     
     
     
