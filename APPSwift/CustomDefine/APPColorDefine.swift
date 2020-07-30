@@ -88,7 +88,7 @@ struct APPColorDefine {
     static let black = COLOR("#000000")
     
     ///弹框暗黑模式黑色
-    static let blcakAlert = COLOR("2C2C2C")
+    static let blackAlert = COLOR("2C2C2C")
     
     ///基础白色
     static let white = COLOR("#FFFFFF")

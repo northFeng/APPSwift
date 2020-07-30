@@ -168,6 +168,15 @@ func DynamicColor(_ lightStylecolor:UIColor, _ darkStylecolor:UIColor) -> UIColo
     APPColorDefine.colorDynamicColor(lightStylecolor:lightStylecolor, darkStylecolor:darkStylecolor)
 }
 
+///黑色
+let kBlackColor = APPColorDefine.black
+
+///黑暗模式 弹框颜色
+let kBlackAlertColor = APPColorDefine.blackAlert
+
+///黑暗模式 系统白亮颜色
+let kLightTextColor = UIColor.lightText
+
 //MARK: ******************************** 定义字体 *********************************
 
 ///标准字体
