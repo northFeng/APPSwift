@@ -567,12 +567,41 @@ class MineVC: APPBaseController {
         .take(2) //只取前两次 后面的过滤
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
-        
+
         //2、takeLast ——> 仅发送 Observable序列中的后 n 个事件。
         Observable.of(1, 2, 3, 4)
         .takeLast(2) //取最好两次 信号
         .subscribe(onNext: { print($0) })
         .disposed(by: disposeBag)
+
+        //takeWhile ——> 判断 Observable 序列的每一个值是否满足给定的条件。 当第一个不满足条件的值出现时，它便自动完成。
+        Observable.of(2, 3, 4, 5, 6)
+        .takeWhile { $0 < 4 }
+        .subscribe(onNext: { print($0) })
+        .disposed(by: disposeBag)
+        
+        //takeUntil ——> 通过 takeUntil 方法我们还可以监视另外一个 Observable， 即 notifier。  如果 notifier 发出值或 complete 通知，那么源 Observable 便自动完成，停止发送事件。
+        //notifier 发送Event，则 source 发送完成Event
+        let source = PublishSubject<String>()
+        let notifier = PublishSubject<String>()
+         
+        source
+            .takeUntil(notifier)
+            .subscribe(onNext: { print($0) },onCompleted: {Print("发送完成")})
+            .disposed(by: disposeBag)
+         
+        source.onNext("a")
+        source.onNext("b")
+        source.onNext("c")
+        source.onNext("d")
+         
+        //停止接收消息
+        notifier.onNext("z")
+         
+        source.onNext("e")
+        source.onNext("f")
+        source.onNext("g")
+        
     }
     
     ///跳过skip
@@ -580,8 +609,47 @@ class MineVC: APPBaseController {
         //1、skip ——> 跳过源 Observable 序列发出的前 n 个事件。
         Observable.of(1, 2, 3, 4)
         .skip(2) //跳过两次
-        .subscribe(onNext: { print($0) })
+        .subscribe(onNext: { print("1------\($0)") })
         .disposed(by: disposeBag)
+        
+        //skipWhile ——> 该方法用于跳过前面所有满足条件的事件。 一旦遇到不满足条件的事件，之后就不会再跳过了。
+        //一直跳过！！ 直到 ——> 条件 为 false 假 ——>  则不再跳过！！！
+        Observable.of(2, 3, 4, 5, 6)
+            .skipWhile { $0 > 4 }
+            .subscribe(onNext: { print("2-------\($0)") })
+            .disposed(by: disposeBag)
+        
+
+        /**
+         skipUntil ——> 同上面的 takeUntil 一样，skipUntil 除了订阅源 Observable 外，通过 skipUntil方法我们还可以监视另外一个 Observable， 即 notifier 。
+         与 takeUntil 相反的是。【源 Observable 序列事件默认会一直跳过】！！，————> 直到 notifier 发出值或 complete 通知。则不跳过 ，开始接受信号
+         */
+        let source = PublishSubject<Int>()
+        let notifier = PublishSubject<Int>()
+         
+        source
+            .skipUntil(notifier)
+            .subscribe(onNext: { print($0) })
+            .disposed(by: disposeBag)
+         
+        source.onNext(1)
+        source.onNext(2)
+        source.onNext(3)
+        source.onNext(4)
+        source.onNext(5)
+         
+        //开始接收消息
+        notifier.onNext(0)
+         
+        source.onNext(6)
+        source.onNext(7)
+        source.onNext(8)
+         
+        //仍然接收消息
+        notifier.onNext(0)
+         
+        source.onNext(9)
+    
     }
     
     ///Sample
@@ -623,9 +691,10 @@ class MineVC: APPBaseController {
     
     
     
+    
     //MARK: ************************* 触摸事件 *************************
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.rx_Variable()
+        self.rx_skip()
     }
     
 }
