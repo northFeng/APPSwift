@@ -14,13 +14,17 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var array2 = ["a","b","c","d","f"]
     
-    let tableView = UITableView(frame: CG_Rect(0, 100, kAPPWidth, kAPPHeight - 100), style: .grouped)
+    let tableView = UITableView(frame: CG_Rect(0, 150, kAPPWidth, kAPPHeight - 150), style: .grouped)
         
     let button = UIButton(type: .custom)
     
     var dataArray:[WordModel]? = []
     
     var param = 0
+    
+    let btnsView = APPSegmentBtnView(frame: CGRect(x: 25, y: 40, width: kAPPWidth - 50, height: 50))
+    
+    let scrollView = UIScrollView(frame: CGRect(x: 0, y: 100, width: kAPPWidth, height: 300))
     
     
     
@@ -194,8 +198,63 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         //tableView.register(UINib(nibName: "", bundle: nil), forCellReuseIdentifier: "cell")
         self.view.addSubview(tableView)
         
+        
+        btnsView.backgroundColor = UIColor.gray
+        self.view.addSubview(btnsView)
+        let oneN = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let ones = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let twoN = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let thrN = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let thrs = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let forN = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let fors = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnSize: CGSize(width: 50, height: 30), btnToLineCenterHeight: 13, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green)
+        
+        
+        scrollView.contentSize = CGSize(width: kAPPWidth * 4, height: 300)
+        scrollView.isPagingEnabled = true
+        scrollView.delegate = self
+        self.view.addSubview(scrollView)
+        
+        
+        let view1 = UIView(frame: CGRect(x: 0, y: 0, width: kAPPWidth, height: 300))
+        view1.backgroundColor = UIColor.gray
+        scrollView.addSubview(view1)
+        
+        let view2 = UIView(frame: CGRect(x: kAPPWidth * 1, y: 0, width: kAPPWidth, height: 300))
+        view2.backgroundColor = UIColor.green
+        scrollView.addSubview(view2)
+        
+        let view3 = UIView(frame: CGRect(x: kAPPWidth * 2, y: 0, width: kAPPWidth, height: 300))
+        view3.backgroundColor = UIColor.blue
+        scrollView.addSubview(view3)
+        
+        let view4 = UIView(frame: CGRect(x: kAPPWidth * 3, y: 0, width: kAPPWidth, height: 300))
+        view4.backgroundColor = UIColor.orange
+        scrollView.addSubview(view4)
+        
+        
+        btnsView.blockIndex = {
+            [unowned self]
+            index in
+            UIView.animate(withDuration: 0.2) {
+                self.scrollView.contentOffset = CGPoint(x: kAPPWidth * CGFloat(index), y: 0)
+            }
+        }
     }
     
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        
+        btnsView.setButtonIndex(index: index)
+    }
     
 }
 
