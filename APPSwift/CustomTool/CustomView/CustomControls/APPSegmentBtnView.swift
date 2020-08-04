@@ -24,6 +24,18 @@ class APPSegmentBtnView: UIView {
     ///block回调
     var blockIndex:((Int)->Void) = {index in }
     
+    ///scrollView
+    private var bridgeScrollView:UIScrollView?
+    
+    ///偏移量
+    private var beginOffsetX:CGFloat = 0
+    
+    ///选中的item下标
+    private var selectedItemIndex:Int = 0
+    
+    ///选中的item变形比例  默认1.3
+    var selectedItemZoomScale:CGFloat = 1.3
+    
     
     override init(frame: CGRect) {
         
@@ -36,16 +48,23 @@ class APPSegmentBtnView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        bridgeScrollView?.removeObserver(self, forKeyPath: "contentOffset")
+    }
+    
     ///设置选中按钮位置
     func setButtonIndex(index:Int) {
+        selectedItemIndex = index
         let button:SegmentButton = self.viewWithTag(1000 + index) as! SegmentButton
         self.onClickButton(button: button)
     }
     
     ///设置 按钮数据 (必须先设置APPSegmentBtnView的frame )
-    func setButtonsData(titlesNormal:[NSAttributedString], titlesSelect:[NSAttributedString], btnSize:CGSize, btnToLineCenterHeight:CGFloat, lineUnderSize:CGSize, lineColor:UIColor, defaultIndex:Int = 0) {
+    func setButtonsData(titlesNormal:[NSAttributedString], titlesSelect:[NSAttributedString], btnSize:CGSize, btnToLineCenterHeight:CGFloat, lineUnderSize:CGSize, lineColor:UIColor, defaultIndex:Int = 0, scrollView:UIScrollView) {
         
         btnLineCenterHeight = btnToLineCenterHeight
+        
+        selectedItemIndex = defaultIndex//默认位置
         
         if titlesNormal.count > 0 {
             
@@ -81,6 +100,9 @@ class APPSegmentBtnView: UIView {
             }
             
             self.bringSubviewToFront(lineUnder)//把划线至于顶层
+            
+            bridgeScrollView = scrollView
+            bridgeScrollView?.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.new, context: nil)
         }
     }
     
@@ -100,6 +122,105 @@ class APPSegmentBtnView: UIView {
         
         blockIndex(btnSelect.tag - 1000)//回调点击位置
     }
+    
+    ///监听 scrollView的huado
+    private override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if keyPath == "contentOffset" && object is UIScrollView {
+            // 当scrolllView滚动时,让跟踪器跟随scrollView滑动
+            
+            self.prepareMoveTrackerFollowScrollView(scorllView: bridgeScrollView!)
+        }
+    }
+    
+    ///处理滑动事件 滑动变化
+    private func prepareMoveTrackerFollowScrollView(scorllView:UIScrollView) {
+        // 这个if条件的意思是scrollView的滑动不是由手指拖拽产生
+        if !scorllView.isDragging && !scorllView.isDecelerating {
+            return
+        }
+        // 当滑到边界时，继续通过scrollView的bouces效果滑动时，直接return
+        if scorllView.contentOffset.x < 0 || scorllView.contentOffset.x > scorllView.contentSize.width - scorllView.bounds.size.width {
+            return
+        }
+        
+        //当前偏移量
+        let currentOffSetX:CGFloat = scorllView.contentOffset.x
+        //偏移进度
+        let offsetProgress:CGFloat = currentOffSetX / scorllView.bounds.size.width
+        var progress = offsetProgress - floor(offsetProgress)
+        
+        
+        var fromIndex = 0
+        var toIndex = 0
+        // 初始值不要等于scrollView.contentOffset.x,因为第一次进入此方法时，scrollView.contentOffset.x的值已经有一点点偏移了，不是很准确
+        beginOffsetX = scorllView.bounds.size.width * CGFloat(selectedItemIndex)
+        
+        //以下注释的“拖拽”一词很准确，不可说成滑动，例如:当手指向右拖拽，还未拖到一半时就松开手，接下来scrollView则会往回滑动，这个往回，就是向左滑动，这也是_beginOffsetX不可时刻纪录的原因，如果时刻纪录，那么往回(向左)滑动时会被视为“向左拖拽”,然而，这个往回却是由“向右拖拽”而导致的
+        if currentOffSetX - beginOffsetX > 0 {
+            //向左拖拽了  ——> 求商,获取上一个item的下标
+            fromIndex = Int(currentOffSetX / scorllView.bounds.size.width)
+            //当前item的下标等于上一个item的下标加1
+            toIndex = fromIndex + 1
+            if toIndex >= btnArray.count {
+                toIndex = fromIndex
+            }
+        }else if currentOffSetX - beginOffsetX < 0 {
+            //向右拖拽了
+            toIndex = Int(currentOffSetX / scorllView.bounds.size.width)
+            fromIndex = toIndex + 1
+            progress = 1.0 - progress
+        }else {
+            progress = 1.0
+            fromIndex = selectedItemIndex
+            toIndex = fromIndex
+        }
+        
+        if currentOffSetX == scorllView.bounds.size.width * CGFloat(fromIndex) {
+            //滚动停止了
+            progress = 1
+            toIndex = fromIndex
+        }
+        
+        // 如果滚动停止，直接通过点击按钮选中toIndex对应的item
+        if currentOffSetX == scorllView.bounds.size.width * CGFloat(toIndex) {
+            // 这里toIndex==fromIndex
+            //这一次赋值起到2个作用，一是点击toIndex对应的按钮，走一遍代理方法,二是弥补跟踪器的结束跟踪，因为本方法是在scrollViewDidScroll中调用，可能离滚动结束还有一丁点的距离，本方法就不调了,最终导致外界还要在scrollView滚动结束的方法里self.selectedItemIndex进行赋值,直接在这里赋值可以让外界不用做此操作
+            if selectedItemIndex != toIndex {
+                selectedItemIndex = toIndex
+            }
+            // 要return，点击了按钮，跟踪器自然会跟着被点击的按钮走
+            return
+        }
+        
+        self.moveTracker(progress: progress, fromIndex: fromIndex, toIndex: toIndex, currentOffsetX: currentOffSetX, beginOffsetX: beginOffsetX)
+    }
+    
+    ///这个方法才开始真正滑动跟踪器，上面都是做铺垫
+    private func moveTracker(progress:CGFloat, fromIndex:Int, toIndex:Int, currentOffsetX:CGFloat, beginOffsetX:CGFloat) {
+        
+        let fromButton = btnArray[fromIndex]
+        let toButton = btnArray[toIndex]
+        
+        // 2个按钮之间的距离
+        let xDistance = toButton.center.x - fromButton.center.x
+        // 2个按钮宽度的差值
+        //let wDistance = toButton.frame.size.width - fromButton.frame.size.width
+        
+        //var newFrame:CGRect = lineUnder.frame
+        var newCenter = lineUnder.center
+        newCenter.x = fromButton.center.x + xDistance * progress
+        
+        lineUnder.center = newCenter
+        
+        //开始变形
+        /**
+         let diff = selectedItemZoomScale - 1//变形大小
+         fromButton.transform = CGAffineTransform(scaleX: (1 - progress) * diff + 1, y: (1 - progress) * diff + 1)
+         toButton.transform = CGAffineTransform(scaleX: progress * diff + 1, y: progress * diff + 1)
+         */
+    }
+    
     
 }
 

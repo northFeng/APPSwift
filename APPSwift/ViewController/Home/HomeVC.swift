@@ -199,23 +199,6 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         self.view.addSubview(tableView)
         
         
-        btnsView.backgroundColor = UIColor.gray
-        self.view.addSubview(btnsView)
-        let oneN = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let ones = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let twoN = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let thrN = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let thrs = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let forN = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let fors = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnSize: CGSize(width: 50, height: 30), btnToLineCenterHeight: 13, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green)
-        
-        
         scrollView.contentSize = CGSize(width: kAPPWidth * 4, height: 300)
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
@@ -239,6 +222,22 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         scrollView.addSubview(view4)
         
         
+        btnsView.backgroundColor = UIColor.gray
+        self.view.addSubview(btnsView)
+        let oneN = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let ones = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let twoN = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let thrN = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let thrs = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        let forN = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let fors = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        
+        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnSize: CGSize(width: 50, height: 30), btnToLineCenterHeight: 13, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green, scrollView: scrollView)
+        
         btnsView.blockIndex = {
             [unowned self]
             index in
@@ -246,14 +245,6 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
                 self.scrollView.contentOffset = CGPoint(x: kAPPWidth * CGFloat(index), y: 0)
             }
         }
-    }
-    
-    
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        
-        btnsView.setButtonIndex(index: index)
     }
     
 }
