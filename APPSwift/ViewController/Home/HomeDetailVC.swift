@@ -12,6 +12,8 @@ import Foundation
 class HomeDetailVC: APPBaseController {
     
     var image:UIImage?
+    var oldFrame:CGRect?
+    
     
     private var imgView:UIImageView = UIImageView()
     
@@ -39,14 +41,18 @@ class HomeDetailVC: APPBaseController {
     ///数据绑定
     func bindViewModel() {
         
-        imgView.image = image
     }
     
     //MARK: ************************* Action && Event *************************
     
     
     //MARK: ************************* 逻辑处理 *************************
-    
+    ///显示
+    func showImgview() {
+        imgView.image = image
+        imgView.frame = CGRect(x: (kAPPWidth - 120.0)/2.0, y: (kAPPHeight - 160.0)/2.0, width: 120, height: 160)
+        imgView.isHidden = false
+    }
     
     //MARK: ************************* tableViewDelegate *************************
     
@@ -54,11 +60,26 @@ class HomeDetailVC: APPBaseController {
     //MARK: ************************* 页面搭建 *************************
     func createView() {
         
+        imgView.frame = CGRect(x: (kAPPWidth - 120.0)/2.0, y: (kAPPHeight - 160.0)/2.0, width: 120, height: 160)
         self.view.addSubview(imgView)
-        imgView.snp.makeConstraints { (make) in
-            make.center.equalToSuperview()
-            make.width.equalTo(120)
-            make.height.equalTo(160)
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.imgView.frame = self.oldFrame!
+            self.view.alpha = 0
+        }) { (complete) in
+            self.imgView.isHidden = true
+        }
+    }
+    
+    override func leftFirstButtonClick() {
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.imgView.frame = self.oldFrame!
+            self.view.alpha = 0
+        }) { (complete) in
         }
     }
     

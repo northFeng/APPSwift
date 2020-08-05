@@ -23,6 +23,8 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     var param = 0
     
     var imgView:UIImageView = UIImageView()
+        
+    var detailVC:HomeDetailVC?
     
     
     
@@ -151,6 +153,8 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         
         ImageLoadImage(imgView: cell.imageView!, url: wordModel.picUrl)
         
+        cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -184,17 +188,28 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         let cellImageFrame = cell!.imageView!.frame
         
         imgView.frame = CGRect(x: 20, y: cellFrame.origin.y - tableView.contentOffset.y + 100, width: cellImageFrame.size.width, height: cellImageFrame.size.height)
+        
+        if detailVC == nil {
+            let homeDetailVC = HomeDetailVC()
+            detailVC = homeDetailVC
+            detailVC!.view!.alpha = 0
+            self.addChild(detailVC!)
+            self.view.addSubview(detailVC!.view)
+            self.view.bringSubviewToFront(imgView)//至于上层
+        }
+
+        detailVC!.image = self.imgView.image
+        detailVC!.oldFrame = imgView.frame
+        
+        
         imgView.isHidden = false
-        
-        
-        let homeDetailVC = HomeDetailVC()
-        homeDetailVC.image = self.imgView.image
-    
         UIView.animate(withDuration: 0.4, animations: {
+            self.detailVC!.view.alpha = 1
             self.imgView.frame = CGRect(x: (kAPPWidth - 120.0)/2.0, y: (kAPPHeight - 160.0)/2.0, width: 120, height: 160)
         }) { (complete) in
+            self.detailVC?.showImgview()
             self.imgView.isHidden = true
-            self.navigationController?.pushViewController(homeDetailVC, animated: false)
+            //self.navigationController?.pushViewController(homeDetailVC, animated: false)
         }
     }
     
