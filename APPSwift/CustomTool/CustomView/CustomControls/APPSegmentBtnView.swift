@@ -269,5 +269,27 @@ fileprivate class SegmentButton: UIButton {
     var textWidth:CGFloat = 0
     
     
+}
+
+/**
+self.view.addSubview(btnsView)
+let oneN = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+let ones = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+
+let twoN = NSAttributedString(string: "嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+
+let thrN = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+let thrs = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+
+let forN = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+let fors = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+
+btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnHeight: 25, btnToLineCenterHeight: 7, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green, scrollView: scrollView)
+
+btnsView.blockIndex = {
+    //[unowned self]
+    index in
     
 }
+ */

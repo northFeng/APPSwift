@@ -14,7 +14,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var array2 = ["a","b","c","d","f"]
     
-    let tableView = UITableView(frame: CG_Rect(0, 150, kAPPWidth, kAPPHeight - 150), style: .grouped)
+    let tableView = UITableView(frame: CG_Rect(0, 100, kAPPWidth, kAPPHeight - 100), style: .grouped)
         
     let button = UIButton(type: .custom)
     
@@ -22,9 +22,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var param = 0
     
-    let btnsView = APPSegmentBtnView(frame: CGRect(x: 25, y: 40, width: kAPPWidth - 50, height: 35))
-    
-    let scrollView = UIScrollView(frame: CGRect(x: 0, y: 100, width: kAPPWidth, height: 300))
+    var imgView:UIImageView = UIImageView()
     
     
     
@@ -178,7 +176,26 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //点击cell
-        self.navigationController?.pushViewController(HomeVC(), animated: true)
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        imgView.image = cell?.imageView?.image
+        
+        let cellFrame = cell!.frame
+        let cellImageFrame = cell!.imageView!.frame
+        
+        imgView.frame = CGRect(x: 20, y: cellFrame.origin.y - tableView.contentOffset.y + 100, width: cellImageFrame.size.width, height: cellImageFrame.size.height)
+        imgView.isHidden = false
+        
+        
+        let homeDetailVC = HomeDetailVC()
+        homeDetailVC.image = self.imgView.image
+    
+        UIView.animate(withDuration: 0.4, animations: {
+            self.imgView.frame = CGRect(x: (kAPPWidth - 120.0)/2.0, y: (kAPPHeight - 160.0)/2.0, width: 120, height: 160)
+        }) { (complete) in
+            self.imgView.isHidden = true
+            self.navigationController?.pushViewController(homeDetailVC, animated: false)
+        }
     }
     
 
@@ -198,51 +215,8 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         //tableView.register(UINib(nibName: "", bundle: nil), forCellReuseIdentifier: "cell")
         self.view.addSubview(tableView)
         
-        
-        scrollView.contentSize = CGSize(width: kAPPWidth * 4, height: 300)
-        scrollView.isPagingEnabled = true
-        scrollView.delegate = self
-        self.view.addSubview(scrollView)
-        
-        
-        let view1 = UIView(frame: CGRect(x: 0, y: 0, width: kAPPWidth, height: 300))
-        view1.backgroundColor = UIColor.gray
-        scrollView.addSubview(view1)
-        
-        let view2 = UIView(frame: CGRect(x: kAPPWidth * 1, y: 0, width: kAPPWidth, height: 300))
-        view2.backgroundColor = UIColor.green
-        scrollView.addSubview(view2)
-        
-        let view3 = UIView(frame: CGRect(x: kAPPWidth * 2, y: 0, width: kAPPWidth, height: 300))
-        view3.backgroundColor = UIColor.blue
-        scrollView.addSubview(view3)
-        
-        let view4 = UIView(frame: CGRect(x: kAPPWidth * 3, y: 0, width: kAPPWidth, height: 300))
-        view4.backgroundColor = UIColor.orange
-        scrollView.addSubview(view4)
-        
-        
-        btnsView.backgroundColor = UIColor.gray
-        self.view.addSubview(btnsView)
-        let oneN = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let ones = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let twoN = NSAttributedString(string: "嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let thrN = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let thrs = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        let forN = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let fors = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
-        
-        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnHeight: 25, btnToLineCenterHeight: 7, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green, scrollView: scrollView)
-        
-        btnsView.blockIndex = {
-            //[unowned self]
-            index in
-            
-        }
+        imgView.isHidden = true
+        self.view.addSubview(imgView)
     }
     
 }
