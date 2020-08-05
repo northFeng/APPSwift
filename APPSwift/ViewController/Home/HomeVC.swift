@@ -22,7 +22,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     
     var param = 0
     
-    let btnsView = APPSegmentBtnView(frame: CGRect(x: 25, y: 40, width: kAPPWidth - 50, height: 50))
+    let btnsView = APPSegmentBtnView(frame: CGRect(x: 25, y: 40, width: kAPPWidth - 50, height: 35))
     
     let scrollView = UIScrollView(frame: CGRect(x: 0, y: 100, width: kAPPWidth, height: 300))
     
@@ -224,26 +224,24 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         
         btnsView.backgroundColor = UIColor.gray
         self.view.addSubview(btnsView)
-        let oneN = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let ones = NSAttributedString(string: "王一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        let oneN = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let ones = NSAttributedString(string: "一博", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
         
-        let twoN = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let twoN = NSAttributedString(string: "嘉尔", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
         let twos = NSAttributedString(string: "王嘉尔", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
         
-        let thrN = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let thrs = NSAttributedString(string: "张艺兴", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        let thrN = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let thrs = NSAttributedString(string: "张艺兴努力", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
         
-        let forN = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
-        let fors = NSAttributedString(string: "钟汉良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
+        let forN = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfSystem(font: 15),NSAttributedString.Key.foregroundColor:UIColor.black])
+        let fors = NSAttributedString(string: "良", attributes: [NSAttributedString.Key.font:FontOfCustom(name: kMediumFont, font: 15),NSAttributedString.Key.foregroundColor:UIColor.yellow])
         
-        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnSize: CGSize(width: 50, height: 30), btnToLineCenterHeight: 13, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green, scrollView: scrollView)
+        btnsView.setButtonsData(titlesNormal: [oneN,twoN,thrN,forN], titlesSelect: [ones,twos,thrs,fors], btnHeight: 25, btnToLineCenterHeight: 7, lineUnderSize: CGSize(width: 20, height: 6), lineColor: UIColor.green, scrollView: scrollView)
         
         btnsView.blockIndex = {
-            [unowned self]
+            //[unowned self]
             index in
-            UIView.animate(withDuration: 0.2) {
-                self.scrollView.contentOffset = CGPoint(x: kAPPWidth * CGFloat(index), y: 0)
-            }
+            
         }
     }
     

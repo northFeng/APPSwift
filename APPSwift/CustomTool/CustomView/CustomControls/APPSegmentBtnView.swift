@@ -1,14 +1,14 @@
 //
 //  APPSegmentBtnView.swift
 //  APPSwift
-//  按钮切换
+//  按钮切换 (适用于按钮个数在5个以下，按钮全部展示不能滑动的情况下使用)
 //  Created by 峰 on 2020/7/21.
 //  Copyright © 2020 north_feng. All rights reserved.
 //
 
 import Foundation
 
-class APPSegmentBtnView: UIView {
+class APPSegmentBtnView: UIView, UIScrollViewDelegate {
     
     private var btnSelect = SegmentButton(type: .custom)
     
@@ -52,15 +52,9 @@ class APPSegmentBtnView: UIView {
         bridgeScrollView?.removeObserver(self, forKeyPath: "contentOffset")
     }
     
-    ///设置选中按钮位置
-    func setButtonIndex(index:Int) {
-        selectedItemIndex = index
-        let button:SegmentButton = self.viewWithTag(1000 + index) as! SegmentButton
-        self.onClickButton(button: button)
-    }
     
     ///设置 按钮数据 (必须先设置APPSegmentBtnView的frame )
-    func setButtonsData(titlesNormal:[NSAttributedString], titlesSelect:[NSAttributedString], btnSize:CGSize, btnToLineCenterHeight:CGFloat, lineUnderSize:CGSize, lineColor:UIColor, defaultIndex:Int = 0, scrollView:UIScrollView) {
+    func setButtonsData(titlesNormal:[NSAttributedString], titlesSelect:[NSAttributedString], btnHeight:CGFloat, btnToLineCenterHeight:CGFloat, lineUnderSize:CGSize, lineColor:UIColor, defaultIndex:Int = 0, scrollView:UIScrollView) {
         
         btnLineCenterHeight = btnToLineCenterHeight
         
@@ -73,8 +67,8 @@ class APPSegmentBtnView: UIView {
             lineUnder.layer.cornerRadius = lineUnderSize.height / 2
             self.addSubview(lineUnder)
             
-            let btnSpace = (self.frame.size.width - (btnSize.width * CGFloat(titlesNormal.count))) / (CGFloat(titlesNormal.count) - 1)
-                        
+            var btnTotalWidth:CGFloat = 0 //按钮总长度
+            
             for index in 0..<titlesNormal.count {
                 
                 let button:SegmentButton = SegmentButton(type: .custom)
@@ -84,26 +78,69 @@ class APPSegmentBtnView: UIView {
                 button.setAttributedTitle(titlesSelect[index], for: .selected)
                 button.isSelected = false
                 button.tag = 1000 + index
-                button.frame = CGRect(origin: CGPoint(x: (btnSize.width + btnSpace) * CGFloat(index), y: 0), size: btnSize)
+                
+                //获取文字宽度
+                let titleSelect:NSAttributedString = titlesSelect[index]
+                let selectString = titleSelect.string
+                var rang = NSMakeRange(0, selectString.count)
+                
+                let dicAttr = titleSelect.attributes(at: 0, effectiveRange: &rang)
+                
+                let option = NSStringDrawingOptions.usesLineFragmentOrigin
+                let textRect = titleSelect.string.boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnHeight),options: option,attributes: dicAttr,context:nil)
+                
+                button.textWidth = textRect.width + 5 //多加5个长度
+                //button.frame = CGRect(origin: CGPoint(x: (btnSize.width + btnSpace) * CGFloat(index), y: 0), size: btnSize)
                 
                 self.addSubview(button)
+                
+                button.addTarget(self, action: #selector(onClickButton(button:)), for: .touchUpInside)
+                
+                btnArray.append(button)
+                btnTotalWidth += button.textWidth
+            }
+            
+            //计算出按钮间距
+            let btnSpace = (self.frame.size.width - btnTotalWidth) / (CGFloat(titlesNormal.count) - 1)
+            
+            //进行按钮之间的布局
+            for index in 0..<btnArray.count {
+                let button = btnArray[index]
+                if index == 0 {
+                    button.frame = CGRect(x: 0, y: 0, width: button.textWidth, height: btnHeight)
+                }else{
+                    let upButton = btnArray[index - 1]
+                    button.frame = CGRect(x: (upButton.frame.origin.x + upButton.frame.size.width) + btnSpace, y: 0, width: button.textWidth, height: btnHeight)
+                }
                 
                 if defaultIndex == index {
                     //选中的位置
                     btnSelect = button
                     btnSelect.isSelected = true
-                    lineUnder.center = CGPoint(x: btnSelect.center.x, y: btnSelect.frame.size.height + btnLineCenterHeight)
+                    lineUnder.center = CGPoint(x: btnSelect.center.x, y: (btnSelect.frame.origin.y + btnSelect.frame.size.height + btnLineCenterHeight))
                 }
-                button.addTarget(self, action: #selector(onClickButton(button:)), for: .touchUpInside)
-                
-                btnArray.append(button)
             }
             
             self.bringSubviewToFront(lineUnder)//把划线至于顶层
             
             bridgeScrollView = scrollView
+            bridgeScrollView?.delegate = self
             bridgeScrollView?.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.new, context: nil)
         }
+    }
+    
+    ///设置选中按钮位置
+    func setButtonIndex(index:Int) {
+        selectedItemIndex = index
+        let button:SegmentButton = self.viewWithTag(1000 + index) as! SegmentButton
+        self.onClickButton(button: button)
+    }
+    
+    ///滑动代理事件
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        //没有滚动了 && 没有拖拽
+        let index = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        self.setButtonIndex(index: index)
     }
     
     ///按钮点击事件
@@ -117,18 +154,19 @@ class APPSegmentBtnView: UIView {
         btnSelect.isSelected = true
         
         UIView.animate(withDuration: 0.2) {
-            self.lineUnder.center = CGPoint(x: self.btnSelect.center.x, y: self.btnSelect.frame.size.height + self.btnLineCenterHeight)
+            self.lineUnder.center = CGPoint(x: self.btnSelect.center.x, y: (self.btnSelect.frame.origin.y + self.btnSelect.frame.size.height + self.btnLineCenterHeight))
+            self.bridgeScrollView?.contentOffset = CGPoint(x: (self.bridgeScrollView?.frame.size.width ?? 0) * CGFloat(button.tag - 1000), y: 0)
         }
         
         blockIndex(btnSelect.tag - 1000)//回调点击位置
     }
     
     ///监听 scrollView的huado
-    private override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if keyPath == "contentOffset" && object is UIScrollView {
-            // 当scrolllView滚动时,让跟踪器跟随scrollView滑动
             
+            //处理滑动条
             self.prepareMoveTrackerFollowScrollView(scorllView: bridgeScrollView!)
         }
     }
@@ -227,6 +265,8 @@ class APPSegmentBtnView: UIView {
 
 fileprivate class SegmentButton: UIButton {
     
+    ///文字宽度
+    var textWidth:CGFloat = 0
     
     
     
