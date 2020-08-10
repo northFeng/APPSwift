@@ -1,0 +1,163 @@
+//
+//  CardView.swift
+//  APPSwift
+//
+//  Created by 峰 on 2020/8/7.
+//  Copyright © 2020 north_feng. All rights reserved.
+//
+
+import Foundation
+
+
+class CardViewVC: APPBaseController,UITableViewDelegate,UITableViewDataSource,BannerViewDelegate {
+    
+    private var tableView:UITableView?
+    private let kTableViewCell = "kTableViewCell"
+    private var bannerView:BannerView?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+    }
+    
+    private func setupTableView() {
+        let tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.backgroundColor = .white
+        self.view.addSubview(tableView)
+        self.tableView = tableView
+    }
+    
+    private func setupBanner1() -> BannerView {
+        if self.bannerView != nil {
+            return self.bannerView!
+        }
+           let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+           bannerView.pageControl?.directionType = .rightDirection
+           bannerView.imageType = .bannerViewImageWithVideo
+           bannerView.imageDatas = ["http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4",
+           "https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+            "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg"]
+           self.bannerView = bannerView
+           return bannerView
+    }
+    private func setupBanner2() -> BannerView {
+        let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+        bannerView.imageDatas = ["https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+        "WechatIMG105",
+         "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg",
+         "http://www.nbyh.info/uploadfiles/day_180315/201803151133523433.gif"]
+        return bannerView
+    }
+    
+    private func setupBanner3() -> BannerView {
+        let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+        bannerView.pageControl?.directionType = .rightDirection
+        bannerView.pageControl?.pageType = .hollow
+        bannerView.pageControl?.pointHeight = 10
+        bannerView.pageControl?.selectColor = .red
+        bannerView.pageControl?.normalColor = .green
+        bannerView.imageViewContentMode = .scaleAspectFill
+        bannerView.rollType = .leftToRight
+        bannerView.imageDatas = ["https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+        "WechatIMG105",
+         "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg",
+         "http://www.nbyh.info/uploadfiles/day_180315/201803151133523433.gif"]
+        return bannerView
+    }
+    private func setupBanner4() -> BannerView {
+        let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+        bannerView.pageControl?.pageType = .circle
+        bannerView.pageControl?.pointHeight = 8
+        bannerView.pageControl?.selectColor = .red
+        bannerView.pageControl?.normalColor = .green
+        bannerView.isZoom = true//缩放 卡片效果
+        bannerView.imgCornerRadius = 10
+        bannerView.itemWidth = 300
+        bannerView.itemSpace = 0
+        bannerView.imageDatas = ["https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+        "WechatIMG105",
+         "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg",
+         "http://www.nbyh.info/uploadfiles/day_180315/201803151133523433.gif"]
+        return bannerView
+    }
+    
+    private func setupBanner5() -> BannerView {
+        let bannerView = BannerView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 160))
+        bannerView.pageControl?.pageType = .rectangle
+        bannerView.pageControl?.pointHeight = 8
+        bannerView.pageControl?.selectColor = .white
+        bannerView.pageControl?.normalColor = .blue
+        bannerView.pageControl?.directionType = .leftDirection
+        bannerView.isZoom = false // 不缩放，平滑过渡，没有卡片效果
+        bannerView.imgCornerRadius = 10
+        bannerView.itemWidth = 300
+        bannerView.itemSpace = 10
+        bannerView.imageDatas = ["https://img.ivsky.com/img/tupian/pre/201911/04/shumu_daoying.jpg",
+        "WechatIMG105",
+         "https://img.ivsky.com/img/tupian/t/201911/09/ciwei.jpg",
+         "http://www.nbyh.info/uploadfiles/day_180315/201803151133523433.gif"]
+        return bannerView
+    }
+    
+    
+    //MARK: ************************* 代理 *************************
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if  indexPath.section == 0 {
+            cell.contentView.addSubview(setupBanner1())
+        }
+        if  indexPath.section == 1 {
+            cell.contentView.addSubview(setupBanner2())
+        }
+        if  indexPath.section == 2 {
+            cell.contentView.addSubview(setupBanner3())
+        }
+        if  indexPath.section == 3 {
+            cell.contentView.addSubview(setupBanner4())
+        }
+        if  indexPath.section == 4 {
+            cell.contentView.addSubview(setupBanner5())
+        }
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 10))
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    //MARK: ************************* banner回调代理 *************************
+    func bannerView(_ bannerView: BannerView, _ selectIndex: NSInteger) {
+        print("selectIndex = \(selectIndex)")
+    }
+}

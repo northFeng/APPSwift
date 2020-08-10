@@ -26,6 +26,21 @@
 		8323011F24A9CB5700CF72BB /* APPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323011E24A9CB5700CF72BB /* APPExtension.swift */; };
 		8323012124A9E32600CF72BB /* APPViewTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323012024A9E32600CF72BB /* APPViewTool.swift */; };
 		8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8323012224A9E34F00CF72BB /* APPDateTool.swift */; };
+		832C983424DD51C500BD8EA6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982224DD51C500BD8EA6 /* BannerView.swift */; };
+		832C983524DD51C500BD8EA6 /* LoadImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982324DD51C500BD8EA6 /* LoadImageView.swift */; };
+		832C983624DD51C500BD8EA6 /* BannerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 832C982424DD51C500BD8EA6 /* BannerView.bundle */; };
+		832C983724DD51C500BD8EA6 /* BannerVideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982524DD51C500BD8EA6 /* BannerVideoViewCell.swift */; };
+		832C983824DD51C500BD8EA6 /* BannerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982624DD51C500BD8EA6 /* BannerTool.swift */; };
+		832C983924DD51C500BD8EA6 /* BannerViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982724DD51C500BD8EA6 /* BannerViewFlowLayout.swift */; };
+		832C983A24DD51C500BD8EA6 /* ZYPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982A24DD51C500BD8EA6 /* ZYPlayer.swift */; };
+		832C983B24DD51C500BD8EA6 /* ZYPlayerTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982B24DD51C500BD8EA6 /* ZYPlayerTool.swift */; };
+		832C983C24DD51C500BD8EA6 /* PlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 832C982C24DD51C500BD8EA6 /* PlayerView.bundle */; };
+		832C983D24DD51C500BD8EA6 /* ZYPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982D24DD51C500BD8EA6 /* ZYPlayerView.swift */; };
+		832C983E24DD51C500BD8EA6 /* BannerBaseDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C982F24DD51C500BD8EA6 /* BannerBaseDataInfo.swift */; };
+		832C983F24DD51C500BD8EA6 /* BannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C983024DD51C500BD8EA6 /* BannerViewCell.swift */; };
+		832C984024DD51C500BD8EA6 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C983224DD51C500BD8EA6 /* PageControl.swift */; };
+		832C984124DD51C500BD8EA6 /* CyclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C983324DD51C500BD8EA6 /* CyclesView.swift */; };
+		832C984324DD51F200BD8EA6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C984224DD51F200BD8EA6 /* CardView.swift */; };
 		8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338EB6C249CAA0C00371C05 /* AppDelegate.swift */; };
 		8338EB74249CAA0C00371C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB72249CAA0C00371C05 /* Main.storyboard */; };
 		8338EB76249CAA0D00371C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8338EB75249CAA0D00371C05 /* Assets.xcassets */; };
@@ -80,6 +95,21 @@
 		8323011E24A9CB5700CF72BB /* APPExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPExtension.swift; sourceTree = "<group>"; };
 		8323012024A9E32600CF72BB /* APPViewTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPViewTool.swift; sourceTree = "<group>"; };
 		8323012224A9E34F00CF72BB /* APPDateTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPDateTool.swift; sourceTree = "<group>"; };
+		832C982224DD51C500BD8EA6 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		832C982324DD51C500BD8EA6 /* LoadImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadImageView.swift; sourceTree = "<group>"; };
+		832C982424DD51C500BD8EA6 /* BannerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BannerView.bundle; sourceTree = "<group>"; };
+		832C982524DD51C500BD8EA6 /* BannerVideoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerVideoViewCell.swift; sourceTree = "<group>"; };
+		832C982624DD51C500BD8EA6 /* BannerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerTool.swift; sourceTree = "<group>"; };
+		832C982724DD51C500BD8EA6 /* BannerViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewFlowLayout.swift; sourceTree = "<group>"; };
+		832C982A24DD51C500BD8EA6 /* ZYPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayer.swift; sourceTree = "<group>"; };
+		832C982B24DD51C500BD8EA6 /* ZYPlayerTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayerTool.swift; sourceTree = "<group>"; };
+		832C982C24DD51C500BD8EA6 /* PlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PlayerView.bundle; sourceTree = "<group>"; };
+		832C982D24DD51C500BD8EA6 /* ZYPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZYPlayerView.swift; sourceTree = "<group>"; };
+		832C982F24DD51C500BD8EA6 /* BannerBaseDataInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerBaseDataInfo.swift; sourceTree = "<group>"; };
+		832C983024DD51C500BD8EA6 /* BannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewCell.swift; sourceTree = "<group>"; };
+		832C983224DD51C500BD8EA6 /* PageControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
+		832C983324DD51C500BD8EA6 /* CyclesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CyclesView.swift; sourceTree = "<group>"; };
+		832C984224DD51F200BD8EA6 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		8338EB69249CAA0C00371C05 /* APPSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APPSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8338EB6C249CAA0C00371C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8338EB73249CAA0C00371C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -209,6 +239,68 @@
 			path = CustomExtend;
 			sourceTree = "<group>";
 		};
+		832C982024DD518700BD8EA6 /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				832C982124DD51C500BD8EA6 /* BannerView */,
+				832C984224DD51F200BD8EA6 /* CardView.swift */,
+			);
+			path = CardView;
+			sourceTree = "<group>";
+		};
+		832C982124DD51C500BD8EA6 /* BannerView */ = {
+			isa = PBXGroup;
+			children = (
+				832C982224DD51C500BD8EA6 /* BannerView.swift */,
+				832C982324DD51C500BD8EA6 /* LoadImageView.swift */,
+				832C982424DD51C500BD8EA6 /* BannerView.bundle */,
+				832C982524DD51C500BD8EA6 /* BannerVideoViewCell.swift */,
+				832C982624DD51C500BD8EA6 /* BannerTool.swift */,
+				832C982724DD51C500BD8EA6 /* BannerViewFlowLayout.swift */,
+				832C982824DD51C500BD8EA6 /* ZYPlayerView */,
+				832C982E24DD51C500BD8EA6 /* Model */,
+				832C983024DD51C500BD8EA6 /* BannerViewCell.swift */,
+				832C983124DD51C500BD8EA6 /* pageControl */,
+			);
+			path = BannerView;
+			sourceTree = "<group>";
+		};
+		832C982824DD51C500BD8EA6 /* ZYPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				832C982924DD51C500BD8EA6 /* ZYPlayer */,
+				832C982C24DD51C500BD8EA6 /* PlayerView.bundle */,
+				832C982D24DD51C500BD8EA6 /* ZYPlayerView.swift */,
+			);
+			path = ZYPlayerView;
+			sourceTree = "<group>";
+		};
+		832C982924DD51C500BD8EA6 /* ZYPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				832C982A24DD51C500BD8EA6 /* ZYPlayer.swift */,
+				832C982B24DD51C500BD8EA6 /* ZYPlayerTool.swift */,
+			);
+			path = ZYPlayer;
+			sourceTree = "<group>";
+		};
+		832C982E24DD51C500BD8EA6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				832C982F24DD51C500BD8EA6 /* BannerBaseDataInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		832C983124DD51C500BD8EA6 /* pageControl */ = {
+			isa = PBXGroup;
+			children = (
+				832C983224DD51C500BD8EA6 /* PageControl.swift */,
+				832C983324DD51C500BD8EA6 /* CyclesView.swift */,
+			);
+			path = pageControl;
+			sourceTree = "<group>";
+		};
 		8338EB60249CAA0C00371C05 = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +383,7 @@
 		8338EB84249CBE9800371C05 /* ThirdModular */ = {
 			isa = PBXGroup;
 			children = (
+				832C982024DD518700BD8EA6 /* CardView */,
 				8397A41324C8416E001B9449 /* DataStore */,
 				83409F7C24A8502A003C44F2 /* AFNetworking */,
 				8323011124A88B1000CF72BB /* KingfisherImage */,
@@ -501,7 +594,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83BCD9C224CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive in Resources */,
+				832C983C24DD51C500BD8EA6 /* PlayerView.bundle in Resources */,
 				83849D8C24B740C600F41053 /* 干货集中营-RAC+RXSwift+MVVM .webarchive in Resources */,
+				832C983624DD51C500BD8EA6 /* BannerView.bundle in Resources */,
 				834ED5A824CEACC1003F79CC /* Swift中的RactiveCocoa.webarchive in Resources */,
 				83BCD9C424D0132300CAF49A /* RxSwift 使用详解系列 .webarchive in Resources */,
 				8338EB79249CAA0D00371C05 /* LaunchScreen.storyboard in Resources */,
@@ -562,33 +657,46 @@
 			buildActionMask = 2147483647;
 			files = (
 				8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */,
+				832C983524DD51C500BD8EA6 /* LoadImageView.swift in Sources */,
+				832C983E24DD51C500BD8EA6 /* BannerBaseDataInfo.swift in Sources */,
 				8323010C24A8746800CF72BB /* APPHttpCacheTool.m in Sources */,
+				832C983424DD51C500BD8EA6 /* BannerView.swift in Sources */,
 				83B800B424A1F2D700CC5FC0 /* APPTextImageButton.swift in Sources */,
 				831A4F1524A0B40300646A1C /* MineVC.swift in Sources */,
 				8306C559249E120B0060409A /* APPNavigationBarView.swift in Sources */,
 				8323011924A89DCF00CF72BB /* APPXYColorApi.m in Sources */,
 				8338EB91249CC1D500371C05 /* APPGlobalVariable.swift in Sources */,
 				83B1AE3024B0739F00FC7363 /* APPLoadingApi.swift in Sources */,
+				832C983824DD51C500BD8EA6 /* BannerTool.swift in Sources */,
 				831A4F1324A0B3F500646A1C /* MiddleVC.swift in Sources */,
 				8338EB8F249CC14400371C05 /* APPEnum.swift in Sources */,
+				832C984324DD51F200BD8EA6 /* CardView.swift in Sources */,
 				83037B7C24B5C1D3007D470D /* ExampleController.swift in Sources */,
+				832C983F24DD51C500BD8EA6 /* BannerViewCell.swift in Sources */,
 				8323011F24A9CB5700CF72BB /* APPExtension.swift in Sources */,
+				832C983B24DD51C500BD8EA6 /* ZYPlayerTool.swift in Sources */,
 				8323012124A9E32600CF72BB /* APPViewTool.swift in Sources */,
 				8371E1BF24C714AB003EA255 /* APPSegmentBtnView.swift in Sources */,
+				832C983A24DD51C500BD8EA6 /* ZYPlayer.swift in Sources */,
 				831A4F0F24A0B3E400646A1C /* HomeVC.swift in Sources */,
 				83B800BC24A33F3D00CC5FC0 /* APPLoacalInfo.swift in Sources */,
 				8323010924A8531800CF72BB /* APPHttpTool.m in Sources */,
 				83409F7B24A84DCC003C44F2 /* APPOCInterface.swift in Sources */,
+				832C983724DD51C500BD8EA6 /* BannerVideoViewCell.swift in Sources */,
+				832C984024DD51C500BD8EA6 /* PageControl.swift in Sources */,
 				8338EB6D249CAA0C00371C05 /* AppDelegate.swift in Sources */,
 				8323011324A88B4000CF72BB /* APPImageLoad.swift in Sources */,
 				8323010E24A8782000CF72BB /* APPNetTool.swift in Sources */,
 				83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */,
+				832C983D24DD51C500BD8EA6 /* ZYPlayerView.swift in Sources */,
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
 				83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */,
 				830C8E8D24DAB82300BDD2BB /* HomeDetailVC.swift in Sources */,
 				83B800BA24A3308300CC5FC0 /* APPKeyInfo.swift in Sources */,
 				83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */,
+				832C984124DD51C500BD8EA6 /* CyclesView.swift in Sources */,
+				832C983924DD51C500BD8EA6 /* BannerViewFlowLayout.swift in Sources */,
 				8323012324A9E34F00CF72BB /* APPDateTool.swift in Sources */,
 				8323011524A89B1C00CF72BB /* APPColorDefine.swift in Sources */,
 				8323011024A889A000CF72BB /* APPModel.swift in Sources */,

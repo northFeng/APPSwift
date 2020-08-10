@@ -42,6 +42,12 @@ pod 'ReactiveCocoa','11.0.0'
 pod 'RxSwift','~> 4.0'
 pod 'RxCocoa','~> 4.0'
 
+#轮播图  https://github.com/LvJianfeng/LLCycleScrollView
+#pod 'LLCycleScrollView'
+
+#轮播图 带控制按钮可设置图片
+#pod 'SDCycleScrollView','1.80'
+
 
 #**************** OC常用第三方框架**************
 pod 'AFNetworking','~>3.2.1'
