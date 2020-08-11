@@ -67,6 +67,7 @@
 		83BCD9C224CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83BCD9C124CFCF8400CAF49A /* RAC,ReactiveSwift博客园.webarchive */; };
 		83BCD9C424D0132300CAF49A /* RxSwift 使用详解系列 .webarchive in Resources */ = {isa = PBXBuildFile; fileRef = 83BCD9C324D0132300CAF49A /* RxSwift 使用详解系列 .webarchive */; };
 		83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BD19B524AF572200699F9B /* APPAlertApi.m */; };
+		83BDBC4824E28D8E00B81B49 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BDBC4724E28D8E00B81B49 /* GFTextField.swift */; };
 		83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2769924B852A500DFBB13 /* APPKeyboardApi.m */; };
 		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
 /* End PBXBuildFile section */
@@ -139,6 +140,7 @@
 		83BCD9C324D0132300CAF49A /* RxSwift 使用详解系列 .webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "RxSwift 使用详解系列 .webarchive"; sourceTree = "<group>"; };
 		83BD19B424AF572200699F9B /* APPAlertApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAlertApi.h; sourceTree = "<group>"; };
 		83BD19B524AF572200699F9B /* APPAlertApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAlertApi.m; sourceTree = "<group>"; };
+		83BDBC4724E28D8E00B81B49 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 		83C2769824B852A500DFBB13 /* APPKeyboardApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPKeyboardApi.h; sourceTree = "<group>"; };
 		83C2769924B852A500DFBB13 /* APPKeyboardApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPKeyboardApi.m; sourceTree = "<group>"; };
 		83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPAlertTool.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 			children = (
 				83B800B324A1F2D700CC5FC0 /* APPTextImageButton.swift */,
 				8371E1BE24C714AB003EA255 /* APPSegmentBtnView.swift */,
+				83BDBC4724E28D8E00B81B49 /* GFTextField.swift */,
 			);
 			path = CustomControls;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83BDBC4824E28D8E00B81B49 /* GFTextField.swift in Sources */,
 				8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */,
 				832C983524DD51C500BD8EA6 /* LoadImageView.swift in Sources */,
 				832C983E24DD51C500BD8EA6 /* BannerBaseDataInfo.swift in Sources */,
