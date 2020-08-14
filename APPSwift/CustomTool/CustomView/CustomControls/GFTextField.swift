@@ -12,9 +12,9 @@ class GFTextField: UITextField {
     
     ///输入框类型
     enum TextFieldType {
-        //默认
+        //默认（输入任何文本）
         case Default
-        ///手机号
+        ///手机号（只能11位数字）
         case Mobile
         ///验证码 密文
         case Code_Cipher
@@ -26,7 +26,11 @@ class GFTextField: UITextField {
     var textLengthLimit:Int = LONG_MAX
     
     ///输入框类型
-    var tfType:TextFieldType = .Default
+    var tfType:TextFieldType{
+        willSet{
+            
+        }
+    }
     
     ///是否展示 菜单
     var showMenuAction:Bool = false
@@ -34,17 +38,29 @@ class GFTextField: UITextField {
     ///上一次文本长度
     private var uptextLength = 0
     
+    ///view数组
+    private var viewsArray:[UIView] = []
+    
+    ///自定义竖线
+    private var lineView = GFLineTF()
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    init(textFieldType:TextFieldType = .Default, lengthLimit:Int = LONG_MAX, menuShow:Bool = false) {
+        tfType = textFieldType
+        textLengthLimit = lengthLimit
+        showMenuAction = menuShow
         
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     }
     override init(frame: CGRect) {
+        tfType = .Default
+        
         super.init(frame: frame)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(textFiledEditChanged(noti:)), name: NSNotification.Name(rawValue: ""), object: nil)
     }
     
@@ -55,7 +71,7 @@ class GFTextField: UITextField {
     //MARK: ************************* 输入框文字变化通知 *************************
     @objc func textFiledEditChanged(noti:Notification) {
         
-        let toBeString:String = self.text ?? ""
+        var toBeString:String = self.text ?? ""
         let lang = self.textInputMode?.primaryLanguage
         
         if lang == "zh-Hans" {
@@ -78,16 +94,24 @@ class GFTextField: UITextField {
             }
         }
         
+        
         //处理
         switch tfType {
+        case .Default:
+            //默认
+            Print("")
         case .Mobile:
             //判断在输入还是删除
+            
+            //再次获取文字
+            toBeString = self.text ?? ""
+            
             if uptextLength < self.text?.count ?? 0 {
                 //输入字符
                 if self.text?.count == 3 || self.text?.count == 8 {
                     self.text = self.text! + " "
                 }else if uptextLength == 3 || uptextLength == 8 {
-                    self.text = String(format: "%@ %@", String(self.text![self.text!.startIndex..<self.text!.index(self.text!.startIndex, offsetBy: uptextLength)]),String(self.text![self.text!.index(self.text!.startIndex, offsetBy: uptextLength)...self.text!.endIndex]))
+                    self.text = String(format: "%@ %@", String(toBeString[toBeString.startIndex..<toBeString.index(self.text!.startIndex, offsetBy: uptextLength)]),String(toBeString[toBeString.index(toBeString.startIndex, offsetBy: uptextLength)...toBeString.endIndex]))
                 }
             }else if uptextLength > self.text?.count ?? 0 {
                 //删除字符
@@ -95,15 +119,192 @@ class GFTextField: UITextField {
                     self.text = String(self.text![self.text!.startIndex...self.text!.index(before: self.text!.endIndex)])
                 }
             }
-//        case .Code_Cipher:
-//        case .Code_Clear:
-//
-//        default:
+        case .Code_Cipher,.Code_Clear:
+            //验证码隐藏
             
+            //再次获取文字
+            toBeString = self.text ?? ""
+            
+            if viewsArray.count > 0 {
+                for backView in viewsArray {
+                    let index = backView.tag - 1000
+                    
+                    if index < self.text?.count ?? 0 {
+                        //要显示的
+                        backView.isHidden = false
+                        
+                        if tfType == .Code_Clear {
+                            //明文
+                            let label = backView as! UILabel
+                            label.text = String(toBeString[toBeString.index(toBeString.startIndex, offsetBy: index)...toBeString.index(toBeString.index(toBeString.startIndex, offsetBy: index), offsetBy: 1)])
+                        }else{
+                            backView.isHidden = true
+                        }
+                    }else{
+                        if tfType == .Code_Clear {
+                            let label = backView as! UILabel
+                            label.text = ""
+                        }else{
+                            backView.isHidden = true
+                        }
+                    }
+                }
+                
+                //控制竖线闪烁
+                if toBeString.count >= textLengthLimit {
+                    //填满
+                    lineView.stopFlashAndHide()
+                }else{
+                    let backView = viewsArray[toBeString.count]
+                    lineView.center = backView.center
+                    lineView.startFlash()
+                }
+            }
         }
+        
+    }
+    
+    ///设置输入框类型设置
+    func setTextFieldType(tfType:TextFieldType, borderColor:UIColor, lineColor:UIColor) {
+        
+        if tfType != .Default {
+            
+            if textLengthLimit != LONG_MAX {
+                
+                //设置外边框的样式
+                self.borderStyle = .none
+                self.layer.borderColor = borderColor.cgColor
+                self.layer.borderWidth = 1;
+                self.tintColor = UIColor.clear
+                self.textColor = UIColor.clear
+                
+                let widthSpace:CGFloat = self.frame.size.width / CGFloat(textLengthLimit)
+                let height:CGFloat = self.frame.size.height
+                
+                for index in 0..<textLengthLimit {
+                    
+                    let line = UIView()
+                    line.backgroundColor = borderColor
+                    //改变竖条的大小
+                    line.frame = CGRect(x: ((widthSpace - 1) + (widthSpace + 1)*CGFloat(index)), y: 1.5, width: 1, height: height - 3)
+                    
+                    if index != textLengthLimit - 1 {
+                        //最后一条线不加
+                        self.addSubview(line)
+                    }
+                    
+                    if tfType == .Code_Cipher {
+                        //密文
+                        let backView = UIView()
+                        backView.backgroundColor = UIColor.black
+                        backView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+                        backView.center = CGPoint(x: widthSpace / 2 + widthSpace*CGFloat(index), y: height / 2)
+                        //设置小圆点大小
+                        backView.layer.cornerRadius = 5
+                        backView.layer.masksToBounds = true
+                        self.addSubview(backView)
+                        backView.isHidden = true
+                        backView.tag = 1000 + index
+                        viewsArray.append(backView)
+                        
+                    }else if tfType == .Code_Clear {
+                        //明文
+                        let label:UILabel = UILabel()
+                        label.textAlignment = .center
+                        label.textColor = UIColor.black
+                        label.backgroundColor = UIColor.clear
+                        //改变label的frame
+                        label.frame = CGRect(x: 0, y: 0, width: widthSpace - 4, height: height - 4)
+                        label.center = CGPoint(x: widthSpace / 2 + widthSpace*CGFloat(index), y: height/2)
+                        self.addSubview(label)
+                        label.isHidden = true
+                        label.tag = 1000 + index
+                        viewsArray.append(label)
+                    }
+                    
+                }
+                
+                lineView.backgroundColor = lineColor
+                lineView.frame = CGRect(x: 0, y: 0, width: 2, height: 24)
+                lineView.center = CGPoint(x: widthSpace / 2, y: height / 2)
+                self.addSubview(lineView)
+            }
+        }
+        
+        ///设置清除按钮图片
+        func setClearBtnImage(image:UIImage) {
+            let clearBtn:UIButton? = self.value(forKey: "clearButton") as? UIButton
+            clearBtn?.setImage(image, for: .normal)
+        }
+        
+        //MARK: ************************* 赋值粘贴 代理处理 *************************
+        func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+            if showMenuAction {
+                let menuController = UIMenuController.shared
+                menuController.isMenuVisible = false
+                //控制显示的菜单
+                if action == #selector(copy(_:)) || action == #selector(paste(_:)) {
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        }
+        
         
         
     }
     
+    
+}
+
+
+//MARK: ************************* 输入框竖线 *************************
+fileprivate class GFLineTF: UIView {
+    
+    ///隐藏 & 显示
+    var isHide = false
+    
+    init() {
+        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
+        self.backgroundColor = UIColor.blue
+        self.isHidden = false
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    ///不停闪烁
+    @objc func constantlyFlashing() {
+        if !isHide {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.isHidden = !self.isHidden
+            }) { (finished) in
+                self.perform(#selector(self.constantlyFlashing), with: nil, afterDelay: 0.5)
+            }
+        }
+    }
+    
+    ///隐藏 && 停止闪烁
+    func stopFlashAndHide() {
+        if !isHide {
+            isHide = true
+            self.isHidden = true
+        }
+    }
+    
+    ///开始闪烁
+    func startFlash() {
+        if isHide {
+            isHide = false
+            self.isHidden = false
+            self.constantlyFlashing()
+        }
+    }
     
 }
