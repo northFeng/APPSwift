@@ -69,6 +69,7 @@
 		83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BD19B524AF572200699F9B /* APPAlertApi.m */; };
 		83BDBC4824E28D8E00B81B49 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BDBC4724E28D8E00B81B49 /* GFTextField.swift */; };
 		83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2769924B852A500DFBB13 /* APPKeyboardApi.m */; };
+		83EA12B924EE65BE00187B05 /* SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EA12B824EE65BE00187B05 /* SwiftUI.swift */; };
 		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 		83BDBC4724E28D8E00B81B49 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 		83C2769824B852A500DFBB13 /* APPKeyboardApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPKeyboardApi.h; sourceTree = "<group>"; };
 		83C2769924B852A500DFBB13 /* APPKeyboardApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPKeyboardApi.m; sourceTree = "<group>"; };
+		83EA12B824EE65BE00187B05 /* SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.swift; sourceTree = "<group>"; };
 		83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPAlertTool.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,6 +184,7 @@
 			children = (
 				831A4F0E24A0B3E400646A1C /* HomeVC.swift */,
 				830C8E8C24DAB82300BDD2BB /* HomeDetailVC.swift */,
+				83EA12B824EE65BE00187B05 /* SwiftUI.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				83B800BE24A33F5400CC5FC0 /* APPFileManager.swift in Sources */,
 				832C983D24DD51C500BD8EA6 /* ZYPlayerView.swift in Sources */,
 				83B800B624A2048100CC5FC0 /* APPManager.swift in Sources */,
+				83EA12B924EE65BE00187B05 /* SwiftUI.swift in Sources */,
 				8338EB97249CC48B00371C05 /* APPBaseController.swift in Sources */,
 				83BD19B624AF572200699F9B /* APPAlertApi.m in Sources */,
 				830C8E8D24DAB82300BDD2BB /* HomeDetailVC.swift in Sources */,

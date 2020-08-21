@@ -12,12 +12,114 @@ import Foundation
 import CommonCrypto
 extension String {
     
-    ///字符串截取
-    func string_subscript(range:ClosedRange<Int>) -> String {
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(startIndex, offsetBy: range.upperBound)
-        return String(self[start...end])
+    ///截取字符串
+    func string_range(start:Int, end:Int) -> String {
+        
+        var indexS = start < 0 ? 0 : start
+        
+        let indexE = end > (self.count - 1) ? self.count - 1 : end;
+        
+        if indexS > indexE {
+            indexS = indexE
+        }
+        
+        let indexStart = index(startIndex, offsetBy: indexS)
+        let indexEnd = index(startIndex, offsetBy: indexE)
+        
+        let substr = String(self[indexStart...indexEnd])
+        
+        return substr
     }
+    
+    //************************* 扩展下标 *************************
+    /// String使用下标截取字符串 —> string[index] 例如："abcdefg"[3]
+    subscript (i:Int)->String{
+        
+        var indexI = i
+        
+        if indexI >= self.count {
+            indexI = self.count - 1
+        }
+        let startIndex = self.index(self.startIndex, offsetBy: indexI)
+        let endIndex = self.index(startIndex, offsetBy: 0)
+        return String(self[startIndex...endIndex])
+    }
+    
+    /// String使用下标截取字符串 —> string[index..<index] 例如："abcdefg"[3..<4] // d
+    subscript (r: Range<Int>) -> String {
+        get {
+            
+            var indexS = r.lowerBound < 0 ? 0 : r.lowerBound
+            
+            let indexE = r.upperBound > self.count ? self.count : r.upperBound;
+            
+            if indexS > indexE {
+                indexS = indexE
+            }
+            
+            let startIndex = self.index(self.startIndex, offsetBy: indexS)
+            let endIndex = self.index(self.startIndex, offsetBy: indexE)
+            
+            return String(self[startIndex..<endIndex])
+        }
+    }
+    
+    /// String使用下标截取字符串 —> string[index,length] 例如："abcdefg"[3,2] // de
+    subscript (index:Int, length:Int) -> String {
+        get {
+            
+            //位置
+            var indexFrom = index
+            if indexFrom < 0 {
+                indexFrom = 0
+            }
+            if indexFrom >= self.count {
+                indexFrom = self.count - 1
+            }
+            
+            //长度
+            var count = length < 0 ? 0 : length
+            count = length > self.count ? self.count : length
+            
+            //总长度 是否超出字符
+            if indexFrom + count > self.count {
+                count = self.count - indexFrom
+            }
+            
+            let startIndex = self.index(self.startIndex, offsetBy: indexFrom)
+            let endIndex = self.index(startIndex, offsetBy: count)
+            return String(self[startIndex..<endIndex])
+        }
+    }
+    //截取 从头到i位置 可以到 字符串长度的下一位
+    func substring(to:Int) -> String{
+        
+        var indexTo = to
+        
+        if indexTo < 0 {
+            indexTo = 0
+        }
+        
+        if indexTo > self.count {
+            indexTo = self.count
+        }
+        
+        return self[0..<to]
+    }
+    //截取 从i到尾部
+    func substring(from:Int) -> String{
+        
+        var indexFrom = from
+        
+        if indexFrom < 0 {
+            indexFrom = 0
+        }
+        if indexFrom >= self.count {
+            indexFrom = self.count - 1
+        }
+        return self[from..<self.count]
+    }
+    //***********************************************************
     
     ///MD5加密
     func md5_gf() -> String {

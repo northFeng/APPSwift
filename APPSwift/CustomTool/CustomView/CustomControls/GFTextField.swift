@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class GFTextField: UITextField {
     
     ///输入框类型
@@ -82,7 +83,7 @@ class GFTextField: UITextField {
             //没有高亮选择的字，则对已输入的文字进行字数统计和限制
             if position != nil {
                 if toBeString.count > textLengthLimit {
-                    self.text = String(toBeString[...toBeString.index(toBeString.endIndex, offsetBy: 0)])
+                    self.text = toBeString.string_range(start: 0, end: textLengthLimit - 1)
                 }
             }else{
                 //有高亮选择的字符串，则暂不对文字进行统计和限制
@@ -90,13 +91,14 @@ class GFTextField: UITextField {
         }else{
             //中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
             if toBeString.count > textLengthLimit {
-                self.text = String(toBeString[...toBeString.index(toBeString.endIndex, offsetBy: 0)])
+                self.text = toBeString.string_range(start: 0, end: textLengthLimit - 1)
             }
         }
         
         
         //处理
         switch tfType {
+            
         case .Default:
             //默认
             Print("")
@@ -108,17 +110,20 @@ class GFTextField: UITextField {
             
             if uptextLength < self.text?.count ?? 0 {
                 //输入字符
-                if self.text?.count == 3 || self.text?.count == 8 {
-                    self.text = self.text! + " "
+                if toBeString.count == 3 || toBeString.count == 8 {
+                    self.text = toBeString + " "
                 }else if uptextLength == 3 || uptextLength == 8 {
-                    self.text = String(format: "%@ %@", String(toBeString[toBeString.startIndex..<toBeString.index(self.text!.startIndex, offsetBy: uptextLength)]),String(toBeString[toBeString.index(toBeString.startIndex, offsetBy: uptextLength)...toBeString.endIndex]))
+                    self.text = String(format: "%@ %@", toBeString.string_range(start: 0, end: uptextLength - 1),toBeString.string_range(start: uptextLength, end: toBeString.count - 1))
                 }
-            }else if uptextLength > self.text?.count ?? 0 {
+            }else if uptextLength > toBeString.count {
                 //删除字符
-                if self.text?.count == 4 || self.text?.count == 9 {
-                    self.text = String(self.text![self.text!.startIndex...self.text!.index(before: self.text!.endIndex)])
+                if toBeString.count == 4 || toBeString.count == 9 {
+                    self.text = toBeString.string_range(start: 0, end: toBeString.count - 2)
                 }
             }
+            
+            uptextLength = self.text?.count ?? 0 //更新长度
+            
         case .Code_Cipher,.Code_Clear:
             //验证码隐藏
             
@@ -129,14 +134,14 @@ class GFTextField: UITextField {
                 for backView in viewsArray {
                     let index = backView.tag - 1000
                     
-                    if index < self.text?.count ?? 0 {
+                    if index < toBeString.count {
                         //要显示的
                         backView.isHidden = false
                         
                         if tfType == .Code_Clear {
                             //明文
                             let label = backView as! UILabel
-                            label.text = String(toBeString[toBeString.index(toBeString.startIndex, offsetBy: index)...toBeString.index(toBeString.index(toBeString.startIndex, offsetBy: index), offsetBy: 1)])
+                            label.text = toBeString.string_range(start: index, end: index)
                         }else{
                             backView.isHidden = true
                         }
@@ -230,34 +235,92 @@ class GFTextField: UITextField {
                 self.addSubview(lineView)
             }
         }
+    }
+    
+    
+    ///设置清除按钮图片
+    func setClearBtnImage(image:UIImage) {
+        let clearBtn:UIButton? = self.value(forKey: "clearButton") as? UIButton
+        clearBtn?.setImage(image, for: .normal)
+    }
+    
+    //MARK: ************************* 赋值粘贴 代理处理 *************************
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         
-        ///设置清除按钮图片
-        func setClearBtnImage(image:UIImage) {
-            let clearBtn:UIButton? = self.value(forKey: "clearButton") as? UIButton
-            clearBtn?.setImage(image, for: .normal)
-        }
-        
-        //MARK: ************************* 赋值粘贴 代理处理 *************************
-        func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-            if showMenuAction {
-                let menuController = UIMenuController.shared
-                menuController.isMenuVisible = false
-                //控制显示的菜单
-                if action == #selector(copy(_:)) || action == #selector(paste(_:)) {
-                    return true
-                }else{
-                    return false
-                }
+        if showMenuAction {
+            let menuController = UIMenuController.shared
+            menuController.isMenuVisible = false
+            //控制显示的菜单
+            if action == #selector(copy(_:)) || action == #selector(paste(_:)) {
+                return true
             }else{
                 return false
             }
+        }else{
+            return false
         }
+    }
+    
+    override func paste(_ sender: Any?) {
+        super.paste(sender)
         
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.05) {
+            self.posted()
+        }
+    }
+    
+    ///菜单弹框隐藏触发
+    private func posted() {
         
+        if tfType == .Mobile && self.text?.count ?? 0 > 0 {
+            //手机号码类型
+            let numArray = self.text!.components(separatedBy: " ")
+            
+            //去空格
+            let mobileStr = numArray.count > 1 ? numArray.joined(separator: "") : self.text!
+            
+            //获取新的带空格手机号
+            var phoneStr = ""
+            
+            for index in 0..<phoneStr.count {
+                
+                let oneNum = self.string_range(string: mobileStr, start: index, end: index)
+                
+                phoneStr.append(oneNum)
+                
+                if phoneStr.count == 3 || phoneStr.count == 8 {
+                    phoneStr.append(" ")//添加空格
+                }
+                
+                if phoneStr.count >= 13 {
+                    break;
+                }
+            }
+            
+            self.text = phoneStr
+        }
         
     }
     
     
+    ///字符串截取
+    private func string_range(string:String, start:Int, end:Int) -> String {
+        
+        var indexS = start < 0 ? 0 : start
+        
+        let indexE = end > (string.count - 1) ? string.count - 1 : end;
+        
+        if indexS > indexE {
+            indexS = indexE
+        }
+        
+        let indexStart = string.index(string.startIndex, offsetBy: indexS)
+        let indexEnd = string.index(string.startIndex, offsetBy: indexE)
+        
+        let substr = String(string[indexStart...indexEnd])
+        
+        return substr
+    }
 }
 
 

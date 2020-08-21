@@ -25,6 +25,9 @@ class HomeDetailVC: APPBaseController {
         
         self.createView()
         self.bindViewModel()
+        
+        
+        
     }
     
     ///数据计算

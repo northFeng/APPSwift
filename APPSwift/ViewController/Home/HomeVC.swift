@@ -35,6 +35,23 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         self.bindViewModel()
         
         tableView.mj_header?.beginRefreshing()
+        
+        
+        let nameStr = "0123456789"
+        
+        
+        let range:Range<Int> = 1..<10
+        
+        Print("----->\(range.lowerBound)---->\(range.upperBound)")
+        
+        
+        
+        Print("1----\(nameStr.substring(to: 5))")
+        Print("2----\(nameStr.substring(from: 3))")
+        Print("3----\(nameStr.string_range(start: 2, end: 2))")
+        Print("4----\(nameStr[8,2])")
+        Print("5----\(nameStr[1..<10])")
+        Print("6----\(nameStr[7])")
     }
     
     ///数据计算
