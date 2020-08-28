@@ -27,14 +27,10 @@ class GFTextField: UITextField {
     var textLengthLimit:Int = LONG_MAX
     
     ///输入框类型
-    var tfType:TextFieldType{
-        willSet{
-            
-        }
-    }
+    var tfType:TextFieldType = .Default
     
     ///是否展示 菜单
-    var showMenuAction:Bool = false
+    private var showMenuAction:Bool = false
     
     ///上一次文本长度
     private var uptextLength = 0
@@ -52,17 +48,23 @@ class GFTextField: UITextField {
     
     init(textFieldType:TextFieldType = .Default, lengthLimit:Int = LONG_MAX, menuShow:Bool = false) {
         tfType = textFieldType
-        textLengthLimit = lengthLimit
+        
+        if textFieldType == .Mobile {
+            textLengthLimit = 13
+        }else{
+            textLengthLimit = lengthLimit
+        }
+        
         showMenuAction = menuShow
         
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        NotificationCenter.default.addObserver(self, selector: #selector(textFiledEditChanged(noti:)), name: UITextField.textDidChangeNotification, object: nil)
     }
+    
     override init(frame: CGRect) {
-        tfType = .Default
-        
         super.init(frame: frame)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textFiledEditChanged(noti:)), name: NSNotification.Name(rawValue: ""), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textFiledEditChanged(noti:)), name: UITextField.textDidChangeNotification, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -143,7 +145,8 @@ class GFTextField: UITextField {
                             let label = backView as! UILabel
                             label.text = toBeString.string_range(start: index, end: index)
                         }else{
-                            backView.isHidden = true
+                            //密文
+                            backView.isHidden = false
                         }
                     }else{
                         if tfType == .Code_Clear {
@@ -169,72 +172,61 @@ class GFTextField: UITextField {
         
     }
     
-    ///设置输入框类型设置
-    func setTextFieldType(tfType:TextFieldType, borderColor:UIColor, lineColor:UIColor) {
-        
-        if tfType != .Default {
+    ///设置输入框 明文 / 密文 边框样式
+    func setTextFieldCodeStyle(borderColor:UIColor, lineColor:UIColor, borderSize:CGSize, borderCorner:CGFloat = 0, borderWidth:CGFloat = 1, clearColor:UIColor = UIColor.black, cipherColor:UIColor = UIColor.black) {
+                
+        if textLengthLimit != LONG_MAX {
             
-            if textLengthLimit != LONG_MAX {
+            //设置外边框的样式
+            self.borderStyle = .none
+            self.tintColor = UIColor.clear
+            self.textColor = UIColor.clear
+            
+            let widthSpace:CGFloat = (self.frame.size.width - (CGFloat(textLengthLimit) * borderSize.width)) / CGFloat(textLengthLimit - 1)
+            
+            for index in 0..<textLengthLimit {
                 
-                //设置外边框的样式
-                self.borderStyle = .none
-                self.layer.borderColor = borderColor.cgColor
-                self.layer.borderWidth = 1;
-                self.tintColor = UIColor.clear
-                self.textColor = UIColor.clear
-                
-                let widthSpace:CGFloat = self.frame.size.width / CGFloat(textLengthLimit)
-                let height:CGFloat = self.frame.size.height
-                
-                for index in 0..<textLengthLimit {
+                let label:UILabel = UILabel()
+                label.textAlignment = .center
+                label.textColor = clearColor
+                label.font = self.font
+                label.backgroundColor = UIColor.clear
+                //改变label的frame
+                label.frame = CGRect(origin: CGPoint(x: CGFloat(index) * (borderSize.width + widthSpace), y: 0), size: borderSize)
+                label.layer.borderColor = borderColor.cgColor
+                label.layer.cornerRadius = borderCorner
+                label.layer.borderWidth = borderWidth
+                self.addSubview(label)
+                label.tag = 1000 + index
+        
+                if tfType == .Code_Cipher {
+                    //密文
+                    let backView = UIView()
+                    backView.backgroundColor = cipherColor
+                    backView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
+                    backView.center = label.center
+                    //设置小圆点大小
+                    backView.layer.cornerRadius = 5
+                    backView.layer.masksToBounds = true
+                    self.addSubview(backView)
+                    backView.isHidden = true
+                    backView.tag = 1000 + index
+                    viewsArray.append(backView)
                     
-                    let line = UIView()
-                    line.backgroundColor = borderColor
-                    //改变竖条的大小
-                    line.frame = CGRect(x: ((widthSpace - 1) + (widthSpace + 1)*CGFloat(index)), y: 1.5, width: 1, height: height - 3)
-                    
-                    if index != textLengthLimit - 1 {
-                        //最后一条线不加
-                        self.addSubview(line)
-                    }
-                    
-                    if tfType == .Code_Cipher {
-                        //密文
-                        let backView = UIView()
-                        backView.backgroundColor = UIColor.black
-                        backView.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-                        backView.center = CGPoint(x: widthSpace / 2 + widthSpace*CGFloat(index), y: height / 2)
-                        //设置小圆点大小
-                        backView.layer.cornerRadius = 5
-                        backView.layer.masksToBounds = true
-                        self.addSubview(backView)
-                        backView.isHidden = true
-                        backView.tag = 1000 + index
-                        viewsArray.append(backView)
-                        
-                    }else if tfType == .Code_Clear {
-                        //明文
-                        let label:UILabel = UILabel()
-                        label.textAlignment = .center
-                        label.textColor = UIColor.black
-                        label.backgroundColor = UIColor.clear
-                        //改变label的frame
-                        label.frame = CGRect(x: 0, y: 0, width: widthSpace - 4, height: height - 4)
-                        label.center = CGPoint(x: widthSpace / 2 + widthSpace*CGFloat(index), y: height/2)
-                        self.addSubview(label)
-                        label.isHidden = true
-                        label.tag = 1000 + index
-                        viewsArray.append(label)
-                    }
-                    
+                }else if tfType == .Code_Clear {
+                    //明文
+                    viewsArray.append(label)
                 }
                 
-                lineView.backgroundColor = lineColor
-                lineView.frame = CGRect(x: 0, y: 0, width: 2, height: 24)
-                lineView.center = CGPoint(x: widthSpace / 2, y: height / 2)
-                self.addSubview(lineView)
             }
+            
+            lineView.backgroundColor = lineColor
+            lineView.frame = CGRect(x: 0, y: 0, width: 2, height: borderSize.height / 2)
+            lineView.center = CGPoint(x: borderSize.width / 2, y: borderSize.height / 2)
+            lineView.startFlash()
+            self.addSubview(lineView)
         }
+        
     }
     
     
@@ -328,7 +320,7 @@ class GFTextField: UITextField {
 fileprivate class GFLineTF: UIView {
     
     ///隐藏 & 显示
-    var isHide = false
+    var isHide = true
     
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))

@@ -27,6 +27,9 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     var detailVC:HomeDetailVC?
     
     
+    ///输入框
+    var tf_Num = GFTextField(textFieldType: .Code_Clear, lengthLimit: 5, menuShow: false)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +55,13 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         Print("4----\(nameStr[8,2])")
         Print("5----\(nameStr[1..<10])")
         Print("6----\(nameStr[7])")
+        
+        
+        tf_Num.borderStyle = .line
+        tf_Num.frame = CGRect(x: 10, y: 50, width: 300, height: 50)
+        tf_Num.setTextFieldCodeStyle(borderColor: UIColor.red, lineColor: UIColor.blue, borderSize: CGSize(width: 40, height: 50), borderCorner: 5, borderWidth: 1, cipherColor: UIColor.red)
+        self.view.addSubview(tf_Num)
+        
     }
     
     ///数据计算
