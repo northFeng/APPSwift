@@ -8,6 +8,15 @@
 
 import Foundation
 
+/**
+///输入框
+var tf_Num = GFTextField(textFieldType: .Code_Clear, lengthLimit: 5, menuShow: false)
+tf_Num.borderStyle = .line
+tf_Num.frame = CGRect(x: 10, y: 50, width: 300, height: 50)
+tf_Num.setTextFieldCodeStyle(borderColor: UIColor.red, lineColor: UIColor.blue, borderSize: CGSize(width: 40, height: 50), borderCorner: 5, borderWidth: 1, cipherColor: UIColor.red)
+self.view.addSubview(tf_Num)
+ */
+
 
 class GFTextField: UITextField {
     
@@ -226,7 +235,6 @@ class GFTextField: UITextField {
             lineView.startFlash()
             self.addSubview(lineView)
         }
-        
     }
     
     
