@@ -71,6 +71,7 @@
 		83C2769A24B852A500DFBB13 /* APPKeyboardApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C2769924B852A500DFBB13 /* APPKeyboardApi.m */; };
 		83EA12B924EE65BE00187B05 /* SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EA12B824EE65BE00187B05 /* SwiftUI.swift */; };
 		83EB9F4D24AB217C00A94BE0 /* APPAlertTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */; };
+		AB5D590D25498903007AD5AB /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5D590C25498903007AD5AB /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +147,7 @@
 		83C2769924B852A500DFBB13 /* APPKeyboardApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPKeyboardApi.m; sourceTree = "<group>"; };
 		83EA12B824EE65BE00187B05 /* SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI.swift; sourceTree = "<group>"; };
 		83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APPAlertTool.swift; sourceTree = "<group>"; };
+		AB5D590C25498903007AD5AB /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		BA1A1D57E54503B673FC8826 /* Pods-APPSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APPSwift.release.xcconfig"; path = "Target Support Files/Pods-APPSwift/Pods-APPSwift.release.xcconfig"; sourceTree = "<group>"; };
 		C2BD9D844B7821280E372195 /* Pods_APPSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APPSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -414,6 +416,7 @@
 				831A4F0B24A0B3BF00646A1C /* Home */,
 				831A4F0C24A0B3C600646A1C /* Middle */,
 				831A4F0D24A0B3CC00646A1C /* Mine */,
+				AB5D590B254988D6007AD5AB /* SwiftyJSON */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -536,6 +539,14 @@
 				83EB9F4C24AB217C00A94BE0 /* APPAlertTool.swift */,
 			);
 			path = CustomAlert;
+			sourceTree = "<group>";
+		};
+		AB5D590B254988D6007AD5AB /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				AB5D590C25498903007AD5AB /* SwiftyJSON.swift */,
+			);
+			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -663,6 +674,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83BDBC4824E28D8E00B81B49 /* GFTextField.swift in Sources */,
+				AB5D590D25498903007AD5AB /* SwiftyJSON.swift in Sources */,
 				8323011C24A8A37E00CF72BB /* APPFunctionApi.swift in Sources */,
 				832C983524DD51C500BD8EA6 /* LoadImageView.swift in Sources */,
 				832C983E24DD51C500BD8EA6 /* BannerBaseDataInfo.swift in Sources */,

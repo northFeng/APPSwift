@@ -151,6 +151,7 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         
+        
     }
     
 
@@ -260,6 +261,8 @@ class HomeVC: APPBaseController, UITableViewDelegate,UITableViewDataSource {
         imgView.isHidden = true
         self.view.addSubview(imgView)
     }
+    
+    
     
 }
 
